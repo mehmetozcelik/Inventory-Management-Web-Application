@@ -193,6 +193,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\TanimController.cs" />
+    <Compile Include="Controllers\TedarikciController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -231,6 +232,7 @@
     <Content Include="Views\Tanim\TeslimBirimDuzenle.cshtml" />
     <Content Include="Views\Tanim\UrunBirimTanimi.cshtml" />
     <Content Include="Views\Tanim\UrunBirimDuzenle.cshtml" />
+    <Content Include="Views\Tedarikci\Listesi.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
