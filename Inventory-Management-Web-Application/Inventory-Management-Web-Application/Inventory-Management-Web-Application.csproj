@@ -194,6 +194,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\TanimController.cs" />
     <Compile Include="Controllers\TedarikciController.cs" />
+    <Compile Include="Controllers\PersonelController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -234,6 +235,9 @@
     <Content Include="Views\Tanim\UrunBirimDuzenle.cshtml" />
     <Content Include="Views\Tedarikci\Listesi.cshtml" />
     <Content Include="Views\Tedarikci\Ekle.cshtml" />
+    <Content Include="Views\Personel\TeslimAlanPersonelListele.cshtml" />
+    <Content Include="Views\Personel\TeslimAlanPersonelEkle.cshtml" />
+    <Content Include="Views\Personel\TeslimAlanPersonelDuzenle.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

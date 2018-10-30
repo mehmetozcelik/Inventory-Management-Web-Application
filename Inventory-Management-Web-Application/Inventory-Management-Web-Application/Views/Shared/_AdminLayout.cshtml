@@ -26,6 +26,8 @@
       <script src="/Content/js/html5shiv.js"></script>
       <script src="/Content/js/respond.min.js"></script>
     <![endif]-->
+    
+    @RenderSection("head",false)
 </head>
 
 <body>
@@ -58,7 +60,6 @@
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu extended logout">
-                            <div class="log-arrow-up"></div>
                             <li><a href="/Content/#"><i class=" icon-suitcase"></i>Profile</a></li>
                             <li><a href="/Content/#"><i class="icon-cog"></i> Settings</a></li>
                             <li><a href="/Content/#"><i class="icon-bell-alt"></i> Notification</a></li>
@@ -269,7 +270,6 @@
     <script src="/Content/js/owl.carousel.js"></script>
     <script src="/Content/js/jquery.customSelect.min.js"></script>
     <script src="/Content/js/respond.min.js"></script>
-
     <script class="include" type="text/javascript" src="/Content/js/jquery.dcjqaccordion.2.7.js"></script>
 
     <!--common script for all pages-->
@@ -279,7 +279,7 @@
     <script src="/Content/js/sparkline-chart.js"></script>
     <script src="/Content/js/easy-pie-chart.js"></script>
     <script src="/Content/js/count.js"></script>
-
+    @RenderSection("script",false)
     <script>
 
       //owl carousel
