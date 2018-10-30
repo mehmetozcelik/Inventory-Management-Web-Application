@@ -13,5 +13,11 @@ namespace Inventory_Management_Web_Application.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public ActionResult Ekle()
+        {
+            return View();
+        }
     }
 }

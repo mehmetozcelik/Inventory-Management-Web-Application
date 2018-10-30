@@ -233,6 +233,7 @@
     <Content Include="Views\Tanim\UrunBirimTanimi.cshtml" />
     <Content Include="Views\Tanim\UrunBirimDuzenle.cshtml" />
     <Content Include="Views\Tedarikci\Listesi.cshtml" />
+    <Content Include="Views\Tedarikci\Ekle.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
