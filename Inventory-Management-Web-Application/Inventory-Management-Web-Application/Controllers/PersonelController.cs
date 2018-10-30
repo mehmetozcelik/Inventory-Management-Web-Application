@@ -12,28 +12,28 @@ namespace Inventory_Management_Web_Application.Controllers
     {
         public InventoryContext db = new InventoryContext();
         // GET: Personel
-        public ActionResult TeslimAlanPersonelListele()
+        public ActionResult TaListesi()
         {
             var TeslimAlanPersonel = db.TeslimAlanPersonel.ToList();
             ViewBag.TeslimAlanPersonel = TeslimAlanPersonel;
             return View();
         }
 
-        public ActionResult TeslimAlanPersonelEkle()
+        public ActionResult TaEkle()
         {
             ViewBag.Birimler = db.Birim.ToList();
             return View();
         }
 
         [HttpPost]
-        public ActionResult TeslimAlanPersonelEkle(TeslimAlanPersonel veri)
+        public ActionResult TaEkle(TeslimAlanPersonel veri)
         {
             db.TeslimAlanPersonel.Add(veri);
             db.SaveChanges();
-            return RedirectToAction("TeslimAlanPersonelListele");
+            return RedirectToAction("TaListesi");
         }
 
-        public ActionResult TeslimAlanPersonelDuzenle(int ID)
+        public ActionResult TaDuzenle(int ID)
         {
             ViewBag.TeslimAlanPersonel = db.TeslimAlanPersonel.SingleOrDefault(x => x.ID == ID);
             ViewBag.Birimler = db.Birim.ToList();
@@ -41,12 +41,27 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult TeslimAlanPersonelDuzenle(TeslimAlanPersonel veri)
+        public ActionResult TaDuzenle(TeslimAlanPersonel veri)
         {
             db.Entry(veri).State = EntityState.Modified;
             db.SaveChanges();
-            return RedirectToAction("TeslimAlanPersonelListele");
+            return RedirectToAction("TaListesi");
         }
 
+        [HttpPost]
+        public ActionResult TaSil(int id)
+        {
+            TeslimAlanPersonel b = db.TeslimAlanPersonel.Where(x => x.ID == id).SingleOrDefault();
+            if (b == null)
+            {
+                return Json(false);
+            }
+            else
+            {
+                db.TeslimAlanPersonel.Remove(b);
+                db.SaveChanges();
+                return Json(true);
+            }
+        }
     }
 }

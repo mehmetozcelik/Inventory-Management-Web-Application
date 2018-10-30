@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "TeslimAlanPersonelListele";
+    ViewBag.Title = "TaListesi";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -23,13 +23,15 @@
 <div class="row">
     <div class="col-lg-12">
         <section class="panel">
-            <header class="panel-heading">
+            <header class="panel-heading" style="padding-bottom: 10px;">
+                <div class="col-lg-12">
                 <b>Teslim Alan Personel Listesi</b>
-                <br />
-                <div style="background-color:black;height:1px;"></div>
+                <a href="TaEkle" class="btn btn-success" style="float: right"><i class="icon-plus"></i> Personel Ekle</a>
+                </div>
             </header>
 
             <div class="panel-body">
+                <div class="col-lg-12">
                 @{
                     if (TempData["a"] != null)
                     {
@@ -49,35 +51,36 @@
                         }
                     }
                 }
-                <div class="adv-table editable-table">
-                    <table class="table table-striped table-hover table-bordered" id="editable-sample">
-                        <thead>
+                    <div class="adv-table editable-table">
+                        <table class="table table-striped table-hover table-bordered" id="editable-sample">
+                            <thead>
                             <tr>
                                 <th>Adı</th>
                                 <th>Soyadı</th>
                                 <th>Birimi</th>
                                 <th>Telefon</th>
-                                <th>E-Posta</th>     
+                                <th>E-Posta</th>
                                 <th>Düzenle</th>
                             </tr>
-                        </thead>
-                        <tbody>
+                            </thead>
+                            <tbody>
                             @foreach (var item in ViewBag.TeslimAlanPersonel)
                             {
-                                    <tr>
-                                        <td class="filterable-cell">@item.Adi</td>
-                                        <td class="filterable-cell">@item.Soyadi</td>
-                                        <td class="filterable-cell"></td>
-                                        <td class="filterable-cell">@item.Tel</td>
-                                        <td class="filterable-cell">@item.Email</td>
-                                        <td class="filterable-cell" style="width:130px">
-                                            <a href="TeslimAlanPersonelDuzenle/@item.ID" class="btn btn-primary btn-xs"><i class="icon-pencil">Düzenle</i></a>
-                                            <a href="" class="btn btn-danger btn-xs"><i class="icon-trash">Sil</i></a>
-                                        </td>
-                                    </tr>
+                                <tr id="@item.ID">
+                                    <td class="filterable-cell">@item.Adi</td>
+                                    <td class="filterable-cell">@item.Soyadi</td>
+                                    <td class="filterable-cell">@item.Birim.Adi</td>
+                                    <td class="filterable-cell">@item.Tel</td>
+                                    <td class="filterable-cell">@item.Email</td>
+                                    <td class="filterable-cell" style="width: 130px">
+                                        <a href="TaDuzenle/@item.ID" class="btn btn-primary btn-xs"><i class="icon-pencil">Düzenle</i></a>
+                                        <a style="float: right;" data-id="@item.ID" class="btn btn-danger btn-xs sil"><i class="icon-trash "> Sil</i></a>
+                                    </td>
+                                </tr>
                             }
-                        </tbody>
-                    </table>                  
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </section>
@@ -102,6 +105,30 @@
     {
         $('#listele').addClass('active');
     }</script>
+
+    <script>
+        $(document).ready(function () {
+            $('.sil').click(function () {
+                var id = $(this).attr("data-id");
+                $.ajax({
+                    url: '/Personel/TaSil/' + id,
+                    type: 'POST',
+                    success: function (rs) {
+                        if (rs === true) {
+                            $('#' + id).remove();
+                        }
+                        else {
+                            alert('Silme işlemi gerçekleşirken bir hata oluştu.');
+                        }
+                    },
+                    error: function (rs) {
+                        alert('Bir hata oluştu' + id);
+                    }
+                });
+            });
+        });
+
+    </script>
 }
 
 

@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "TeslimAlanPersonelDuzenle";
+    ViewBag.Title = "TaDuzenle";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -12,7 +12,7 @@
             </div>
         </header>
         <div class="panel-body">
-            <form action="TeslimAlanPersonelDuzenle" method="post">
+            <form action="TaDuzenle" method="post">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="col-lg-12">
@@ -27,7 +27,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Birimi</label>&nbsp;<span style="color: red;">*</span>
-                                <select id="gkk" class="form-control m-bot15" name="TeslimBirimID">
+                                <select  onchange="show_selected()" id="gkk" class="form-control m-bot15" name="TeslimBirimID">
                                     <option value="default">Birim Seçiniz</option>
                                     @foreach (var item in ViewBag.Birimler)
                                     {
@@ -52,7 +52,7 @@
                             </div>
 
                             <button type="submit" id="button" class="btn btn-info">Kaydet</button>
-                            <a href="../Personel/TeslimAlanPersonelListele" class="btn btn-danger">İptal</a>
+                            <a href="../Personel/TaDuzenle" class="btn btn-danger">İptal</a>
                             <button type="reset" class="btn btn-default">Temizle</button>
                         </div>
                     </div>
@@ -63,4 +63,26 @@
         </div>
     </section>
 </div>
+
+@section script{
+    <script type="text/javascript">
+        function show_selected(){
+            "use strict";
+            var selector = document.getElementById('gkk');
+            var valuea = selector[selector.selectedIndex].value;
+
+            if (valuea == 'default') {
+                $('#button').removeClass('btn btn-info');
+                $('#button').addClass('btn btn-info disabled');
+                document.getElementById('button').disabled = true;
+            }
+            else {
+                $('#button').removeClass('btn btn-info disabled');
+                $('#button').addClass('btn btn-info');
+                document.getElementById('button').disabled = false;
+            }
+        };
+        window.onload = show_selected();
+    </script>
+}
 

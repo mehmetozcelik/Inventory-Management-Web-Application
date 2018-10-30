@@ -232,9 +232,9 @@
     <Content Include="Views\Tanim\TeslimBirimDuzenle.cshtml" />
     <Content Include="Views\Tanim\UrunBirimTanimi.cshtml" />
     <Content Include="Views\Tanim\UrunBirimDuzenle.cshtml" />
-    <Content Include="Views\Personel\TeslimAlanPersonelListele.cshtml" />
-    <Content Include="Views\Personel\TeslimAlanPersonelEkle.cshtml" />
-    <Content Include="Views\Personel\TeslimAlanPersonelDuzenle.cshtml" />
+    <Content Include="Views\Personel\TaListesi.cshtml" />
+    <Content Include="Views\Personel\TaEkle.cshtml" />
+    <Content Include="Views\Personel\TaDuzenle.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
