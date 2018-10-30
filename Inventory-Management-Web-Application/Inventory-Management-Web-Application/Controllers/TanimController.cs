@@ -120,5 +120,6 @@ namespace Inventory_Management_Web_Application.Controllers
                 return RedirectToAction("UrunBirimTanimi");
             }
         }
+
     }
 }
