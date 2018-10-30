@@ -127,6 +127,51 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\404.html" />
+    <Content Include="Content\500.html" />
+    <Content Include="Content\advanced_form_components.html" />
+    <Content Include="Content\advanced_table.html" />
+    <Content Include="Content\basic_table.html" />
+    <Content Include="Content\blank.html" />
+    <Content Include="Content\boxed_page.html" />
+    <Content Include="Content\buttons.html" />
+    <Content Include="Content\calendar.html" />
+    <Content Include="Content\chartjs.html" />
+    <Content Include="Content\dropzone.html" />
+    <Content Include="Content\dynamic_table.html" />
+    <Content Include="Content\editable_table.html" />
+    <Content Include="Content\flot_chart.html" />
+    <Content Include="Content\font_awesome.html" />
+    <Content Include="Content\form_component.html" />
+    <Content Include="Content\form_validation.html" />
+    <Content Include="Content\form_wizard.html" />
+    <Content Include="Content\gallery.html" />
+    <Content Include="Content\general.html" />
+    <Content Include="Content\google_maps.html" />
+    <Content Include="Content\grids.html" />
+    <Content Include="Content\horizontal_menu.html" />
+    <Content Include="Content\image_cropping.html" />
+    <Content Include="Content\inbox.html" />
+    <Content Include="Content\index.html" />
+    <Content Include="Content\inline_editor.html" />
+    <Content Include="Content\invoice.html" />
+    <Content Include="Content\language_switch_bar.html" />
+    <Content Include="Content\lock_screen.html" />
+    <Content Include="Content\login.html" />
+    <Content Include="Content\morris.html" />
+    <Content Include="Content\nestable.html" />
+    <Content Include="Content\product_details.html" />
+    <Content Include="Content\product_list.html" />
+    <Content Include="Content\profile-activity.html" />
+    <Content Include="Content\profile-edit.html" />
+    <Content Include="Content\profile.html" />
+    <Content Include="Content\registration.html" />
+    <Content Include="Content\responsive_table.html" />
+    <Content Include="Content\search_result.html" />
+    <Content Include="Content\slider.html" />
+    <Content Include="Content\todo_list.html" />
+    <Content Include="Content\widget.html" />
+    <Content Include="Content\xchart.html" />
     <Content Include="DB_Script\StokDBScprit.sql" />
     <Content Include="Global.asax" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
@@ -171,6 +216,11 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\assets\" />
+    <Folder Include="Content\css\" />
+    <Folder Include="Content\fonts\" />
+    <Folder Include="Content\img\" />
+    <Folder Include="Content\js\" />
     <Folder Include="Controllers\" />
   </ItemGroup>
   <PropertyGroup>
