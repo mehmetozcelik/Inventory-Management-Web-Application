@@ -26,6 +26,8 @@
       <script src="/Content/js/html5shiv.js"></script>
       <script src="/Content/js/respond.min.js"></script>
     <![endif]-->
+    
+    @RenderSection("head",false)
 </head>
 
 <body>
@@ -58,7 +60,6 @@
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu extended logout">
-                            <div class="log-arrow-up"></div>
                             <li><a href="/Content/#"><i class=" icon-suitcase"></i>Profile</a></li>
                             <li><a href="/Content/#"><i class="icon-cog"></i> Settings</a></li>
                             <li><a href="/Content/#"><i class="icon-bell-alt"></i> Notification</a></li>
@@ -79,14 +80,14 @@
                     <li>
                         <a class="active" href="/Content/index.html">
                             <i class="icon-dashboard"></i>
-                            <span>Dashboard</span>
+                            <span>Anasayfa</span>
                         </a>
                     </li>
 
                     <li class="sub-menu">
                         <a href="/Content/javascript:;">
                             <i class="icon-laptop"></i>
-                            <span>Layouts</span>
+                            <span>Kullanıcı İşlemleri</span>
                         </a>
                         <ul class="sub">
                             <li><a href="/Content/boxed_page.html">Boxed Page</a></li>
@@ -98,7 +99,7 @@
                     <li class="sub-menu">
                         <a href="/Content/javascript:;">
                             <i class="icon-book"></i>
-                            <span>UI Elements</span>
+                            <span>Ürün İşlemleri</span>
                         </a>
                         <ul class="sub">
                             <li><a href="/Content/general.html">General</a></li>
@@ -113,13 +114,11 @@
                     <li class="sub-menu">
                         <a href="/Content/javascript:;">
                             <i class="icon-cogs"></i>
-                            <span>Components</span>
+                            <span>Tanımlar</span>
                         </a>
                         <ul class="sub">
-                            <li><a href="/Content/grids.html">Grids</a></li>
-                            <li><a href="/Content/calendar.html">Calendar</a></li>
-                            <li><a href="/Content/gallery.html">Gallery</a></li>
-                            <li><a href="/Content/todo_list.html">Todo List</a></li>
+                            <li><a href="/Tanim/TeslimBiriö">Teslim Birimi Tanımı</a></li>
+                            <li><a href="/Tanim/UrunBirimTanimi">Calendar</a></li>
                         </ul>
                     </li>
                     <li class="sub-menu">
@@ -271,7 +270,6 @@
     <script src="/Content/js/owl.carousel.js"></script>
     <script src="/Content/js/jquery.customSelect.min.js"></script>
     <script src="/Content/js/respond.min.js"></script>
-
     <script class="include" type="text/javascript" src="/Content/js/jquery.dcjqaccordion.2.7.js"></script>
 
     <!--common script for all pages-->
@@ -281,7 +279,7 @@
     <script src="/Content/js/sparkline-chart.js"></script>
     <script src="/Content/js/easy-pie-chart.js"></script>
     <script src="/Content/js/count.js"></script>
-
+    @RenderSection("script",false)
     <script>
 
       //owl carousel

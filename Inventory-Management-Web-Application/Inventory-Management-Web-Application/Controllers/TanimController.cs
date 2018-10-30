@@ -11,6 +11,8 @@ namespace Inventory_Management_Web_Application.Controllers
     {
         // GET: Tanim
         InventoryContext db = new InventoryContext();
+
+        // ---------------------------------------- Teslim birimi Tanımı -------------------------------------- //
         public ActionResult TeslimBirim()
         {
             return View(db.Birim.ToList());
@@ -24,6 +26,7 @@ namespace Inventory_Management_Web_Application.Controllers
             return RedirectToAction("TeslimBirim");
         }
 
+        [HttpPost]
         public ActionResult teslimBirimSil(int id)
         {
             Birim b = db.Birim.Where(x => x.ID == id).SingleOrDefault();
@@ -62,5 +65,61 @@ namespace Inventory_Management_Web_Application.Controllers
                 return RedirectToAction("TeslimBirim");
             }
         }
+
+        // ---------------------------------------------------------- Ürün birimi Tanımı ---------------------------------------------------------
+
+        public ActionResult UrunBirimTanimi()
+        {
+            return View(db.UrunBirim.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult UrunBirimEkle(UrunBirim b)
+        {
+            db.UrunBirim.Add(b);
+            db.SaveChanges();
+            return RedirectToAction("UrunBirimTanimi");
+        }
+
+        [HttpPost]
+        public ActionResult UrunBirimSil(int id)
+        {
+            UrunBirim b = db.UrunBirim.Where(x => x.ID == id).SingleOrDefault();
+            if (b == null)
+            {
+                return Json(false);
+            }
+            else
+            {
+                db.UrunBirim.Remove(b);
+                db.SaveChanges();
+                return Json(true);
+            }
+        }
+
+        [HttpGet]
+        public ActionResult UrunBirimDuzenle(int id)
+        {
+            UrunBirim b = db.UrunBirim.Where(x => x.ID == id).FirstOrDefault();
+            return View(b);
+        }
+
+        [HttpPost]
+        public ActionResult UrunBirimDuzenle(UrunBirim b)
+        {
+            UrunBirim bb = db.UrunBirim.Where(x => x.ID == b.ID).SingleOrDefault();
+            if (bb != null)
+            {
+                bb.Adi = b.Adi;
+                db.SaveChanges();
+                return RedirectToAction("UrunBirimTanimi");
+            }
+            else
+            {
+
+                return RedirectToAction("UrunBirimTanimi");
+            }
+        }
+
     }
 }

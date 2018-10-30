@@ -194,6 +194,8 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\KategoriController.cs" />
     <Compile Include="Controllers\TanimController.cs" />
+    <Compile Include="Controllers\TedarikciController.cs" />
+    <Compile Include="Controllers\PersonelController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -224,13 +226,22 @@
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Tanim\TeslimBirim.cshtml" />
     <Content Include="Views\Tanim\TeslimBirimDuzenle.cshtml" />
+    <Content Include="Views\Tanim\UrunBirimTanimi.cshtml" />
+    <Content Include="Views\Tanim\UrunBirimDuzenle.cshtml" />
+    <Content Include="Views\Tedarikci\Listesi.cshtml" />
+    <Content Include="Views\Tedarikci\Ekle.cshtml" />
+    <Content Include="Views\Personel\TeslimAlanPersonelListele.cshtml" />
+    <Content Include="Views\Personel\TeslimAlanPersonelEkle.cshtml" />
+    <Content Include="Views\Personel\TeslimAlanPersonelDuzenle.cshtml" />
+    <Content Include="Views\Personel\TaListesi.cshtml" />
+    <Content Include="Views\Personel\TaEkle.cshtml" />
+    <Content Include="Views\Personel\TaDuzenle.cshtml" />
     <Content Include="Views\Kategori\Listesi.cshtml" />
     <Content Include="Views\Kategori\Duzenle.cshtml" />
     <Content Include="Views\Kategori\Ekle.cshtml" />

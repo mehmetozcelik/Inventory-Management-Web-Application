@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "TaDuzenle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-lg-12">
+    <section class="panel">
+        <header class="panel-heading">
+            <div class="col-lg-12">
+                <b>Teslim Alan Personel Düzenle</b>
+            </div>
+        </header>
+        <div class="panel-body">
+            <form action="TaDuzenle" method="post">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="col-lg-12">
+                            <input type="hidden" name="ID" value="@ViewBag.TeslimAlanPersonel.ID"/>
+                            <div class="form-group">
+                                <label>Adı</label>&nbsp;<span style="color: red;">*</span>
+                                <input value="@ViewBag.TeslimAlanPersonel.Adi" name="Adi" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label>Soyadı</label>&nbsp;<span style="color: red;">*</span>
+                                <input value="@ViewBag.TeslimAlanPersonel.Soyadi" name="Soyadi" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Birimi</label>&nbsp;<span style="color: red;">*</span>
+                                <select  onchange="show_selected()" id="gkk" class="form-control m-bot15" name="TeslimBirimID">
+                                    <option value="default">Birim Seçiniz</option>
+                                    @foreach (var item in ViewBag.Birimler)
+                                    {
+                                        if (ViewBag.TeslimAlanPersonel.TeslimBirimID == item.ID)
+                                        {
+                                            <option value="@item.ID" selected>@item.Adi</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@item.ID">@item.Adi</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Telefon</label>&nbsp;<span style="color: red;">*</span>
+                                <input value="@ViewBag.TeslimAlanPersonel.Tel" name="Tel" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label>E-Posta</label>&nbsp;<span style="color: red;">*</span>
+                                <input value="@ViewBag.TeslimAlanPersonel.Email" name="Email" class="form-control" required>
+                            </div>
+
+                            <button type="submit" id="button" class="btn btn-info">Kaydet</button>
+                            <a href="../Personel/TaDuzenle" class="btn btn-danger">İptal</a>
+                            <button type="reset" class="btn btn-default">Temizle</button>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </section>
+</div>
+
+@section script{
+    <script type="text/javascript">
+        function show_selected(){
+            "use strict";
+            var selector = document.getElementById('gkk');
+            var valuea = selector[selector.selectedIndex].value;
+
+            if (valuea == 'default') {
+                $('#button').removeClass('btn btn-info');
+                $('#button').addClass('btn btn-info disabled');
+                document.getElementById('button').disabled = true;
+            }
+            else {
+                $('#button').removeClass('btn btn-info disabled');
+                $('#button').addClass('btn btn-info');
+                document.getElementById('button').disabled = false;
+            }
+        };
+        window.onload = show_selected();
+    </script>
+}
+
