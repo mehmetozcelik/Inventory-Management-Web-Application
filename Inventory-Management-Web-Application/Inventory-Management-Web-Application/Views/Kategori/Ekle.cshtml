@@ -1,0 +1,36 @@
+﻿
+@{
+    ViewBag.Title = "Ekle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using Inventory_Management_Web_Application.Models
+
+@model List<Kategori>
+
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                Kategori Ekle
+            </header>
+            <div class="panel-body">
+                <form role="form" method="post" action="../Kategori/Ekle.cshtml">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Kategori Adı </label>
+                        <input type="text" class="form-control" placeholder="Kategori Adı Giriniz..." name="Adi">
+                        <label for="exampleInputEmail1">Açıklama </label>
+                        <input type="text" class="form-control" placeholder="Açıklama Giriniz..." name="Adi">
+                    </div>
+                    <button type="submit" class="btn btn-info">Kaydet</button>
+                    <a href="../Kategori/Listesi" type="submit" class="btn btn-danger">İptal</a>
+                    <button type="reset" class="btn btn-default">Temizle</button>
+                </form>
+
+            </div>
+        </section>
+    </div>
+</div>
