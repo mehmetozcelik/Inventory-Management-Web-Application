@@ -12,6 +12,46 @@ namespace Inventory_Management_Web_Application.Controllers
         // GET: Tanim
         InventoryContext db = new InventoryContext();
 
+
+        // ---------------------------------------- Kategori Tanımı -------------------------------------- //
+
+        public ActionResult KategoriTanimi()
+        {
+            return View(db.Kategori.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult KategoriEkle(Kategori k)
+        {
+            db.Kategori.Add(k);
+            db.SaveChanges();
+            return RedirectToAction("KategoriTanimi");
+        }
+
+        [HttpPost]
+        public ActionResult KategoriSil(int id)
+        {
+            Kategori b = db.Kategori.Where(x => x.ID == id).SingleOrDefault();
+            if (b == null)
+            {
+                return Json(false);
+            }
+            else
+            {
+                try
+                {
+                    db.Kategori.Remove(b);
+                    db.SaveChanges();
+                    return Json(true);
+                }
+                catch (Exception)
+                {
+                    return Json("FK");
+                }
+
+            }
+        }
+
         // ---------------------------------------- Teslim birimi Tanımı -------------------------------------- //
         public ActionResult TeslimBirim()
         {
@@ -36,9 +76,17 @@ namespace Inventory_Management_Web_Application.Controllers
             }
             else
             {
+                try
+                {
                 db.Birim.Remove(b);
                 db.SaveChanges();
                 return Json(true);
+                }
+                catch (Exception)
+                {
+                    return Json("FK");
+                }
+
             }
         }
 
@@ -53,7 +101,7 @@ namespace Inventory_Management_Web_Application.Controllers
         public ActionResult TeslimBirimDuzenle(Birim b)
         {
             Birim bb = db.Birim.Where(x => x.ID == b.ID).SingleOrDefault();
-            if (bb!=null)
+            if (bb != null)
             {
                 bb.Adi = b.Adi;
                 db.SaveChanges();
@@ -91,9 +139,17 @@ namespace Inventory_Management_Web_Application.Controllers
             }
             else
             {
+                try
+                {
                 db.UrunBirim.Remove(b);
                 db.SaveChanges();
                 return Json(true);
+                }
+                catch (Exception)
+                {
+                    return Json("FK");
+                }
+
             }
         }
 

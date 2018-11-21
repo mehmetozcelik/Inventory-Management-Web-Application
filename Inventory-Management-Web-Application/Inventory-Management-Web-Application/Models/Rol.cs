@@ -21,6 +21,9 @@ namespace Inventory_Management_Web_Application.Models
         [StringLength(100)]
         public string RolAdi { get; set; }
 
+        [StringLength(500)]
+        public string Aciklama { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MenuRol> MenuRol { get; set; }
 

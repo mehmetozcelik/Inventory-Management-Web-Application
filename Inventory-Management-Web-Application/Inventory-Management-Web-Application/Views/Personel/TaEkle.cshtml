@@ -65,7 +65,7 @@
             var selector = document.getElementById('gkk');
             var valuea = selector[selector.selectedIndex].value;
 
-            if (valuea == 'default') {
+            if (valuea === 'default') {
                 $('#button').removeClass('btn btn-info');
                 $('#button').addClass('btn btn-info disabled');
                 document.getElementById('button').disabled = true;

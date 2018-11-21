@@ -27,6 +27,9 @@ namespace Inventory_Management_Web_Application.Models
         public string Email { get; set; }
 
         [StringLength(100)]
+        public string Sifre { get; set; }
+
+        [StringLength(100)]
         public string Tel { get; set; }
 
         public int? RolID { get; set; }

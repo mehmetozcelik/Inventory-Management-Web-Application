@@ -34,6 +34,9 @@ namespace Inventory_Management_Web_Application.Models
 
         public bool? AcilirMenu { get; set; }
 
+        [StringLength(100)]
+        public string MenuList { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Menu> Menu1 { get; set; }
 

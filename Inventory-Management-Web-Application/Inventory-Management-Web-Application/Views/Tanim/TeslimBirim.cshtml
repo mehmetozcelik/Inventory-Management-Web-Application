@@ -45,12 +45,12 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr  id="@item.ID">
+                        <tr id="@item.ID">
                             <td>
                                 @item.Adi
                             </td>
                             <td>
-                                <a style="float:right;" data-id="@item.ID" class="btn btn-danger btn-xs sil"><i class="icon-trash "> Sil</i></a>
+                                <a title="Sil" style="float:right;" class="btn btn-danger btn-xs btn-confirm" data-id="@item.ID"><i class="icon-trash"></i> Sil</a>
                                 <a style="float:right;padding-right:5px;" href="/Tanim/TeslimBirimDuzenle/@item.ID" class="btn btn-primary btn-xs"><i class="icon-pencil"></i> Düzenle</a>
                             </td>
                         </tr>
@@ -63,30 +63,67 @@
 </div>
 
 
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Bu Birimi Silmek İstediğinizden Emin misiniz ?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="modal-btn-si">Sil</button>
+                <button type="button" class="btn btn-primary" id="modal-btn-no">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="/Content/js/jquery.js"></script>
 <script src="/Content/js/jquery-1.8.3.min.js"></script>
 
 <script>
-        $(document).ready(function () {
-            $('.sil').click(function () {
-                var id = $(this).attr("data-id");
-                $.ajax({
-                    url: '/Tanim/teslimBirimSil/' + id,
-                    type: 'POST',
-                    success: function (rs) {
-                        if (rs === true) {
-                            $('#' + id).remove();
-                        }
-                        else {
-                            alert('Silme işlemi gerçekleşirken bir hata oluştu.');
-                        }
-                    },
-                    error: function (rs) {
-                        alert('Bir hata oluştu' + id);
-                    }
-                });
-            });
+    var id;
+    var modalConfirm = function (callback) {
+        $(".btn-confirm").on("click", function () {
+            id = $(this).attr("data-id");
+            $("#mi-modal").modal('show');
         });
 
-</script>
+        $("#modal-btn-si").on("click", function () {
+            callback(true);
+            $("#mi-modal").modal('hide');
+        });
 
+        $("#modal-btn-no").on("click", function () {
+            callback(false);
+            $("#mi-modal").modal('hide');
+        });
+    };
+
+    modalConfirm(function (confirm) {
+        if (confirm) {
+            $.ajax({
+                url: '/Tanim/teslimBirimSil/' + id,
+                type: 'POST',
+                success: function (rs) {
+                    if (rs === true) {
+                        $('#' + id).remove();
+                    }
+                    else if (rs === "FK")
+                    {
+                        alert("Bu Birime ait Personel kaydı Bulunduğundan dolayı bu Birimi Silemezsiniz. ");
+                    }
+                    else {
+                        alert('Silme işlemi gerçekleşirken bir hata oluştu.');
+                    }
+                },
+                error: function (rs) {
+                    alert('Bir hata oluştu');
+                }
+            });
+        } else {
+            alert("Hata");
+        }
+    });
+</script>
