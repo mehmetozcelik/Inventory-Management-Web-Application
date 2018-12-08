@@ -28,7 +28,7 @@ namespace Inventory_Management_Web_Application.Models
         [StringLength(100)]
         public string UrunAdi { get; set; }
 
-        public int? KategoriID { get; set; }
+        public int? altKategoriID { get; set; }
 
         public int? StokMiktari { get; set; }
 
@@ -37,10 +37,10 @@ namespace Inventory_Management_Web_Application.Models
 
         public int? UrunBirimID { get; set; }
 
+        public virtual AltKategori AltKategori { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArizaDurum> ArizaDurum { get; set; }
-
-        public virtual Kategori Kategori { get; set; }
 
         public virtual UrunBirim UrunBirim { get; set; }
 

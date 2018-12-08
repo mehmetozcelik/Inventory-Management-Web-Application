@@ -6,11 +6,11 @@ namespace Inventory_Management_Web_Application.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Kategori")]
-    public partial class Kategori
+    [Table("AltKategori")]
+    public partial class AltKategori
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Kategori()
+        public AltKategori()
         {
             Urun = new HashSet<Urun>();
             YazılımUrun = new HashSet<YazılımUrun>();
@@ -18,12 +18,15 @@ namespace Inventory_Management_Web_Application.Models
 
         public int ID { get; set; }
 
-        [Required]
         [StringLength(100)]
         public string KategoriAdi { get; set; }
 
         [StringLength(500)]
         public string Aciklama { get; set; }
+
+        public int? AnaKategorID { get; set; }
+
+        public virtual AnaKategori AnaKategori { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Urun> Urun { get; set; }

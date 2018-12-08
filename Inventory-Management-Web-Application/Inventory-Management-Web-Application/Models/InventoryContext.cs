@@ -12,9 +12,10 @@
         {
         }
 
+        public virtual DbSet<AltKategori> AltKategori { get; set; }
+        public virtual DbSet<AnaKategori> AnaKategori { get; set; }
         public virtual DbSet<ArizaDurum> ArizaDurum { get; set; }
         public virtual DbSet<Birim> Birim { get; set; }
-        public virtual DbSet<Kategori> Kategori { get; set; }
         public virtual DbSet<Menu> Menu { get; set; }
         public virtual DbSet<MenuRol> MenuRol { get; set; }
         public virtual DbSet<Personel> Personel { get; set; }
@@ -30,6 +31,11 @@
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AnaKategori>()
+                .HasMany(e => e.AltKategori)
+                .WithOptional(e => e.AnaKategori)
+                .HasForeignKey(e => e.AnaKategorID);
+
             modelBuilder.Entity<Birim>()
                 .HasMany(e => e.TeslimAlanPersonel)
                 .WithOptional(e => e.Birim)

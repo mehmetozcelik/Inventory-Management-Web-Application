@@ -1,0 +1,41 @@
+﻿
+@{
+    ViewBag.Title = "Guncelle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using Inventory_Management_Web_Application.Models
+
+@model AltKategori
+
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                Şu anda <b>@Model.KategoriAdi</b> kategorisini düzenliyorsunuz...
+            </header>
+            <div class="panel-body">
+                <form role="form" method="post" action="/Kategori/AnaKategoriGuncelle">
+                    @Html.Hidden("ID", Model.ID)
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Ana Kategori Seçiniz </label>&nbsp;<span style="color: red;">*</span>
+                        @Html.DropDownList("AnaKategorID", (SelectList)ViewBag.kategoriler, "Seçiniz...", new { @class = "form-control", required = "required" })
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Ürün Adı </label>
+                        <input type="text" class="form-control" placeholder="Ürün Adı Giriniz..." name="KategoriAdi" value="@Model.KategoriAdi" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Ürün Kodu </label>
+                        <input type="text" class="form-control" placeholder="Ürün Kodu Giriniz..." name="Aciklama" value="@Model.Aciklama" required>
+                    </div>
+                    <button style="float:right;" type="submit" class="btn btn-info">Kaydet</button>
+                    <a href="../Personel/TaListele" class="btn btn-danger">İptal</a>
+                    <button type="reset" class="btn btn-default">Temizle</button>
+                </form>
+
+            </div>
+        </section>
+    </div>
+</div>
+

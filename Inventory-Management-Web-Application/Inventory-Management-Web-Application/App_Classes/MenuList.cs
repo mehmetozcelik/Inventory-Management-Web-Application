@@ -22,9 +22,9 @@ namespace Inventory_Management_Web_Application.App_Classes
 
             List<int> termsList = new List<int>();
 
-            if (list.KullaniciEkle)
+            if (list.UrunIslemleri)
             {
-                int id = db.Menu.Where(x => x.MenuList == "KullaniciEkle").FirstOrDefault().ID;
+                int id = db.Menu.Where(x => x.MenuList == "UrunIslemleri").FirstOrDefault().ID;
                 termsList.Add(id);
             }
             if (list.UrunListesi)
@@ -60,8 +60,8 @@ namespace Inventory_Management_Web_Application.App_Classes
                 menu.MenuID = item;
                 menu.RolID = RolID;
                 db.MenuRol.Add(menu);
+                db.SaveChanges();
             }
-            db.SaveChanges();
         }
     }
 }

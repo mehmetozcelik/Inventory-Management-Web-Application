@@ -21,7 +21,7 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpGet]
         public ActionResult Ekle()
         {
-            var kategoriler = db.Kategori.ToList();
+            var kategoriler = db.AltKategori.ToList();
             var urunbirimler = db.UrunBirim.ToList();
             ViewBag.kategoriler = new SelectList(kategoriler, "ID", "KategoriAdi");
             ViewBag.urunbirimler = new SelectList(urunbirimler, "ID", "Adi");
@@ -64,7 +64,7 @@ namespace Inventory_Management_Web_Application.Controllers
         public ActionResult Guncelle(int id)
         {
             Urun u = db.Urun.Where(x => x.ID == id).FirstOrDefault();
-            var kategoriler = db.Kategori.ToList();
+            var kategoriler = db.AltKategori.ToList();
             var urunbirimler = db.UrunBirim.ToList();
             ViewBag.kategoriler = new SelectList(kategoriler, "ID", "KategoriAdi");
             ViewBag.urunbirimler = new SelectList(urunbirimler, "ID", "Adi");
@@ -83,7 +83,7 @@ namespace Inventory_Management_Web_Application.Controllers
             {
                 return RedirectToAction("Hata", "Admin");
             }
-            gu.KategoriID = u.KategoriID;
+            gu.altKategoriID = u.altKategoriID;
             gu.UrunAdi = u.UrunAdi;
             gu.Aciklama = u.Aciklama;
             gu.StokMiktari = u.StokMiktari;

@@ -195,6 +195,7 @@
     <Compile Include="App_Classes\_SecurityFilter.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\KategoriController.cs" />
     <Compile Include="Controllers\KullaniciController.cs" />
     <Compile Include="Controllers\TanimController.cs" />
     <Compile Include="Controllers\TedarikciController.cs" />
@@ -203,10 +204,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AltKategori.cs" />
+    <Compile Include="Models\AnaKategori.cs" />
     <Compile Include="Models\ArizaDurum.cs" />
     <Compile Include="Models\Birim.cs" />
     <Compile Include="Models\InventoryContext.cs" />
-    <Compile Include="Models\Kategori.cs" />
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\MenuRol.cs" />
     <Compile Include="Models\Personel.cs" />
@@ -238,12 +240,9 @@
     <Content Include="Views\Tanim\TeslimBirimDuzenle.cshtml" />
     <Content Include="Views\Tanim\UrunBirimTanimi.cshtml" />
     <Content Include="Views\Tanim\UrunBirimDuzenle.cshtml" />
-    <Content Include="Views\Tedarikci\Listesi.cshtml" />
-    <Content Include="Views\Tedarikci\Ekle.cshtml" />
     <Content Include="Views\Personel\TaListesi.cshtml" />
     <Content Include="Views\Personel\TaEkle.cshtml" />
     <Content Include="Views\Personel\TaDuzenle.cshtml" />
-    <Content Include="Views\Tanim\KategoriTanimi.cshtml" />
     <Content Include="Views\Urun\Listesi.cshtml" />
     <Content Include="Views\Urun\Ekle.cshtml" />
     <Content Include="Views\Urun\Guncelle.cshtml" />
@@ -251,6 +250,15 @@
     <Content Include="Views\Kullanici\ProfilListesi.cshtml" />
     <Content Include="Views\Kullanici\Yetkiler.cshtml" />
     <Content Include="Views\Kullanici\Login.cshtml" />
+    <Content Include="Views\Kategori\AnaKategoriListesi.cshtml" />
+    <Content Include="Views\Kategori\AnaKategoriTanimi.cshtml" />
+    <Content Include="Views\Kategori\AnaKategoriGuncelle.cshtml" />
+    <Content Include="Views\Kategori\AltKategoriListesi.cshtml" />
+    <Content Include="Views\Kategori\AltKategoriTanimi.cshtml" />
+    <Content Include="Views\Kategori\AltKategoriGuncelle.cshtml" />
+    <Content Include="Views\Tedarikci\Listesi.cshtml" />
+    <Content Include="Views\Tedarikci\Ekle.cshtml" />
+    <Content Include="Views\Tedarikci\Guncelle.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

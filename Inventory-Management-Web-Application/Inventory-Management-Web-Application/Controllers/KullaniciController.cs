@@ -83,7 +83,7 @@ namespace Inventory_Management_Web_Application.Controllers
             }
 
             //Bu role ait tüm yetkileri sil
-            List<MenuRol> menuRol = db.MenuRol.Where(x => x.ID == r.ID).ToList();
+            List<MenuRol> menuRol = db.MenuRol.Where(x => x.RolID == r.ID).ToList();
 
             foreach (var item in menuRol)
             {
@@ -96,7 +96,7 @@ namespace Inventory_Management_Web_Application.Controllers
             MenuList.RolKontrol(list, RolID);
 
             //Sayfayı geri yükle
-            ViewBag.Yetkiler = db.MenuRol.Where(x => x.RolID == r.ID).ToList();
+            ViewBag.Yetkileri = db.MenuRol.Where(x => x.RolID == r.ID).ToList();
             ViewBag.Menuler = db.Menu.ToList();
             return View(r);
         }

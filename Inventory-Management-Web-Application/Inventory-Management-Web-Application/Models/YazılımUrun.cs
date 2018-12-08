@@ -38,11 +38,11 @@ namespace Inventory_Management_Web_Application.Models
         [StringLength(100)]
         public string LisansUyari { get; set; }
 
-        public int? KategoriID { get; set; }
+        public int? altKategoriID { get; set; }
 
         public int? TeslimAlanKisiID { get; set; }
 
-        public virtual Kategori Kategori { get; set; }
+        public virtual AltKategori AltKategori { get; set; }
 
         public virtual TeslimAlanPersonel TeslimAlanPersonel { get; set; }
 
