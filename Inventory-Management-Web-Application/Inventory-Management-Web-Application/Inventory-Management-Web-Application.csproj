@@ -180,6 +180,7 @@
     <Content Include="Content\todo_list.html" />
     <Content Include="Content\widget.html" />
     <Content Include="Content\xchart.html" />
+    <Content Include="DB_Script\12.12.2018_StokTakipDB.sql" />
     <Content Include="DB_Script\StokDBScprit.sql" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
