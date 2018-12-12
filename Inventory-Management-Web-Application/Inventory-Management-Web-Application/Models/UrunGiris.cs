@@ -21,6 +21,13 @@ namespace Inventory_Management_Web_Application.Models
 
         public int? TedarikciID { get; set; }
 
+        public int? YazilimUrunID { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime? GirisTarihi { get; set; }
+
+        public virtual Personel Personel { get; set; }
+
         public virtual Tedarikci Tedarikci { get; set; }
 
         public virtual Urun Urun { get; set; }

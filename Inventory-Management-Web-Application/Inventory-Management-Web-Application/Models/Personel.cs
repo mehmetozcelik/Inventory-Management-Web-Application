@@ -14,6 +14,7 @@ namespace Inventory_Management_Web_Application.Models
         {
             ArizaDurum = new HashSet<ArizaDurum>();
             UrunCikis = new HashSet<UrunCikis>();
+            UrunGiris = new HashSet<UrunGiris>();
         }
 
         public int ID { get; set; }
@@ -42,5 +43,8 @@ namespace Inventory_Management_Web_Application.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UrunCikis> UrunCikis { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UrunGiris> UrunGiris { get; set; }
     }
 }

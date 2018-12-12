@@ -37,6 +37,13 @@ namespace Inventory_Management_Web_Application.Models
 
         public int? UrunBirimID { get; set; }
 
+        [Column(TypeName = "date")]
+        public DateTime? EklenmeTarihi { get; set; }
+
+        public int? PersonelID { get; set; }
+
+        public int? TedarikciID { get; set; }
+
         public virtual AltKategori AltKategori { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

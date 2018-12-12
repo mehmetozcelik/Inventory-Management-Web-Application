@@ -181,6 +181,7 @@
     <Content Include="Content\widget.html" />
     <Content Include="Content\xchart.html" />
     <Content Include="DB_Script\12.12.2018_StokTakipDB.sql" />
+    <Content Include="DB_Script\13.12.2018_StokTakipDB.sql" />
     <Content Include="DB_Script\StokDBScprit.sql" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -203,6 +204,7 @@
     <Compile Include="App_Classes\Functions.cs" />
     <Compile Include="App_Classes\MenuList.cs" />
     <Compile Include="App_Classes\UrunCikis.cs" />
+    <Compile Include="App_Classes\YazilimUrunCikis.cs" />
     <Compile Include="App_Classes\_SecurityFilter.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -289,6 +291,11 @@
     <Content Include="Views\YazilimUrun\Listesi.cshtml" />
     <Content Include="Views\YazilimUrun\altKategoriDropdown.cshtml" />
     <Content Include="Views\YazilimUrun\Ekle.cshtml" />
+    <Content Include="Views\YazilimUrun\Guncelle.cshtml" />
+    <Content Include="Views\YazilimUrun\stokCikarView.cshtml" />
+    <Content Include="Views\YazilimUrun\stokEkleView.cshtml" />
+    <Content Include="Views\Urun\stokEkleView.cshtml" />
+    <Content Include="Views\Urun\urunGirisleri.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

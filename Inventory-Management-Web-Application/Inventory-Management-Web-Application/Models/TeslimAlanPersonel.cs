@@ -13,7 +13,6 @@ namespace Inventory_Management_Web_Application.Models
         public TeslimAlanPersonel()
         {
             UrunCikis = new HashSet<UrunCikis>();
-            YazılımUrun = new HashSet<YazılımUrun>();
         }
 
         public int ID { get; set; }
@@ -36,8 +35,5 @@ namespace Inventory_Management_Web_Application.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UrunCikis> UrunCikis { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<YazılımUrun> YazılımUrun { get; set; }
     }
 }
