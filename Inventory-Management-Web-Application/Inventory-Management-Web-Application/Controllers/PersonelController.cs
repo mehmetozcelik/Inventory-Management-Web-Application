@@ -28,7 +28,9 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult TaEkle(TeslimAlanPersonel veri)
         {
-            db.TeslimAlanPersonel.Add(veri);
+                    
+            db.TeslimAlanPersonel.Add(veri);        
+                    
             db.SaveChanges();
             return RedirectToAction("TaListesi");
         }
@@ -51,6 +53,8 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult TaSil(int id)
         {
+            
+
             TeslimAlanPersonel b = db.TeslimAlanPersonel.Where(x => x.ID == id).SingleOrDefault();
             if (b == null)
             {
@@ -58,9 +62,17 @@ namespace Inventory_Management_Web_Application.Controllers
             }
             else
             {
-                db.TeslimAlanPersonel.Remove(b);
-                db.SaveChanges();
-                return Json(true);
+                try
+                {
+                    db.TeslimAlanPersonel.Remove(b);
+                    db.SaveChanges();
+                    return Json(true);
+                }
+                catch (Exception)
+                {
+                    return Json("FK");
+                }
+
             }
         }
     }

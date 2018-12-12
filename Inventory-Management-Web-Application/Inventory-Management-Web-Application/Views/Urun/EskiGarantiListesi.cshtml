@@ -153,6 +153,7 @@
             $("#modal-btn-no").on("click", function () {
                 callback(false);
                 $("#mi-modal").modal('hide');
+                return e.preventDefault()
             });
         };
 

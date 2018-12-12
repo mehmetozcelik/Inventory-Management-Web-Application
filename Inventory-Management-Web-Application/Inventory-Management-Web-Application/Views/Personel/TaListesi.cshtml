@@ -74,7 +74,9 @@
                                     <td class="filterable-cell">@item.Email</td>
                                     <td class="filterable-cell" style="width: 130px">
                                         <a href="TaDuzenle/@item.ID" class="btn btn-primary btn-xs"><i class="icon-pencil">Düzenle</i></a>
-                                        <a style="float: right;" data-id="@item.ID" class="btn btn-danger btn-xs sil"><i class="icon-trash "> Sil</i></a>
+                                        @*<a style="float: right;" data-id="@item.ID" class="btn btn-danger btn-xs sil"><i class="icon-trash "> Sil</i></a>*@
+                                        <a title="Sil" style="float:right;" class="btn btn-danger btn-xs btn-confirm" data-id="@item.ID"><i class="icon-trash"></i> Sil</a>
+
                                     </td>
                                 </tr>
                             }
@@ -86,6 +88,22 @@
         </section>
     </div>
 </div>
+
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Bu Ürünü Silmek İstediğinizden Emin misiniz ?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="modal-btn-si">Sil</button>
+                <button type="button" class="btn btn-primary" id="modal-btn-no">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section script{
     <script type="text/javascript" src="/Content/assets/data-tables/jquery.dataTables.js"></script>
     <script type="text/javascript" src="/Content/assets/data-tables/DT_bootstrap.js"></script>
@@ -107,15 +125,39 @@
     }</script>
 
     <script>
-        $(document).ready(function () {
-            $('.sil').click(function () {
-                var id = $(this).attr("data-id");
+
+        var id;
+        var modalConfirm = function (callback) {
+
+            $(".btn-confirm").on("click", function () {
+                id = $(this).attr("data-id");
+                $("#mi-modal").modal('show');
+            });
+
+            $("#modal-btn-si").on("click", function () {
+                callback(true);
+
+                $("#mi-modal").modal('hide');
+            });
+
+            $("#modal-btn-no").on("click", function () {
+                callback(false);
+                $("#mi-modal").modal('hide');
+                return e.preventDefault();
+            });
+        };
+               
+               modalConfirm(function (confirm) {
+                    if (confirm) {
                 $.ajax({
                     url: '/Personel/TaSil/' + id,
                     type: 'POST',
                     success: function (rs) {
                         if (rs === true) {
                             $('#' + id).remove();
+                        }
+                        else if (rs === "FK") {
+                            alert("Bu Personele ait Yazılım Ürünü veya Ürün Çıkış Kaydı Bulunduğundan dolayı bu Personeli Silemezsiniz. ");
                         }
                         else {
                             alert('Silme işlemi gerçekleşirken bir hata oluştu.');
@@ -125,8 +167,11 @@
                         alert('Bir hata oluştu' + id);
                     }
                 });
+                    } else {
+                        console.log("");
+                    }
             });
-        });
+        
 
     </script>
 }
