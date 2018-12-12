@@ -89,6 +89,17 @@ namespace Inventory_Management_Web_Application.Controllers
             return RedirectToAction("Listesi");
         }
 
+        [HttpGet]
+        public ActionResult Detay(int id)
+        {
+            Tedarikci u = db.Tedarikci.Where(x => x.ID == id).FirstOrDefault();
+            if (u == null)
+            {
+                return RedirectToAction("Hata", "Admin");
+            }
+            return View(u);
+        }
+
 
     }
 }

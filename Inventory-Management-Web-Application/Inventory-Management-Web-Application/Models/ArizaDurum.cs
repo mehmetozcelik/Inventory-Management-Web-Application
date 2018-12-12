@@ -23,6 +23,14 @@ namespace Inventory_Management_Web_Application.Models
         [StringLength(100)]
         public string KargoNo { get; set; }
 
+        public int? GarantiVerenKisiID { get; set; }
+
+        public int? Adet { get; set; }
+
+        public bool? aktif { get; set; }
+
+        public virtual Personel Personel { get; set; }
+
         public virtual Urun Urun { get; set; }
     }
 }

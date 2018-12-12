@@ -22,7 +22,7 @@ namespace Inventory_Management_Web_Application.Models
         [StringLength(100)]
         public string UrunSeriNo { get; set; }
 
-        [StringLength(100)]
+        [StringLength(50)]
         public string UrunKodu { get; set; }
 
         [StringLength(100)]

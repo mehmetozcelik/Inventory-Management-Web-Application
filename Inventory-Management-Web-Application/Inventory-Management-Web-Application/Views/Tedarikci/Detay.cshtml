@@ -1,0 +1,58 @@
+﻿
+@using Inventory_Management_Web_Application.Models
+
+@model Tedarikci
+
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading" style="padding-bottom: 10px;">
+                <div class="col-lg-12" style="margin-bottom:10px;">
+                    <b>Tedarikci Detay</b>
+                    <a href="/Tedarikci/Listesi" class="btn btn-success" style="float: right"><i class="icon-mail-reply (alias)"></i> Listeye Geri Dön</a>
+                </div>
+            </header>
+
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <section class="panel">
+                        <header class="panel-heading tab-bg-dark-navy-blue ">
+                            <ul class="nav nav-tabs">
+                                <li class="active">
+                                    <a data-toggle="tab" href="#home">Firma Bilgileri</a>
+                                </li>
+                                <li class="">
+                                    <a data-toggle="tab" href="#about">Yetkili Bilgileri</a>
+                                </li>
+                            </ul>
+                        </header>
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div id="home" class="tab-pane active">
+                                    <b>Firma Adı : </b> <p>@Model.FirmaAdi</p> <br />
+
+                                    <b>Firma Telefon : </b> <p>@Model.FirmaTel</p>  <br />
+
+                                    <b>Firma Adres : </b> <p>@Model.FirmaAdres</p>  <br />
+
+                                    <b>Firma Mail : </b> <p>@Model.FirmaMail</p>  <br />
+                                </div>
+                                <div id="about" class="tab-pane">
+                                    <b>Yetkili : </b> <p>@Model.YetkiliAdi  @Model.YetkiliSoyadi</p> <br />
+
+                                    <b>Yetkili Telefon : </b> <p>@Model.YetkiliTel</p> <br />
+
+                                    <b>Yetkili Unvanı : </b> <p>@Model.YetkiliUnvani</p> <br />
+
+                                    <b>Yetkili Mail : </b> <p>@Model.YetkiliMail</p> <br />
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+

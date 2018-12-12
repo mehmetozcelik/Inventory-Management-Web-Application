@@ -47,6 +47,11 @@
                 .HasForeignKey(e => e.ParentMenuID);
 
             modelBuilder.Entity<Personel>()
+                .HasMany(e => e.ArizaDurum)
+                .WithOptional(e => e.Personel)
+                .HasForeignKey(e => e.GarantiVerenKisiID);
+
+            modelBuilder.Entity<Personel>()
                 .HasMany(e => e.UrunCikis)
                 .WithOptional(e => e.Personel)
                 .HasForeignKey(e => e.TeslimVerenID);
@@ -64,7 +69,7 @@
             modelBuilder.Entity<YazılımUrun>()
                 .HasMany(e => e.UrunCikis)
                 .WithOptional(e => e.YazılımUrun)
-                .HasForeignKey(e => e.UrunID);
+                .HasForeignKey(e => e.YazilimUrunID);
 
             modelBuilder.Entity<YazılımUrun>()
                 .HasMany(e => e.UrunGiris)

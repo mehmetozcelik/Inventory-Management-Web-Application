@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿
+@using Inventory_Management_Web_Application.App_Classes
+@using Inventory_Management_Web_Application.Models
+
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -8,7 +13,7 @@
     <meta name="keyword" content="FlatLab, Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
     <link rel="shortcut icon" href="/Content/img/favicon.png">
 
-    <title>FlatLab - Flat & Responsive Bootstrap Admin Template</title>
+    <title>Düzce Üniversitesi</title>
 
     <!-- Bootstrap core CSS -->
     <link href="/Content/css/bootstrap.min.css" rel="stylesheet">
@@ -26,8 +31,8 @@
       <script src="/Content/js/html5shiv.js"></script>
       <script src="/Content/js/respond.min.js"></script>
     <![endif]-->
-    
-    @RenderSection("head",false)
+
+    @RenderSection("head", false)
 </head>
 
 <body>
@@ -43,12 +48,61 @@
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
                 <!--  notification start -->
-                
                 <!--  notification end -->
             </div>
             <div class="top-nav ">
                 <!--search & user info start-->
                 <ul class="nav pull-right top-menu">
+
+                    @{
+                        if (Session["Urun"] != null)
+                        {
+                            var urunler = (Inventory_Management_Web_Application.App_Classes.UrunCikis)Session["Urun"];
+
+                            if (urunler != null)
+                            {
+                                List<Urun> liste = urunler.HepsiniGetir();
+
+                                <li id="header_notification_bar" class="dropdown" style="margin-right:5px;">
+                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+
+                                        Stoktan Çıkartılacak Ürünler
+                                        <span class="badge bg-warning">@liste.Count</span>
+                                    </a>
+                                    <ul class="dropdown-menu extended notification">
+                                        <div class="notify-arrow notify-arrow-yellow"></div>
+                                        <li>
+                                            <p class="yellow">Listede @liste.Count ürün bulunmaktdır.</p>
+                                        </li>
+
+
+                                        @{List<Urun> temp = new List<Urun>();
+                                        }
+                                        @foreach (Urun item in liste)
+                                        {
+                                            if (temp.Where(x => x.ID == item.ID).SingleOrDefault() != null)
+                                            {
+                                                continue;
+                                            }
+                                            <li>
+                                                <a href="#">
+                                                    <span class="label label-info"><i class="icon-th-large"></i></span>
+                                                    <span> @item.UrunAdi</span>  
+                                                    <span class="small italic">(@liste.Where(x => x.ID == item.ID).ToList().Count @item.UrunBirim.Adi)</span>
+                                                </a>
+                                            </li>
+                                            temp.Add(item);
+                                        }
+
+                                        <li>
+                                            <a href="/Urun/stokCikarView">Ürünleri Çıkart</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+
+                        }
+                    }
                     <a href="#" class="btn btn-default">@*@user.adi @user.soyadi*@ Hamza TAŞ</a>
                     <a href="/Admin/CikisYap" class="btn btn-danger">Çıkış Yap <i class="icon-arrow-right"></i></a>
                 </ul>
@@ -74,10 +128,10 @@
                         </a>
                         <ul class="sub">
                             <li><a href="/Kullanici/ProfilListesi">Profil Tanımı/Listesi</a></li>
-                            <li><a href="/Content/boxed_page.html">Kullanıcı Listesi</a></li>
-                            <li><a href="/Content/horizontal_menu.html">Kullanıcı Ekle</a></li>
-                            <li><a href="/Content/language_switch_bar.html">Personel Listesi</a></li>
-                            <li><a href="/Content/language_switch_bar.html">Personel Ekle</a></li>
+                            <li><a href="/Kullanici/Listesi">Kullanıcı Listesi</a></li>
+                            <li><a href="/Kullanici/ekle">Kullanıcı Ekle</a></li>
+                            <li><a href="/Personel/TaListesi">Personel Listesi</a></li>
+                            <li><a href="/Personel/TaEkle">Personel Ekle</a></li>
                         </ul>
                     </li>
 
@@ -101,9 +155,10 @@
                         <ul class="sub">
                             <li><a href="/Urun/Listesi">Ürün Listesi</a></li>
                             <li><a href="/Content/buttons.html">Yazılım Listesi</a></li>
-                            <li><a href="/Content/buttons.html">Ürün Çıkış Listesi</a></li>
                             <li><a href="/Urun/Ekle">Yeni Ürün Girişi</a></li>
                             <li><a href="/Content/slider.html">Yeni Yazılım Girişi</a></li>
+                            <li><a href="/Content/buttons.html">Ürün Çıkışları</a></li>
+                            <li><a href="/Content/buttons.html">Ürün Girişleri</a></li>
                         </ul>
                     </li>
 
@@ -113,12 +168,10 @@
                             <span>Ürün Arıza İşlemleri</span>
                         </a>
                         <ul class="sub">
-                            <li><a href="/Urun/Listesi">Garantideki Ürünler</a></li>
-                            <li><a href="/Content/buttons.html">Ürün Garantiye Çıkar</a></li>
+                            <li><a href="/Urun/GarantiListesi">Garantideki Ürünler</a></li>
+                            <li><a href="/Urun/EskiGarantiListesi">Eski Kayıtlar</a></li>
                         </ul>
                     </li>
-
-
 
                     <li class="sub-menu">
                         <a href="/Content/javascript:;">
@@ -126,8 +179,8 @@
                             <span>Tedarikçi İşlemleri</span>
                         </a>
                         <ul class="sub">
-                            <li><a href="/Content/general.html">Tedarikçi Listesi</a></li>
-                            <li><a href="/Content/buttons.html">Tedarikçi Ekle</a></li>
+                            <li><a href="/Tedarikci/Listesi">Tedarikçi Listesi</a></li>
+                            <li><a href="/Tedarikci/Ekle">Tedarikçi Ekle</a></li>
                         </ul>
                     </li>
 
@@ -196,27 +249,27 @@
     <script src="/Content/js/sparkline-chart.js"></script>
     <script src="/Content/js/easy-pie-chart.js"></script>
     <script src="/Content/js/count.js"></script>
-    @RenderSection("script",false)
+    @RenderSection("script", false)
     <script>
 
-      //owl carousel
+        //owl carousel
 
-      $(document).ready(function() {
-          $("#owl-demo").owlCarousel({
-              navigation : true,
-              slideSpeed : 300,
-              paginationSpeed : 400,
-              singleItem : true,
-			  autoPlay:true
+        $(document).ready(function () {
+            $("#owl-demo").owlCarousel({
+                navigation: true,
+                slideSpeed: 300,
+                paginationSpeed: 400,
+                singleItem: true,
+                autoPlay: true
 
-          });
-      });
+            });
+        });
 
-      //custom select box
+        //custom select box
 
-      $(function(){
-          $('select.styled').customSelect();
-      });
+        $(function () {
+            $('select.styled').customSelect();
+        });
 
     </script>
 

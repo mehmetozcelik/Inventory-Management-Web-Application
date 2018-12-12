@@ -1,7 +1,75 @@
 ﻿
 @{
-    ViewBag.Title = "Guncelle";
+    ViewBag.Title = "Ekle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Guncelle</h2>
+@using Inventory_Management_Web_Application.Models
+
+@model Tedarikci
+
+<div class="row">
+
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <div class="col-lg-12">
+                   Şu anda <b>@Model.FirmaAdi</b> isimli tedarikçiyi düzenliyorsunuz...
+                </div>
+            </header>
+            <div class="panel-body">
+                <form role="form" method="post" action="/Tedarikci/Guncelle">
+                    @Html.Hidden("ID", Model.ID)
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Firma Adı </label>&nbsp;<span style="color: red;">*</span>
+                                    <input type="text" class="form-control" placeholder="Firma Adı Giriniz..." name="FirmaAdi" required value="@Model.FirmaAdi">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Firma Telefon </label>&nbsp;<span style="color: red;">*</span>
+                                    <input type="text" class="form-control" placeholder="Firma Telefon Giriniz..." name="FirmaTel" required value="@Model.FirmaTel">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Firma Adres </label>&nbsp;<span style="color: red;">*</span>
+                                    <input type="text" class="form-control" placeholder="Firma Adres Giriniz..." name="FirmaAdres" required value="@Model.FirmaAdres">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Firma Mail </label>&nbsp;<span style="color: red;">*</span>
+                                    <input type="email" class="form-control" placeholder="Firma Mail Giriniz..." name="FirmaMail" required value="@Model.FirmaMail">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Yetkili Adı </label>
+                                    <input type="text" class="form-control" placeholder="Yetkili Adı Giriniz..." name="YetkiliAdi" value="@Model.YetkiliAdi">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Yetkili Soyadı </label>
+                                    <input type="text" class="form-control" placeholder="Yetkili Soyadı Giriniz..." name="YetkiliSoyadi" value="@Model.YetkiliSoyadi">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Yetkili Unvanı </label>
+                                    <input type="text" class="form-control" placeholder="Yetkili Unvanı Giriniz..." name="YetkiliUnvani" value="@Model.YetkiliUnvani">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Yetkili Telefon </label>
+                                    <input type="text" class="form-control" placeholder="Yetkili Telefon Giriniz..." name="YetkiliTel" value="@Model.YetkiliTel">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Yetkili Mail </label>
+                                    <input type="email" class="form-control" placeholder="Yetkili Mail Giriniz..." name="YetkiliMail" value="@Model.YetkiliMail">
+                                </div>
+                                <button type="submit" id="button" class="btn btn-info">Kaydet</button>
+                                <a href="/Tedarikci/Listesi" class="btn btn-danger">İptal</a>
+                                <button type="reset" class="btn btn-default">Temizle</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
 

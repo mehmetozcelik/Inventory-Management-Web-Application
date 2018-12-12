@@ -23,6 +23,10 @@ namespace Inventory_Management_Web_Application.Models
         [StringLength(500)]
         public string Aciklama { get; set; }
 
+        public int? YazilimUrunID { get; set; }
+
+        public int? CikisNumarasi { get; set; }
+
         public virtual Personel Personel { get; set; }
 
         public virtual TeslimAlanPersonel TeslimAlanPersonel { get; set; }

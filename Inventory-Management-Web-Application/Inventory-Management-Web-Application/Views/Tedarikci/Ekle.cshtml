@@ -1,7 +1,70 @@
 ﻿
 @{
     ViewBag.Title = "Ekle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Ekle</h2>
+<div class="row">
+
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <div class="col-lg-12">
+                    <b> Yeni Tedarikci Ekle</b>
+                </div>
+            </header>
+            <div class="panel-body">
+                <form role="form" method="post" action="/Tedarikci/Ekle">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Firma Adı </label>&nbsp;<span style="color: red;">*</span>
+                                    <input type="text" class="form-control" placeholder="Firma Adı Giriniz..." name="FirmaAdi" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Firma Telefon </label>&nbsp;<span style="color: red;">*</span>
+                                    <input type="text" class="form-control" placeholder="Firma Telefon Giriniz..." name="FirmaTel" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Firma Adres </label>&nbsp;<span style="color: red;">*</span>
+                                    <input type="text" class="form-control" placeholder="Firma Adres Giriniz..." name="FirmaAdres" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Firma Mail </label>&nbsp;<span style="color: red;">*</span>
+                                    <input type="email" class="form-control" placeholder="Firma Mail Giriniz..." name="FirmaMail" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Yetkili Adı </label>
+                                    <input type="text" class="form-control" placeholder="Yetkili Adı Giriniz..." name="YetkiliAdi">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Yetkili Soyadı </label>
+                                    <input type="text" class="form-control" placeholder="Yetkili Soyadı Giriniz..." name="YetkiliSoyadi">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Yetkili Unvanı </label>
+                                    <input type="text" class="form-control" placeholder="Yetkili Unvanı Giriniz..." name="YetkiliUnvani">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Yetkili Telefon </label>
+                                    <input type="text" class="form-control" placeholder="Yetkili Telefon Giriniz..." name="YetkiliTel">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Yetkili Mail </label>
+                                    <input type="email" class="form-control" placeholder="Yetkili Mail Giriniz..." name="YetkiliMail">
+                                </div>
+                                <button type="submit" id="button" class="btn btn-info">Kaydet</button>
+                                <a href="/Tedarikci/Listesi" class="btn btn-danger">İptal</a>
+                                <button type="reset" class="btn btn-default">Temizle</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
 

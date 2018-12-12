@@ -192,6 +192,7 @@
   <ItemGroup>
     <Compile Include="App_Classes\Functions.cs" />
     <Compile Include="App_Classes\MenuList.cs" />
+    <Compile Include="App_Classes\UrunCikis.cs" />
     <Compile Include="App_Classes\_SecurityFilter.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -259,6 +260,15 @@
     <Content Include="Views\Tedarikci\Listesi.cshtml" />
     <Content Include="Views\Tedarikci\Ekle.cshtml" />
     <Content Include="Views\Tedarikci\Guncelle.cshtml" />
+    <Content Include="Views\Tedarikci\Detay.cshtml" />
+    <Content Include="Views\Kullanici\Ekle.cshtml" />
+    <Content Include="Views\Kullanici\Listesi.cshtml" />
+    <Content Include="Views\Kullanici\Guncelle.cshtml" />
+    <Content Include="Views\Urun\Garanti.cshtml" />
+    <Content Include="Views\Urun\GarantiListesi.cshtml" />
+    <Content Include="Views\Urun\EskiGarantiListesi.cshtml" />
+    <Content Include="Views\Urun\altKategoriDropdown.cshtml" />
+    <Content Include="Views\Urun\stokCikarView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

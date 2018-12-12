@@ -31,6 +31,12 @@
 }
 <div class="row">
     <div class="col-lg-12" >
+        @if (ViewBag.hata !=null)
+        {
+            <div class="alert alert-danger">
+                <p>@ViewBag.hata</p>
+            </div>
+        }
         <section class="panel">
             <header class="panel-heading" style="padding-bottom: 10px;">
                 <div class="col-lg-12" style="margin-bottom:10px;">
@@ -65,7 +71,7 @@
                                             @item.UrunSeriNo
                                         </td>
                                         <td>
-                                            @item.Kategori.KategoriAdi
+                                            @item.AltKategori.KategoriAdi
                                         </td>
                                         <td>
                                             @item.UrunAdi
@@ -87,8 +93,10 @@
                                         <td>
                                             <a title="Sil" style="float:right;" class="btn btn-danger btn-xs btn-confirm" data-id="@item.ID"><i class="icon-trash"></i> Sil</a>
                                             <a title="Düzünle" style="float:right;margin-right:5px;" href="/Urun/Guncelle/@item.ID" class="btn btn-primary btn-xs"><i class="icon-pencil"></i> Düzenle</a>
-                                            <a title="Garantiye Gönder" style="float:right;margin-right:5px;" href="/Tanim/KategoriDuzenle/@item.ID" class="btn btn-default btn-xs"><i class="icon-refresh"></i> Garanti</a>
+                                            <a title="Garantiye Gönder" style="float:right;margin-right:5px;" href="/Urun/Garanti/@item.ID" class="btn btn-default btn-xs"><i class="icon-refresh"></i> Garanti</a>
                                             <a title="Stok Ekle" style="float:right;margin-right:5px;" class="btn btn-warning btn-xs"><i class="icon-plus-sign-alt"></i> Stok Ekle</a>
+                                            <a title="Ürün Çıkışı" href="/Urun/stokCikar/@item.ID" style="float:right;margin-right:5px;" class="btn btn-info btn-xs"><i class="icon-mail-reply (alias)"></i> Ürün Çıkışı</a>
+
                                         </td>
                                     </tr>
                                 }
@@ -101,8 +109,6 @@
         </section>
     </div>
 </div>
-
-
 
 
 

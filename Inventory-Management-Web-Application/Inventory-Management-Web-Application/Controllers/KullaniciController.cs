@@ -14,6 +14,86 @@ namespace Inventory_Management_Web_Application.Controllers
         // GET: Kullanici
         InventoryContext db = new InventoryContext();
 
+        //----------------------- Kullanıcı İşlemleri ------------------------------------
+        [HttpGet]
+        public ActionResult Listesi()
+        {
+            return View(db.Personel.ToList());
+        }
+
+        [HttpGet]
+        public ActionResult Ekle()
+        {
+            var Roller = db.Rol.ToList();
+            ViewBag.Roller = new SelectList(Roller, "ID", "RolAdi");
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Ekle(Personel p)
+        {
+            db.Personel.Add(p);
+            db.SaveChanges();
+            return RedirectToAction("Listesi");
+        }
+
+        [HttpPost]
+        public ActionResult Sil(int id)
+        {
+            Personel b = db.Personel.Where(x => x.ID == id).SingleOrDefault();
+            if (b == null)
+            {
+                return Json(false);
+            }
+            else
+            {
+                try
+                {
+                    db.Personel.Remove(b);
+                    db.SaveChanges();
+                    return Json(true);
+                }
+                catch (Exception)
+                {
+                    return Json("FK");
+                }
+
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Guncelle(int id)
+        {
+            Personel u = db.Personel.Where(x => x.ID == id).FirstOrDefault();
+            var Roller = db.Rol.ToList();
+            ViewBag.Roller = new SelectList(Roller, "ID", "RolAdi");
+            if (u == null)
+            {
+                return RedirectToAction("Hata", "Admin");
+            }
+            return View(u);
+        }
+
+        [HttpPost]
+        public ActionResult Guncelle(Personel u)
+        {
+            Personel gu = db.Personel.Where(x => x.ID == u.ID).FirstOrDefault();
+            if (gu == null)
+            {
+                return RedirectToAction("Hata", "Admin");
+            }
+            gu.Adi = u.Adi;
+            gu.Soyadi = u.Soyadi;
+            gu.Email = u.Email;
+            gu.Sifre = u.Sifre;
+            gu.Tel = u.Tel;
+            gu.RolID = u.RolID;
+            db.SaveChanges();
+            return RedirectToAction("Listesi");
+        }
+
+
+        //----------------------- Diğer İşlemler -----------------------------------------
         [HttpGet]
         public ActionResult Login()
         {
@@ -35,6 +115,7 @@ namespace Inventory_Management_Web_Application.Controllers
             if (p==null)
             {
                 ViewBag.Hata = "Girdiğiniz Bilgilerde Bir kullanıcı Bulunamadı";
+                return View();
             }
 
             Session["Kullanici"] = p;
@@ -100,5 +181,7 @@ namespace Inventory_Management_Web_Application.Controllers
             ViewBag.Menuler = db.Menu.ToList();
             return View(r);
         }
+
+
     }
 }
