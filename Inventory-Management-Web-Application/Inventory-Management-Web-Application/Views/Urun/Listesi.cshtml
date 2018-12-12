@@ -80,7 +80,7 @@
                                             @item.Aciklama
                                         </td>
                                         <td>
-                                            @if (item.StokMiktari <= 5)
+                                            @if (item.StokMiktari <= ViewBag.ayarlar.UrunStok)
                                             {
                                                 <span class="label label-danger label-mini">@item.StokMiktari @item.UrunBirim.Adi</span>
                                             }

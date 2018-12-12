@@ -85,6 +85,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Rotativa.1.7.4-rc\lib\net45\Rotativa.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
@@ -179,10 +183,15 @@
     <Content Include="DB_Script\StokDBScprit.sql" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Rotativa\help-wkhtmltoimage.txt" />
+    <Content Include="Rotativa\help-wkhtmltopdf.txt" />
+    <Content Include="Rotativa\wkhtmltoimage.exe" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
@@ -202,12 +211,14 @@
     <Compile Include="Controllers\TedarikciController.cs" />
     <Compile Include="Controllers\PersonelController.cs" />
     <Compile Include="Controllers\UrunController.cs" />
+    <Compile Include="Controllers\YazilimUrunController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AltKategori.cs" />
     <Compile Include="Models\AnaKategori.cs" />
     <Compile Include="Models\ArizaDurum.cs" />
+    <Compile Include="Models\Ayarlar.cs" />
     <Compile Include="Models\Birim.cs" />
     <Compile Include="Models\InventoryContext.cs" />
     <Compile Include="Models\Menu.cs" />
@@ -269,6 +280,9 @@
     <Content Include="Views\Urun\EskiGarantiListesi.cshtml" />
     <Content Include="Views\Urun\altKategoriDropdown.cshtml" />
     <Content Include="Views\Urun\stokCikarView.cshtml" />
+    <Content Include="Views\YazilimUrun\Listesi.cshtml" />
+    <Content Include="Views\YazilimUrun\altKategoriDropdown.cshtml" />
+    <Content Include="Views\YazilimUrun\Ekle.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

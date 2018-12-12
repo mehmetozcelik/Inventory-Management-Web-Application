@@ -15,6 +15,7 @@
         public virtual DbSet<AltKategori> AltKategori { get; set; }
         public virtual DbSet<AnaKategori> AnaKategori { get; set; }
         public virtual DbSet<ArizaDurum> ArizaDurum { get; set; }
+        public virtual DbSet<Ayarlar> Ayarlar { get; set; }
         public virtual DbSet<Birim> Birim { get; set; }
         public virtual DbSet<Menu> Menu { get; set; }
         public virtual DbSet<MenuRol> MenuRol { get; set; }

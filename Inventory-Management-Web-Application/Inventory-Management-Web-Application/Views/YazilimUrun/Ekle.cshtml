@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "Ekle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <div class="col-lg-12">
+                    <b> Yeni Ürün Ekle</b>
+                </div>
+            </header>
+            <div class="panel-body">
+                <form role="form" method="post" action="/YazilimUrun/Ekle">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Kategori Seçiniz </label>&nbsp;<span style="color: red;">*</span>
+                                    @Html.DropDownList("KategoriID", (SelectList)ViewBag.anakategoriler, "Seçiniz...", new { @class = "form-control", required = "required", id = "ana" })
+                                </div>
+
+                                <div class="form-group alt">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Ürün Adı </label>&nbsp;<span style="color: red;">*</span>
+                                    <input type="text" class="form-control" placeholder="Ürün Adı Giriniz..." name="UrunAdi" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Ürün Seri No </label>&nbsp;<span style="color: red;">*</span>
+                                    <input type="text" class="form-control" placeholder="Ürün Seri No Giriniz..." name="UrunSeriNo" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Key Adeti </label>&nbsp;<span style="color: red;">*</span>
+                                    <input type="text" class="form-control" placeholder="Key Adetini Giriniz..." name="KeyAdet" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Lisans Başlangıç Tarihi </label>&nbsp;<span style="color: red;">*</span>
+                                    <input type="date" class="form-control" placeholder="Lisans Başlangıç Tarihini Seçiniz..." name="LisansBaslangicTarihi" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Lisans Bitiş Tarihi </label>&nbsp;<span style="color: red;">*</span>
+                                    <input type="date" class="form-control" placeholder="Lisans Bitiş Tarihini Seçiniz..." name="LisansBitisTarihi" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Ürün Açıklama </label>
+                                    <input type="text" class="form-control" placeholder="Açıklama Giriniz..." name="Aciklama">
+                                </div>
+                                <button type="submit" id="button" class="btn btn-info">Kaydet</button>
+                                <a href="../Personel/TaListele" class="btn btn-danger">İptal</a>
+                                <button type="reset" class="btn btn-default">Temizle</button>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+@section script{
+    <script>
+           var id;
+           $("#ana").change(function () {
+               id = this.value;
+               $.ajax({
+                   url: '/YazilimUrun/altKategoriDropdown/' + id,
+                   type: 'GET',
+                   cache: false,
+                   success: function (data) {
+                       $('.alt').html(data);
+                   },
+                   error: function () {
+                       alert("eror");
+                   }
+               });
+           });
+    </script>
+}
