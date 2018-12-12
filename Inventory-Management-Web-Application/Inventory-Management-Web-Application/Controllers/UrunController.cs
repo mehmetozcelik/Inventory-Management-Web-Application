@@ -276,8 +276,20 @@ namespace Inventory_Management_Web_Application.Controllers
             }
             urunler.ListeTemizle();
             Session.Remove("Urun");
-            return RedirectToAction("UrunCikislar");
+            return RedirectToAction("CikisBasarili");
         }
+
+        public ActionResult CikisBasarili(UrunCikis uc)
+        {
+            return View();
+        }
+
+        public ActionResult UrunCikislar()
+        {
+
+            return View(db.UrunCikis.ToList());
+        }
+
 
         public void urunSepetAl()
         {
