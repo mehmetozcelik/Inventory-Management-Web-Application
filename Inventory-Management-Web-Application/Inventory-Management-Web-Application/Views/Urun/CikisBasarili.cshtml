@@ -1,11 +1,7 @@
 ﻿
-@{
-    ViewBag.Title = "CikisBasarili";
-}
 
 @using Inventory_Management_Web_Application.Models
 
-@model UrunCikis
  
 
 <div class="row">
@@ -20,10 +16,11 @@
             <div class="panel-body">
                 <p>
                     Ürün Çıkarma İşlemi başarılı bir şekilde tamamlanmıştır.  Aşağıdaki bağlantılardan çıkışa ait formu yazdırabilir veya çıkışlar listesine gidebilirsiniz.
+                    <br />
+                    <br />
+                    <a style="margin-right:5px;" target="_blank" href="/Print/UrunCikis/@ViewBag.id" class="btn btn-primary">Formu Yazdır</a>
 
-                    <a style="margin-right:5px;" href="/Print/UrunCikis/@Model.CikisNumarasi" class="btn btn-primary">Formu Yazdır</a>
-
-                    <a href="/Urun/UrunCikislar/@Model.CikisNumarasi" class="btn btn-primary">Çıkış Listesine Git</a>
+                    <a href="/Urun/UrunCikislar" class="btn btn-primary">Çıkış Listesine Git</a>
                 </p>
             </div>
         </section>

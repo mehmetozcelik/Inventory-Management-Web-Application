@@ -3,7 +3,7 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+@using Inventory_Management_Web_Application.Models
 
 <div class="row state-overview">
 
@@ -53,3 +53,106 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-md-12">
+        <section class="panel tasks-widget">
+            <header class="panel-heading">
+                Lisans Bitiş Tarihi Yaklaşan Yazılımlar
+            </header>
+            <div class="panel-body">
+                <div class="task-content">
+                    <ul id="sortable" class="task-list ui-sortable">
+
+                        @foreach (YazılımUrun item in ViewBag.yazilimlar)
+                        {
+                            var lisansUyari = (item.LisansBitisTarihi.Value.Date - DateTime.Now.Date).TotalDays;
+                            if (lisansUyari <= ViewBag.ayarlar.YazilimUrun)
+                            {
+                                <li class="list-success">
+                                    <i class=" icon-ellipsis-vertical"></i>
+                                    <div class="task-title">
+                                        <span class="task-title-sp">@item.UrunAdi</span>	&nbsp;
+                                        <span class="badge badge-sm label-danger">@lisansUyari Gün Kaldı</span>
+                                    </div>
+                                </li>
+                            }
+                        }
+
+                    </ul>
+                </div>
+                <div class=" add-task-row">
+                    <a class="btn btn-success btn-sm pull-right" href="/YazilimUrun/Listesi">Tüm Ürünleri Gör</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <section class="panel tasks-widget">
+            <header class="panel-heading">
+                Key Adedi Azalan Yazılımlar
+            </header>
+            <div class="panel-body">
+                <div class="task-content">
+                    <ul id="sortable" class="task-list ui-sortable">
+
+                        @foreach (YazılımUrun item in ViewBag.yazilimlar)
+                        {
+                            if (item.KeyAdet <= ViewBag.ayarlar.YazilimUrunStok)
+                            {
+                                <li class="list-primary">
+                                    <i class=" icon-ellipsis-vertical"></i>
+                                    <div class="task-title">
+                                        <span class="task-title-sp">@item.UrunAdi  </span>	&nbsp;
+                                        <span class="badge badge-sm label-danger">  @item.KeyAdet Adet Kaldı</span>
+                                    </div>
+                                </li>
+                            }
+                        }
+
+                    </ul>
+                </div>
+                <div class=" add-task-row">
+                    <a class="btn btn-primary btn-sm pull-right" href="/YazilimUrun/Listesi">Tüm Ürünleri Gör</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <section class="panel tasks-widget">
+            <header class="panel-heading">
+                Stoğu Azalan Ürünler
+            </header>
+            <div class="panel-body">
+                <div class="task-content">
+                    <ul id="sortable" class="task-list ui-sortable">
+
+                        @foreach (Urun item in ViewBag.urunler)
+                        {
+                            if (item.StokMiktari <= ViewBag.ayarlar.UrunStok)
+                            {
+                                <li class="list-warning">
+                                    <i class=" icon-ellipsis-vertical"></i>
+                                    <div class="task-title">
+                                        <span class="task-title-sp">@item.UrunAdi  </span>	&nbsp;
+                                        <span class="badge badge-sm label-danger">  @item.StokMiktari @item.UrunBirim.Adi Kaldı</span>
+                                    </div>
+                                </li>
+                            }
+                        }
+
+                    </ul>
+                </div>
+                <div class=" add-task-row">
+                    <a class="btn btn-warning btn-sm pull-right" href="/Urun/Listesi">Tüm Ürünleri Gör</a>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>

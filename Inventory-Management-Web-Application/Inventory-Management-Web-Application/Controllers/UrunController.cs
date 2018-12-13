@@ -277,11 +277,13 @@ namespace Inventory_Management_Web_Application.Controllers
             }
             urunler.ListeTemizle();
             Session.Remove("Urun");
+            TempData["basariid"] = CikisNumarasi;
             return RedirectToAction("CikisBasarili");
         }
 
-        public ActionResult CikisBasarili(UrunCikis uc)
+        public ActionResult CikisBasarili()
         {
+            ViewBag.id = TempData["basariid"];
             return View();
         }
 

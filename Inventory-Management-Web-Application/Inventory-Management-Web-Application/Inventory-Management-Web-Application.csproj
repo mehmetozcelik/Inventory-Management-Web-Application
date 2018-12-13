@@ -289,6 +289,8 @@
     <Content Include="Views\YazilimUrun\Listesi.cshtml" />
     <Content Include="Views\YazilimUrun\altKategoriDropdown.cshtml" />
     <Content Include="Views\YazilimUrun\Ekle.cshtml" />
+    <Content Include="Views\Print\UrunCikis.cshtml" />
+    <Content Include="Views\Admin\Ayarlar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -303,7 +305,6 @@
     <Folder Include="Content\fonts\" />
     <Folder Include="Content\img\" />
     <Folder Include="Content\js\" />
-    <Folder Include="Views\Print\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
