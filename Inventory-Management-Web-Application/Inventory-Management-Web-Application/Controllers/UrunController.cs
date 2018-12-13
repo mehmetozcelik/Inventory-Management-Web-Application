@@ -30,9 +30,25 @@ namespace Inventory_Management_Web_Application.Controllers
         public ActionResult Ekle()
         {
             var anakategoriler = db.AnaKategori.ToList();
-            var urunbirimler = db.UrunBirim.ToList();
             ViewBag.anakategoriler = new SelectList(anakategoriler, "ID", "KategoriAdi");
+
+            var urunbirimler = db.UrunBirim.ToList();
             ViewBag.urunbirimler = new SelectList(urunbirimler, "ID", "Adi");
+
+            var tedarikciler = db.Tedarikci.Select(x => new
+            {
+                ID = x.ID,
+                TedarikciAdi = x.FirmaAdi
+            });
+            var personeller = db.Personel.Select(x => new
+            {
+                ID = x.ID,
+                adiSoyadi = x.Adi + " " + x.Soyadi
+            });
+            ViewBag.tedarikciler = new SelectList(tedarikciler, "ID", "TedarikciAdi");
+            ViewBag.personeller = new SelectList(personeller, "ID", "adiSoyadi");
+
+
             return View();
         }
 
@@ -48,6 +64,17 @@ namespace Inventory_Management_Web_Application.Controllers
             string urunKodu = u.altKategoriID.ToString() + "1000" + DateTime.Now.Year.ToString() + (Lastid+1).ToString();
             u.UrunKodu = urunKodu;
             db.Urun.Add(u);
+            db.SaveChanges();
+
+            Urun ku = db.Urun.Where(x => x.UrunKodu == urunKodu).SingleOrDefault();
+            UrunGiris ug = new UrunGiris();
+            ug.UrunID = ku.ID;
+            ug.AlinanMiktar = ku.StokMiktari;
+            ug.AlanPerID = u.PersonelID;
+            ug.TedarikciID = u.TedarikciID;
+            ug.Aciklama = u.Aciklama;
+            ug.GirisTarihi = DateTime.Now;
+            db.UrunGiris.Add(ug);
             db.SaveChanges();
             return RedirectToAction("Listesi");
         }
@@ -289,8 +316,7 @@ namespace Inventory_Management_Web_Application.Controllers
 
         public ActionResult UrunCikislar()
         {
-
-            return View(db.UrunCikis.ToList());
+            return View(db.UrunCikis.Where(x => x.UrunID != null).ToList());
         }
 
 
@@ -338,9 +364,8 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpGet]
         public ActionResult urunGirisleri()
         {
-            var yazilim = db.UrunGiris.Where(x => x.YazilimUrunID != null).ToList();
-            ViewBag.urun = db.UrunGiris.Where(x => x.UrunID != null).ToList();
-            return View(yazilim);
+            var urunler = db.UrunGiris.Where(x => x.UrunID != null).ToList();
+            return View(urunler);
         }
     }
 }

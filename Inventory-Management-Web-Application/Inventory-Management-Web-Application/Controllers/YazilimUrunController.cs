@@ -32,6 +32,20 @@ namespace Inventory_Management_Web_Application.Controllers
         {
             var anakategoriler = db.AnaKategori.ToList();
             ViewBag.anakategoriler = new SelectList(anakategoriler, "ID", "KategoriAdi");
+
+
+            var tedarikciler = db.Tedarikci.Select(x => new
+            {
+                ID = x.ID,
+                TedarikciAdi = x.FirmaAdi
+            });
+            var personeller = db.Personel.Select(x => new
+            {
+                ID = x.ID,
+                adiSoyadi = x.Adi + " " + x.Soyadi
+            });
+            ViewBag.tedarikciler = new SelectList(tedarikciler, "ID", "TedarikciAdi");
+            ViewBag.personeller = new SelectList(personeller, "ID", "adiSoyadi");
             return View();
         }
 
@@ -47,6 +61,17 @@ namespace Inventory_Management_Web_Application.Controllers
             string urunKodu = u.altKategoriID.ToString() + "1000" + DateTime.Now.Year.ToString() + (Lastid + 1).ToString();
             u.UrunID = urunKodu;
             db.YazılımUrun.Add(u);
+            db.SaveChanges();
+
+            YazılımUrun ku = db.YazılımUrun.Where(x => x.UrunID == urunKodu).SingleOrDefault();
+            UrunGiris ug = new UrunGiris();
+            ug.YazilimUrunID = ku.ID;
+            ug.AlinanMiktar = ku.KeyAdet;
+            ug.AlanPerID = u.PersonelID;
+            ug.TedarikciID = u.TedarikciID;
+            ug.Aciklama = u.Aciklama;
+            ug.GirisTarihi = DateTime.Now;
+            db.UrunGiris.Add(ug);
             db.SaveChanges();
             return RedirectToAction("Listesi");
         }
@@ -185,7 +210,14 @@ namespace Inventory_Management_Web_Application.Controllers
             }
             urunler.ListeTemizle();
             Session.Remove("YazilimUrun");
-            return RedirectToAction("CikisBasarili", uc);
+            TempData["basariid2"] = CikisNumarasi;
+            return RedirectToAction("CikisBasarili");
+        }
+
+        public ActionResult CikisBasarili()
+        {
+            ViewBag.id2 = TempData["basariid2"];
+            return View();
         }
 
         [HttpGet]
@@ -219,5 +251,18 @@ namespace Inventory_Management_Web_Application.Controllers
             db.SaveChanges();
             return RedirectToAction("urunGirisleri","Urun");
         }
+
+        [HttpGet]
+        public ActionResult urunGirisleri()
+        {
+            var urunler = db.UrunGiris.Where(x => x.YazilimUrunID != null).ToList();
+            return View(urunler);
+        }
+
+        public ActionResult UrunCikislar()
+        {
+            return View(db.UrunCikis.Where(x => x.YazilimUrunID != null).ToList());
+        }
+
     }
 }

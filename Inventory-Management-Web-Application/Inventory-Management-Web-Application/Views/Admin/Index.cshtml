@@ -62,7 +62,9 @@
             <div class="panel-body">
                 <div class="task-content">
                     <ul id="sortable" class="task-list ui-sortable">
-
+                        @{
+                            bool control = true;
+                        }
                         @foreach (YazılımUrun item in ViewBag.yazilimlar)
                         {
                             var lisansUyari = (item.LisansBitisTarihi.Value.Date - DateTime.Now.Date).TotalDays;
@@ -75,7 +77,12 @@
                                         <span class="badge badge-sm label-danger">@lisansUyari Gün Kaldı</span>
                                     </div>
                                 </li>
+                                control = false;
                             }
+                        }
+                        @if (control)
+                        {
+                        <p>Lisans bitiş tarihi yaklaşan yazılım bulunmamaktadır.</p>
                         }
 
                     </ul>
@@ -97,7 +104,9 @@
             <div class="panel-body">
                 <div class="task-content">
                     <ul id="sortable" class="task-list ui-sortable">
-
+                        @{
+                            control = true;
+                        }
                         @foreach (YazılımUrun item in ViewBag.yazilimlar)
                         {
                             if (item.KeyAdet <= ViewBag.ayarlar.YazilimUrunStok)
@@ -109,14 +118,19 @@
                                         <span class="badge badge-sm label-danger">  @item.KeyAdet Adet Kaldı</span>
                                     </div>
                                 </li>
+                                control = false;
                             }
+                        }
+                        @if (control)
+                        {
+                        <p>Key adedi azalan yazılım bulunmamaktadır.</p>
                         }
 
                     </ul>
                 </div>
                 <div class=" add-task-row">
                     <a class="btn btn-primary btn-sm pull-right" href="/YazilimUrun/Listesi">Tüm Ürünleri Gör</a>
-                </div>
+                </div>""
             </div>
         </section>
     </div>
@@ -132,7 +146,9 @@
             <div class="panel-body">
                 <div class="task-content">
                     <ul id="sortable" class="task-list ui-sortable">
-
+                        @{
+                            control = true;
+                        }
                         @foreach (Urun item in ViewBag.urunler)
                         {
                             if (item.StokMiktari <= ViewBag.ayarlar.UrunStok)
@@ -144,7 +160,13 @@
                                         <span class="badge badge-sm label-danger">  @item.StokMiktari @item.UrunBirim.Adi Kaldı</span>
                                     </div>
                                 </li>
+                                control = false;
                             }
+                        }
+                        @if (control)
+                        {
+                        <p>Stok sayısı azalan ürün bulunmamaktadır.</p>
+
                         }
 
                     </ul>

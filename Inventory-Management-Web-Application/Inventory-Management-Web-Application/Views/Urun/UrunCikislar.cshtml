@@ -76,8 +76,7 @@
                                             @item.Aciklama
                                         </td>
                                         <td>
-                                            <a title="Sil" style="float:right;" class="btn btn-danger btn-xs btn-confirm" data-id="@item.ID"><i class="icon-trash"></i> Sil</a>
-                                           <a title="PDF Çıkar" target="_blank" href="/Print/UrunCikis/@item.CikisNumarasi" style="float:right;margin-right:5px;" class="btn btn-info btn-xs"><i class="icon-print"></i> Belge</a>
+                                          <a title="PDF Çıkar" target="_blank" href="/Print/UrunCikis/@item.CikisNumarasi" style="float:right;margin-right:5px;" class="btn btn-info btn-xs"><i class="icon-print"></i> Belge</a>
 
                                         </td>
                                     </tr>
@@ -93,21 +92,6 @@
 </div>
 
 
-
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Bu Ürünü Silmek İstediğinizden Emin misiniz ?</h4>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="modal-btn-si">Sil</button>
-                <button type="button" class="btn btn-primary" id="modal-btn-no">Kapat</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 
@@ -131,52 +115,5 @@
         }</script>
 
 
-    <script>
-        var id;
-        var modalConfirm = function (callback) {
-
-            $(".btn-confirm").on("click", function () {
-                id = $(this).attr("data-id");
-                $("#mi-modal").modal('show');
-            });
-
-            $("#modal-btn-si").on("click", function () {
-                callback(true);
-
-                $("#mi-modal").modal('hide');
-            });
-
-            $("#modal-btn-no").on("click", function () {
-                callback(false);
-                $("#mi-modal").modal('hide');
-            });
-        };
-
-
-        modalConfirm(function (confirm) {
-            if (confirm) {
-                $.ajax({
-                    url: '/Urun/Sil/' + id,
-                    type: 'POST',
-                    success: function (rs) {
-                        if (rs === true) {
-                            $('#' + id).remove();
-                        }
-                        else if (rs === "FK") {
-                            alert("Bu ürüne ait Garanti Kaydı , Ürün Giriş Kaydı veya Ürün Çıkış Kaydı Bulunduğundan dolayı bu Ürün Silemezsiniz. ");
-                        }
-                        else {
-                            alert('Silme işlemi gerçekleşirken bir hata oluştu.');
-                        }
-                    },
-                    error: function (rs) {
-                        alert('Bir hata oluştu');
-                    }
-                });
-            } else {
-                alert("Hata");
-            }
-        });
-
-    </script>
+    
 }

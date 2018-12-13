@@ -17,7 +17,14 @@ namespace Inventory_Management_Web_Application.Controllers
            List<UrunCikis> uc = db.UrunCikis.Where(x => x.CikisNumarasi == id).ToList();
             var report = new ViewAsPdf("UrunCikis", uc)
                 { };
+            return report;
+        }
 
+        public ActionResult yazilimUrunCikis(int id)
+        {
+            List<UrunCikis> uc = db.UrunCikis.Where(x => x.CikisNumarasi == id).ToList();
+            var report = new ViewAsPdf("yazilimUrunCikis", uc)
+            { };
             return report;
         }
     }

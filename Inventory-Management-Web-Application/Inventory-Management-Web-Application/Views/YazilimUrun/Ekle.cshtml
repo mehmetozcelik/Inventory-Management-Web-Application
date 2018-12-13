@@ -46,6 +46,14 @@
                                     <input type="date" class="form-control" placeholder="Lisans Bitiş Tarihini Seçiniz..." name="LisansBitisTarihi" required>
                                 </div>
                                 <div class="form-group">
+                                    <label for="exampleInputEmail1">Ekleyen Kişiyi Seçiniz </label>&nbsp;<span style="color: red;">*</span>
+                                    @Html.DropDownList("PersonelID", (SelectList)ViewBag.personeller, "Seçiniz...", new { @class = "form-control", required = "required" })
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Tedarikçi Seçiniz </label>&nbsp;<span style="color: red;">*</span>
+                                    @Html.DropDownList("TedarikciID", (SelectList)ViewBag.tedarikciler, "Seçiniz...", new { @class = "form-control", required = "required" })
+                                </div>
+                                <div class="form-group">
                                     <label for="exampleInputEmail1">Ürün Açıklama </label>
                                     <input type="text" class="form-control" placeholder="Açıklama Giriniz..." name="Aciklama">
                                 </div>
@@ -77,7 +85,7 @@
                        $('.alt').html(data);
                    },
                    error: function () {
-                       alert("eror");
+                       $('.alt').html("");
                    }
                });
            });

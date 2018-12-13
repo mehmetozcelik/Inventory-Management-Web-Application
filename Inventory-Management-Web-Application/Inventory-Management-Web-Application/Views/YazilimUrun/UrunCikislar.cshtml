@@ -10,7 +10,7 @@
 
 @using Inventory_Management_Web_Application.Models
 
-@model List<UrunGiris>
+@model List<UrunCikis>
 
 
 @section head{
@@ -29,20 +29,12 @@
         }
     </style>
 }
-
-
 <div class="row">
     <div class="col-lg-12">
-        @if (ViewBag.hata != null)
-        {
-            <div class="alert alert-danger">
-                <p>@ViewBag.hata</p>
-            </div>
-        }
         <section class="panel">
             <header class="panel-heading" style="padding-bottom: 10px;">
                 <div class="col-lg-12" style="margin-bottom:10px;">
-                    Ürün Giriş Kayıtları
+                    <b>Yazılım Ürün Çıkış Kayıtları</b>
                 </div>
             </header>
 
@@ -52,38 +44,42 @@
                         <table class="table table-striped table-hover table-bordered" id="editable-sample">
                             <thead>
                                 <tr>
-                                    <th>Alınan Ürün</th>
-                                    <th>Alınan Miktar</th>
-                                    <th>Alan Personel</th>
-                                    <th>Tedarikçi</th>
-                                    <th>Giriş Tarihi</th>
+                                    <th>Ürün Adı</th>
+                                    <th>Çıkan Miktar</th>
+                                    <th>Teslim Alan</th>
+                                    <th>Teslim Veren</th>
+                                    <th>Teslim Tarihi</th>
                                     <th>Açıklama</th>
+                                    <th style="text-align:center;"> İşlemler</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                <tr id="@item.ID">
-                                    <td>
-                                        @item.Urun.UrunAdi
-                                    </td>
-                                    <td>
-                                        @item.AlinanMiktar
-                                    </td>
-                                    <td>
-                                        @item.Personel.Adi @item.Personel.Soyadi
-                                    </td>
-                                    <td>
-                                        @item.Tedarikci.FirmaAdi
-                                    </td>
-                                    <td>
-                                        @item.GirisTarihi.Value.Day/@item.GirisTarihi.Value.Month/@item.GirisTarihi.Value.Year
-                                    </td>
+                                    <tr id="@item.ID">
+                                        <td>
+                                            @item.YazılımUrun.UrunAdi
+                                        </td>
+                                        <td>
+                                            @item.CikanMictar
+                                        </td>
+                                        <td>
+                                            @item.TeslimAlanPersonel.Adi @item.TeslimAlanPersonel.Soyadi
+                                        </td>
+                                        <td>
+                                            @item.Personel.Adi @item.Personel.Soyadi
+                                        </td>
+                                        <td>
+                                            @item.TeslimTarihi.Value.Day/@item.TeslimTarihi.Value.Month/@item.TeslimTarihi.Value.Year
+                                        </td>
+                                        <td>
+                                            @item.Aciklama
+                                        </td>
+                                        <td>
+                                            <a title="PDF Çıkar" target="_blank" href="/Print/yazilimUrunCikis/@item.CikisNumarasi" style="float:right;margin-right:5px;" class="btn btn-info btn-xs"><i class="icon-print"></i> Belge</a>
 
-                                    <td>
-                                        @item.Aciklama
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
                                 }
 
                             </tbody>
@@ -94,6 +90,8 @@
         </section>
     </div>
 </div>
+
+
 
 
 
@@ -115,4 +113,7 @@
         window.onload = function () {
             $('#listele').addClass('active');
         }</script>
+
+
+
 }
