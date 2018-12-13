@@ -1,4 +1,5 @@
 ﻿using Inventory_Management_Web_Application.Models;
+using Inventory_Management_Web_Application.ModelViews;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,23 @@ namespace Inventory_Management_Web_Application.Controllers
             a.YazilimUrunStok = ayarlar.YazilimUrunStok;
             db.SaveChanges();
             return View(db.Ayarlar.FirstOrDefault());
+        }
+
+        public ActionResult CikisYap()
+        {
+            Session.Abandon();
+            return RedirectToAction("Login","Kullanici");
+        }
+
+        [HttpGet]
+        public PartialViewResult MenuGetir()
+        {
+            Personel p = (Personel)Session["Kullanici"];
+
+            MenuControl k = new MenuControl();
+            k.menuler = db.Menu.ToList();
+            k.roller = db.MenuRol.Where(x=>x.RolID==p.RolID).ToList();
+            return  PartialView(k);
         }
     }
 }

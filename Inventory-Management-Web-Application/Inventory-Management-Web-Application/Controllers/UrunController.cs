@@ -63,6 +63,7 @@ namespace Inventory_Management_Web_Application.Controllers
             Lastid = db.Urun.Max(x => x.ID);           
             string urunKodu = u.altKategoriID.ToString() + "1000" + DateTime.Now.Year.ToString() + (Lastid+1).ToString();
             u.UrunKodu = urunKodu;
+            u.EklenmeTarihi= DateTime.Now;
             db.Urun.Add(u);
             db.SaveChanges();
 

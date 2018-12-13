@@ -211,6 +211,7 @@
     <Compile Include="Controllers\KategoriController.cs" />
     <Compile Include="Controllers\KullaniciController.cs" />
     <Compile Include="Controllers\PrintController.cs" />
+    <Compile Include="Controllers\RaporController.cs" />
     <Compile Include="Controllers\TanimController.cs" />
     <Compile Include="Controllers\TedarikciController.cs" />
     <Compile Include="Controllers\PersonelController.cs" />
@@ -237,6 +238,7 @@
     <Compile Include="Models\UrunCikis.cs" />
     <Compile Include="Models\UrunGiris.cs" />
     <Compile Include="Models\YazılımUrun.cs" />
+    <Compile Include="ModelViews\MenuControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -302,6 +304,8 @@
     <Content Include="Views\YazilimUrun\UrunCikislar.cshtml" />
     <Content Include="Views\Print\yazilimUrunCikis.cshtml" />
     <Content Include="Views\YazilimUrun\CikisBasarili.cshtml" />
+    <Content Include="Views\Rapor\Urun.cshtml" />
+    <Content Include="Views\Admin\MenuGetir.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

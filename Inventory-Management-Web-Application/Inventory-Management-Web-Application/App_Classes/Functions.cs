@@ -9,7 +9,7 @@ namespace Inventory_Management_Web_Application.App_Classes
     {
         public static bool LDAP(string mail,string sifre)
         {
-            return true;
+            return false;
         }
     }
 }

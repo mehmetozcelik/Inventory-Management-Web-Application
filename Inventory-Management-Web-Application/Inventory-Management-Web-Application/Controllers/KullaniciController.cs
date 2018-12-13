@@ -107,6 +107,12 @@ namespace Inventory_Management_Web_Application.Controllers
 
             if (ldap)
             {
+                Personel ldapPersonel = new Personel();
+                ldapPersonel.Adi = "LDAP";
+                ldapPersonel.Soyadi = "Personel";
+                ldapPersonel.Email = mail;
+                ldapPersonel.RolID = db.Rol.Where(x=>x.RolAdi=="LDAP").FirstOrDefault().ID;
+                Session["Kullanici"] = ldapPersonel;
                 return RedirectToAction("Index", "Admin");
             }
 
@@ -179,7 +185,8 @@ namespace Inventory_Management_Web_Application.Controllers
             //Sayfayı geri yükle
             ViewBag.Yetkileri = db.MenuRol.Where(x => x.RolID == r.ID).ToList();
             ViewBag.Menuler = db.Menu.ToList();
-            return View(r);
+            ViewBag.basarili = "Profil yetkileri başarılı bir şekilde güncellenmiştir.";
+            return RedirectToAction("ProfilListesi");
         }
 
 
