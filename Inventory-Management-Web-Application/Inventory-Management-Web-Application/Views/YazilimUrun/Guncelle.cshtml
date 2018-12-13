@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "Guncelle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using Inventory_Management_Web_Application.Models
+
+@model YazılımUrun
+
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                Şu anda <b> @Model.UrunAdi </b>ürününü düzenliyorsunuz...
+            </header>
+            <div class="panel-body">
+                @{
+                    string baslangicTarihi = Model.LisansBaslangicTarihi.Value.Year.ToString() + "-" + Model.LisansBaslangicTarihi.Value.Month.ToString() + "-" + Model.LisansBaslangicTarihi.Value.Day.ToString();
+                    string bitisTarihi = Model.LisansBitisTarihi.Value.Year.ToString() + "-" + Model.LisansBitisTarihi.Value.Month.ToString() + "-" + Model.LisansBitisTarihi.Value.Day.ToString();
+                }
+                <form role="form" method="post" action="/YazilimUrun/Guncelle">
+                    @Html.Hidden("ID", Model.ID)
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Alt Kategori Seçiniz </label>&nbsp;<span style="color: red;">*</span>
+                        @Html.DropDownList("altKategoriID", (SelectList) ViewBag.anakategoriler, "Seçiniz...", new {@class = "form-control", required = "required"})
+                    </div>
+
+                    <div class="form-group alt">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Ürün Adı </label>
+                        <input type="text" class="form-control" placeholder="Ürün Adı Giriniz..." name="UrunAdi" value="@Model.UrunAdi" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Ürün Seri No </label>
+                        <input type="text" class="form-control" placeholder="Ürün Seri No Giriniz..." name="UrunSeriNo" value="@Model.UrunSeriNo" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Key Adeti </label>&nbsp;<span style="color: red;">*</span>
+                        <input type="text" class="form-control" placeholder="Key Adetini Giriniz..." name="KeyAdet" value="@Model.KeyAdet" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Lisans Başlangıç Tarihi </label>&nbsp;<span style="color: red;">*</span>
+                        <input type="date" class="form-control" placeholder="Lisans Başlangıç Tarihini Seçiniz..." name="LisansBaslangicTarihi" value="@baslangicTarihi.ToString()" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Lisans Bitiş Tarihi </label>&nbsp;<span style="color: red;">*</span>
+                        <input type="date" class="form-control" placeholder="Lisans Bitiş Tarihini Seçiniz..." name="LisansBitisTarihi" value="@bitisTarihi.ToString()" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Ürün Açıklama </label>
+                        <input type="text" class="form-control" placeholder="Açıklama Giriniz..." value="@Model.Aciklama" name="Aciklama">
+                    </div>
+                    <button style="float: right;" type="submit" class="btn btn-info">Kaydet</button>
+                </form>
+
+            </div>
+        </section>
+    </div>
+</div>
+
+
+@section script{
+    <script>
+           var id;
+           $("#ana").change(function () {
+               id = this.value;
+               $.ajax({
+                   url: '/YazilimUrun/altKategoriDropdown/' + id,
+                   type: 'GET',
+                   cache: false,
+                   success: function (data) {
+                       $('.alt').html(data);
+                   },
+                   error: function () {
+                       alert("eror");
+                   }
+               });
+           });
+    </script>
+}

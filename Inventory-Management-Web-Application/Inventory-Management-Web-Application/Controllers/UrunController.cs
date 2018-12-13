@@ -302,5 +302,45 @@ namespace Inventory_Management_Web_Application.Controllers
                 var liste = urunler.HepsiniGetir();
             }
         }
+
+        [HttpGet]
+        public ActionResult stokEkleView(int id)
+        {
+            var tedarikciler = db.Tedarikci.Select(x => new
+            {
+                ID = x.ID,
+                TedarikciAdi = x.FirmaAdi
+            });
+            var personeller = db.Personel.Select(x => new
+            {
+                ID = x.ID,
+                adiSoyadi = x.Adi + " " + x.Soyadi
+            });
+            var urunbirimler = db.UrunBirim.ToList();
+            ViewBag.tedarikciler = new SelectList(tedarikciler, "ID", "TedarikciAdi");
+            ViewBag.personeller = new SelectList(personeller, "ID", "adiSoyadi");
+
+            Urun eklenecekUrun = db.Urun.Where(x => x.ID == id).FirstOrDefault();
+            return View(eklenecekUrun);
+        }
+
+        [HttpPost]
+        public ActionResult stokEkle(UrunGiris veri)
+        {
+            var urun = db.Urun.FirstOrDefault(x => x.ID == veri.UrunID);
+            urun.StokMiktari = urun.StokMiktari + veri.AlinanMiktar;
+            veri.YazilimUrunID = null;
+            db.UrunGiris.Add(veri);
+            db.SaveChanges();
+            return RedirectToAction("urunGirisleri", "Urun");
+        }
+
+        [HttpGet]
+        public ActionResult urunGirisleri()
+        {
+            var yazilim = db.UrunGiris.Where(x => x.YazilimUrunID != null).ToList();
+            ViewBag.urun = db.UrunGiris.Where(x => x.UrunID != null).ToList();
+            return View(yazilim);
+        }
     }
 }

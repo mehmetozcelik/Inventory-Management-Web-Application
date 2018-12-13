@@ -94,7 +94,7 @@
                                             <a title="Sil" style="float:right;" class="btn btn-danger btn-xs btn-confirm" data-id="@item.ID"><i class="icon-trash"></i> Sil</a>
                                             <a title="Düzünle" style="float:right;margin-right:5px;" href="/Urun/Guncelle/@item.ID" class="btn btn-primary btn-xs"><i class="icon-pencil"></i> Düzenle</a>
                                             <a title="Garantiye Gönder" style="float:right;margin-right:5px;" href="/Urun/Garanti/@item.ID" class="btn btn-default btn-xs"><i class="icon-refresh"></i> Garanti</a>
-                                            <a title="Stok Ekle" style="float:right;margin-right:5px;" class="btn btn-warning btn-xs"><i class="icon-plus-sign-alt"></i> Stok Ekle</a>
+                                            <a title="Stok Ekle" href="stokEkleView/@item.ID" style="float:right;margin-right:5px;" class="btn btn-warning btn-xs"><i class="icon-plus-sign-alt"></i> Stok Ekle</a>
                                             <a title="Ürün Çıkışı" href="/Urun/stokCikar/@item.ID" style="float:right;margin-right:5px;" class="btn btn-info btn-xs"><i class="icon-mail-reply (alias)"></i> Ürün Çıkışı</a>
 
                                         </td>
@@ -167,6 +167,7 @@
             $("#modal-btn-no").on("click", function () {
                 callback(false);
                 $("#mi-modal").modal('hide');
+                return e.preventDefault()
             });
         };
 
@@ -192,7 +193,7 @@
                     }
                 });
             } else {
-                alert("Hata");
+                console.log("");
             }
         });
 

@@ -53,7 +53,55 @@
             <div class="top-nav ">
                 <!--search & user info start-->
                 <ul class="nav pull-right top-menu">
+                    @{
+                        if (Session["YazilimUrun"] != null)
+                        {
+                            var urunler = (Inventory_Management_Web_Application.App_Classes.YazilimUrunCikis)Session["YazilimUrun"];
 
+                            if (urunler != null)
+                            {
+                                List<YazılımUrun> liste = urunler.HepsiniGetir();
+
+                                <li id="header_notification_bar" class="dropdown" style="margin-right:5px;">
+                                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+
+                                        Stoktan Çıkartılacak Yazılım Ürünleri
+                                        <span class="badge bg-warning">@liste.Count</span>
+                                    </a>
+                                    <ul class="dropdown-menu extended notification">
+                                        <div class="notify-arrow notify-arrow-yellow"></div>
+                                        <li>
+                                            <p class="yellow">Listede @liste.Count ürün bulunmaktdır.</p>
+                                        </li>
+
+
+                                        @{List<YazılımUrun> temp = new List<YazılımUrun>();
+                                        }
+                                        @foreach (YazılımUrun item in liste)
+                                        {
+                                            if (temp.Where(x => x.ID == item.ID).SingleOrDefault() != null)
+                                            {
+                                                continue;
+                                            }
+                                            <li>
+                                                <a href="#">
+                                                    <span class="label label-info"><i class="icon-th-large"></i></span>
+                                                    <span> @item.UrunAdi</span>
+                                                    <span class="small italic">(@liste.Where(x => x.ID == item.ID).ToList().Count)</span>
+                                                </a>
+                                            </li>
+                                            temp.Add(item);
+                                        }
+
+                                        <li>
+                                            <a href="/YazilimUrun/stokCikarView">Ürünleri Çıkart</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                                }
+
+                                            }
+                    }
                     @{
                         if (Session["Urun"] != null)
                         {
@@ -156,9 +204,9 @@
                             <li><a href="/Urun/Listesi">Ürün Listesi</a></li>
                             <li><a href="/YazilimUrun/Listesi">Yazılım Listesi</a></li>
                             <li><a href="/Urun/Ekle">Yeni Ürün Girişi</a></li>
-                            <li><a href="/Content/slider.html">Yeni Yazılım Girişi</a></li>
+                            <li><a href="/YazilimUrun/Ekle">Yeni Yazılım Girişi</a></li>
                             <li><a href="/Urun/UrunCikislar">Ürün Çıkışları</a></li>
-                            <li><a href="/Content/buttons.html">Ürün Girişleri</a></li>
+                            <li><a href="/Urun/urunGirisleri">Ürün Girişleri</a></li>
                         </ul>
                     </li>
 

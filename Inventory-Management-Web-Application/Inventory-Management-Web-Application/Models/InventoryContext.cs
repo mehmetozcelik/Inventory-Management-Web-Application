@@ -57,13 +57,13 @@
                 .WithOptional(e => e.Personel)
                 .HasForeignKey(e => e.TeslimVerenID);
 
-            modelBuilder.Entity<TeslimAlanPersonel>()
-                .HasMany(e => e.UrunCikis)
-                .WithOptional(e => e.TeslimAlanPersonel)
-                .HasForeignKey(e => e.TeslimAlanKisiID);
+            modelBuilder.Entity<Personel>()
+                .HasMany(e => e.UrunGiris)
+                .WithOptional(e => e.Personel)
+                .HasForeignKey(e => e.AlanPerID);
 
             modelBuilder.Entity<TeslimAlanPersonel>()
-                .HasMany(e => e.YazılımUrun)
+                .HasMany(e => e.UrunCikis)
                 .WithOptional(e => e.TeslimAlanPersonel)
                 .HasForeignKey(e => e.TeslimAlanKisiID);
 
@@ -75,7 +75,7 @@
             modelBuilder.Entity<YazılımUrun>()
                 .HasMany(e => e.UrunGiris)
                 .WithOptional(e => e.YazılımUrun)
-                .HasForeignKey(e => e.UrunID);
+                .HasForeignKey(e => e.YazilimUrunID);
         }
     }
 }

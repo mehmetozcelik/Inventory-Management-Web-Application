@@ -40,11 +40,14 @@ namespace Inventory_Management_Web_Application.Models
 
         public int? altKategoriID { get; set; }
 
-        public int? TeslimAlanKisiID { get; set; }
+        [Column(TypeName = "date")]
+        public DateTime? EklenmeTarihi { get; set; }
+
+        public int? PersonelID { get; set; }
+
+        public int? TedarikciID { get; set; }
 
         public virtual AltKategori AltKategori { get; set; }
-
-        public virtual TeslimAlanPersonel TeslimAlanPersonel { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UrunCikis> UrunCikis { get; set; }
