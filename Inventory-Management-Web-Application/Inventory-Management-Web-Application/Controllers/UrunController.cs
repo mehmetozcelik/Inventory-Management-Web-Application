@@ -366,7 +366,32 @@ namespace Inventory_Management_Web_Application.Controllers
         public ActionResult urunGirisleri()
         {
             var urunler = db.UrunGiris.Where(x => x.UrunID != null).ToList();
+            ViewBag.yazilimUrunler = db.UrunGiris.Where(x => x.YazilimUrunID != null).ToList();
             return View(urunler);
         }
+
+        [HttpPost]
+        public ActionResult urunGirisSil(int id)
+        {
+            UrunGiris b = db.UrunGiris.Where(x => x.ID == id).SingleOrDefault();
+            if (b == null)
+            {
+                return Json(false);
+            }
+            else
+            {
+                try
+                {
+                    db.UrunGiris.Remove(b);
+                    db.SaveChanges();
+                    return Json(true);
+                }
+                catch (Exception)
+                {
+                    return Json("FK");
+                }
+            }
+        }
+
     }
 }
