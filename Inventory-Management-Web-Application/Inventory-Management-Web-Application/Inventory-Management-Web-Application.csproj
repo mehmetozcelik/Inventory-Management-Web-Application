@@ -306,6 +306,13 @@
     <Content Include="Views\YazilimUrun\CikisBasarili.cshtml" />
     <Content Include="Views\Rapor\Urun.cshtml" />
     <Content Include="Views\Admin\MenuGetir.cshtml" />
+    <Content Include="Views\Rapor\Urun_Print.cshtml" />
+    <Content Include="Views\Rapor\UrunCikis.cshtml" />
+    <Content Include="Views\Rapor\UrunCikis_Print.cshtml" />
+    <Content Include="Views\Rapor\YazilimUrun.cshtml" />
+    <Content Include="Views\Rapor\YazilimUrun_Print.cshtml" />
+    <Content Include="Views\Rapor\CikanYazilimUrun.cshtml" />
+    <Content Include="Views\Rapor\CikanYazilimUrun_Print.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

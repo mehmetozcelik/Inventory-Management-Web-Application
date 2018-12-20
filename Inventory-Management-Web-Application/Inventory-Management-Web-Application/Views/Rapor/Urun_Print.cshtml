@@ -1,0 +1,63 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+@using Inventory_Management_Web_Application.Models
+
+@model List<Urun>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Urun_Print</title>
+    <link href="/Content/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Content/css/bootstrap-reset.css" rel="stylesheet">
+</head>
+<body>
+    <div style="align-items:center;text-align:center;">
+        <h3>Düzce Üniversitesi Bilgi İşlem Daire Başkanlığı <br /> BISTOK Ürün Raporu </h3> <p>@DateTime.Now</p><br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ürün Kodu</th>
+                    <th>Seri No</th>
+                    <th>Kategori</th>
+                    <th>Adı</th>
+                    <th>Stok</th>
+                    <th>Eklenme Tarihi</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.UrunKodu
+                        </td>
+                        <td>
+                            @item.UrunSeriNo
+                        </td>
+                        <td>
+                            @item.AltKategori.KategoriAdi
+                        </td>
+                        <td>
+                            @item.UrunAdi
+                        </td>
+                        <td>
+                            @item.StokMiktari @item.UrunBirim.Adi
+                        </td>
+                        <td>
+                            @item.EklenmeTarihi.Value.Day/@item.EklenmeTarihi.Value.Month/@item.EklenmeTarihi.Value.Year
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

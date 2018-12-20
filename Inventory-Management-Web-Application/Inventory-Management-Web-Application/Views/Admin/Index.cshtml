@@ -74,7 +74,18 @@
                                     <i class=" icon-ellipsis-vertical"></i>
                                     <div class="task-title">
                                         <span class="task-title-sp">@item.UrunAdi</span>	&nbsp;
-                                        <span class="badge badge-sm label-danger">@lisansUyari Gün Kaldı</span>
+                                        @if (lisansUyari > 0)
+                                        {
+                                            <span class="badge badge-sm label-danger">@lisansUyari Gün Kaldı</span>
+                                        }
+                                        else if (lisansUyari == 0)
+                                        {
+                                            <span class="badge badge-sm label-danger">Son Gün</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-sm label-danger">Lisans Süresi bitmiştir.</span>
+                                        }
                                     </div>
                                 </li>
                                 control = false;
@@ -82,7 +93,7 @@
                         }
                         @if (control)
                         {
-                        <p>Lisans bitiş tarihi yaklaşan yazılım bulunmamaktadır.</p>
+                            <p>Lisans bitiş tarihi yaklaşan yazılım bulunmamaktadır.</p>
                         }
 
                     </ul>
@@ -123,7 +134,7 @@
                         }
                         @if (control)
                         {
-                        <p>Key adedi azalan yazılım bulunmamaktadır.</p>
+                            <p>Key adedi azalan yazılım bulunmamaktadır.</p>
                         }
 
                     </ul>
@@ -165,7 +176,7 @@
                         }
                         @if (control)
                         {
-                        <p>Stok sayısı azalan ürün bulunmamaktadır.</p>
+                            <p>Stok sayısı azalan ürün bulunmamaktadır.</p>
 
                         }
 

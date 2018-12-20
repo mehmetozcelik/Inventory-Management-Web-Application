@@ -1,0 +1,71 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+@using Inventory_Management_Web_Application.Models
+
+@model List<YazılımUrun>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Urun_Print</title>
+    <link href="/Content/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Content/css/bootstrap-reset.css" rel="stylesheet">
+</head>
+<body>
+    <div style="align-items:center;text-align:center;">
+        <h3>Düzce Üniversitesi Bilgi İşlem Daire Başkanlığı <br /> BISTOK Yazılım Ürün Raporu </h3> <p>@DateTime.Now</p><br />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ürün Kodu</th>
+                    <th>Seri No</th>
+                    <th>Kategori</th>
+                    <th>Adı</th>
+                    <th>Stok</th>
+                    <th>Eklenme Tarihi</th>
+                    <th>Lisans Başlangıç</th>
+                    <th>Lisans Bitiş</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @item.UrunID
+                    </td>
+                    <td>
+                        @item.UrunSeriNo
+                    </td>
+                    <td>
+                        @item.AltKategori.KategoriAdi
+                    </td>
+                    <td>
+                        @item.UrunAdi
+                    </td>
+                    <td>
+                        @item.KeyAdet
+                    </td>
+                    <td>
+                        @item.EklenmeTarihi.Value.Day/@item.EklenmeTarihi.Value.Month/@item.EklenmeTarihi.Value.Year
+                    </td>
+                    <td>
+                        @item.LisansBaslangicTarihi.Value.Day/@item.LisansBaslangicTarihi.Value.Month/@item.LisansBaslangicTarihi.Value.Year
+                    </td>
+                    <td>
+                        @item.LisansBitisTarihi.Value.Day/@item.LisansBitisTarihi.Value.Month/@item.LisansBitisTarihi.Value.Year
+                    </td>
+                </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
