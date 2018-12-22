@@ -103,11 +103,12 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult Login(string mail , string sifre)
         {
+            #region,LDAP ile giriş kontrolu
             bool ldap = Functions.LDAP(mail, sifre);
-
             if (ldap)
             {
                 Personel ldapPersonel = new Personel();
+                ldapPersonel.ID = -1;
                 ldapPersonel.Adi = "LDAP";
                 ldapPersonel.Soyadi = "Personel";
                 ldapPersonel.Email = mail;
@@ -115,7 +116,9 @@ namespace Inventory_Management_Web_Application.Controllers
                 Session["Kullanici"] = ldapPersonel;
                 return RedirectToAction("Index", "Admin");
             }
+            #endregion
 
+            #region,Personel ile giriş kontrolu
             Personel p = db.Personel.Where(x => x.Email == mail && x.Sifre == sifre).FirstOrDefault();
 
             if (p==null)
@@ -125,8 +128,8 @@ namespace Inventory_Management_Web_Application.Controllers
             }
 
             Session["Kullanici"] = p;
-
-            return RedirectToAction("Index","Admin");
+            return RedirectToAction("Index", "Admin");
+            #endregion
         }
 
         [HttpGet]

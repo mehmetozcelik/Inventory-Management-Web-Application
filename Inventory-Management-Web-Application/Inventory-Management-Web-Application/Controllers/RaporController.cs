@@ -41,9 +41,12 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult Urun(int? altKategoriID , int? stok ,DateTime? tarih , int? PersonelID , int? TedarikciID)
         {
-            List<Urun> rapor = db.Urun.Where(x => x.altKategoriID == altKategoriID || x.StokMiktari <= stok || x.EklenmeTarihi>=tarih || x.PersonelID==PersonelID || x.TedarikciID==TedarikciID).ToList();           
+            List<Urun> rapor = db.Urun.Where(x => x.altKategoriID == altKategoriID || x.StokMiktari <= stok || x.EklenmeTarihi>=tarih || x.PersonelID==PersonelID || x.TedarikciID==TedarikciID).ToList();
             var report = new ViewAsPdf("Urun_Print", rapor)
             { };
+
+
+
             return report;
         }
 

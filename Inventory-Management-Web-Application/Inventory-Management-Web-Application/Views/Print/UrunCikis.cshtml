@@ -20,7 +20,7 @@
     <ol>
         @foreach (var item in Model)
         {
-            <li>   @item.Urun.UrunAdi (@Model.Where(x => x.ID == item.ID).ToList().Count @item.Urun.UrunBirim.Adi)</li>
+            <li>   @item.Urun.UrunAdi (@Model.Where(x => x.ID == item.ID).SingleOrDefault().CikanMictar @item.Urun.UrunBirim.Adi)</li>
         }
     </ol>
     </div>
