@@ -44,10 +44,22 @@ namespace Inventory_Management_Web_Application.Models
 
         public int? TedarikciID { get; set; }
 
+        public bool? Aktif { get; set; }
+
+        public int? SilenKisiID { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime? SilmeTarihi { get; set; }
+
+        [StringLength(500)]
+        public string SilmeNedeni { get; set; }
+
         public virtual AltKategori AltKategori { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArizaDurum> ArizaDurum { get; set; }
+
+        public virtual Personel Personel { get; set; }
 
         public virtual UrunBirim UrunBirim { get; set; }
 

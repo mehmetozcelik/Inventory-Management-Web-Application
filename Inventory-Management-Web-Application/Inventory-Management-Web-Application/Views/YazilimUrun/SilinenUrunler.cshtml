@@ -2,12 +2,13 @@
 @{
     /**/
 
-    ViewBag.Title = "Listesi";
+    ViewBag.Title = "SilinenListesi";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 
 
+@using Inventory_Management_Web_Application.Controllers
 @using Inventory_Management_Web_Application.Models
 
 @model List<YazılımUrun>
@@ -40,11 +41,9 @@
         <section class="panel">
             <header class="panel-heading" style="padding-bottom: 10px;">
                 <div class="col-lg-12" style="margin-bottom:10px;">
-                    <b>Ürün Listesi</b>
-                    <a href="Ekle" class="btn btn-success" style="float: right"><i class="icon-plus"></i> Yeni Ürün Ekle</a>
+                    <b>Silinen Ürünler</b>
                 </div>
             </header>
-
             <div class="panel-body">
                 <div class="col-lg-12">
                     <div class="adv-table editable-table">
@@ -52,22 +51,18 @@
                             <thead>
                                 <tr>
                                     <th>Ürün Kodu</th>
-                                    <th>Ürün Seri No</th>
-                                    <th>Ürün Adı</th>
-                                    <th>Açıklama</th>
-                                    <th>Lisans Başlangıç Tarihi</th>
-                                    <th>Lisans Bitiş Tarihi</th>
-                                    <th>Key Adeti</th>
-                                    <th>Lisans Uyarı</th>
+                                    <th>Seri No</th>
                                     <th>Kategori</th>
-
+                                    <th>Adı</th>
+                                    <th>Nedeni</th>
+                                    <th>Tarihi</th>
+                                    <th>Silen Kişi</th>
                                     <th style="text-align:center;"> İşlemler</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    var lisansUyari = (item.LisansBitisTarihi.Value.Date - DateTime.Now.Date).TotalDays; 
                                     <tr id="@item.ID">
                                         <td>
                                             @item.UrunID
@@ -76,49 +71,22 @@
                                             @item.UrunSeriNo
                                         </td>
                                         <td>
+                                            @item.AltKategori.KategoriAdi
+                                        </td>
+                                        <td>
                                             @item.UrunAdi
                                         </td>
                                         <td>
-                                            @item.Aciklama
+                                            @item.SilmeNedeni
                                         </td>
                                         <td>
-                                            @item.LisansBaslangicTarihi.Value.Day/@item.LisansBaslangicTarihi.Value.Month/@item.LisansBaslangicTarihi.Value.Year
+                                            @item.SilmeTarihi
                                         </td>
                                         <td>
-                                            @item.LisansBitisTarihi.Value.Day/@item.LisansBitisTarihi.Value.Month/@item.LisansBitisTarihi.Value.Year
+                                            @item.Personel.Adi
                                         </td>
                                         <td>
-                                            @if (item.KeyAdet <= ViewBag.ayarlar.YazilimUrunStok)
-                                            {
-                                                <span class="label label-danger label-mini">@item.KeyAdet <b>Adet</b></span>
-                                            }
-                                            else
-                                            {
-                                                <span class="label label-success label-mini">@item.KeyAdet <b>Adet</b></span>
-                                            }
-
-                                        </td>
-                                        <td>
-                                            @if (lisansUyari <= ViewBag.ayarlar.YazilimUrun)
-                                            {
-                                                <span class="label label-danger label-mini">@lisansUyari <b>Gün</b></span>
-                                            }
-                                            else
-                                            {
-                                                <span class="label label-success label-mini">@lisansUyari <b>Gün</b></span>
-                                            }
-                                        </td>
-                                        
-                                        <td>
-                                            @item.AltKategori.KategoriAdi
-                                        </td>
-
-                                        <td style="width: 29%">
-                                            <a title="Sil" style="float:right;" class="btn btn-danger btn-xs btn-confirm" data-id="@item.ID"><i class="icon-trash"></i> Sil</a>
-                                            <a title="Düzünle" style="float:right;margin-right:5px;" href="/YazilimUrun/Guncelle/@item.ID" class="btn btn-primary btn-xs"><i class="icon-pencil"></i> Düzenle</a>
-                                            <a title="Stok Ekle" href="stokEkleView/@item.ID" style="float:right;margin-right:5px;" class="btn btn-warning btn-xs"><i class="icon-plus-sign-alt"></i> Stok Ekle</a>
-                                            <a title="Ürün Çıkışı" href="/YazilimUrun/stokCikar/@item.ID" style="float:right;margin-right:5px;" class="btn btn-info btn-xs"><i class="icon-mail-reply (alias)"></i> Ürün Çıkışı</a>
-
+                                            <a title="Sil" class="btn btn-danger btn-xs btn-confirm" data-id="@item.ID"><i class="icon-trash"></i> Sil</a>
                                         </td>
                                     </tr>
                                 }
@@ -132,8 +100,6 @@
     </div>
 </div>
 
-
-
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
@@ -142,18 +108,12 @@
                 <h4 class="modal-title" id="myModalLabel">Bu Ürünü Silmek İstediğinizden Emin misiniz ?</h4>
             </div>
             <div class="modal-footer">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Ürünü Silme Nedeni </label>&nbsp;<span style="color: red;">*</span>
-                    <input type="text" class="form-control" placeholder="Ürünü Silme Nedenini Giriniz..." id="neden" required>
-                </div>
                 <button type="button" class="btn btn-danger" id="modal-btn-si">Sil</button>
                 <button type="button" class="btn btn-primary" id="modal-btn-no">Kapat</button>
             </div>
         </div>
     </div>
 </div>
-
-
 
 @section script{
     <script type="text/javascript" src="/Content/assets/data-tables/jquery.dataTables.js"></script>
@@ -198,16 +158,16 @@
         };
 
 
+
         modalConfirm(function (confirm) {
             if (confirm) {
                 $.ajax({
-                    url: '@Url.Action("Sil","YazilimUrun")',
-                    type: 'POST',
+                    url: '@Url.Action("SilSilinen", "YazilimUrun")',
                     contentType: 'application/json',
                     data: JSON.stringify({
                         id: id,
-                        neden: document.getElementById('neden').value
                     }),
+                    type: 'POST',
                     success: function (rs) {
                         if (rs === true) {
                             $('#' + id).remove();

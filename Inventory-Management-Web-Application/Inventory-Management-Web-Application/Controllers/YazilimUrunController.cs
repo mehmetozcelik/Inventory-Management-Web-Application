@@ -17,7 +17,7 @@ namespace Inventory_Management_Web_Application.Controllers
         public ActionResult Listesi()
         {
             ViewBag.ayarlar = db.Ayarlar.FirstOrDefault();
-            return View(db.YazılımUrun.ToList());
+            return View(db.YazılımUrun.Where(x => x.Aktif != false).ToList());
         }
 
         public PartialViewResult altKategoriDropdown(int id)
@@ -77,7 +77,43 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult Sil(int id)
+        public ActionResult Sil(int id, string neden)
+        {
+            Personel aktifKullanici = (Personel)Session["Kullanici"];
+            YazılımUrun b = db.YazılımUrun.Where(x => x.ID == id).SingleOrDefault();
+            var dateAndTime = DateTime.Now;
+            var date = dateAndTime.Date;
+            if (b == null)
+            {
+                return Json(false);
+            }
+            else
+            {
+                try
+                {
+                    b.Aktif = false;
+                    b.SilmeNedeni = neden;
+                    b.SilenKisiID = aktifKullanici.ID;
+                    b.SilmeTarihi = date;
+                    db.SaveChanges();
+                    return Json(true);
+                }
+                catch (Exception)
+                {
+                    return Json("FK");
+                }
+
+            }
+        }
+
+        [HttpGet]
+        public ActionResult SilinenUrunler()
+        {
+            return View(db.YazılımUrun.Where(x => x.Aktif == false).ToList());
+        }
+
+        [HttpPost]
+        public ActionResult SilSilinen(int id)
         {
             YazılımUrun b = db.YazılımUrun.Where(x => x.ID == id).SingleOrDefault();
             if (b == null)
@@ -88,7 +124,7 @@ namespace Inventory_Management_Web_Application.Controllers
             {
                 try
                 {
-                    db.YazılımUrun.Remove(b);
+                    b.Aktif = null;
                     db.SaveChanges();
                     return Json(true);
                 }
