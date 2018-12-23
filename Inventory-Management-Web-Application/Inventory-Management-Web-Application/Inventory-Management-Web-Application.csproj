@@ -185,6 +185,7 @@
     <Content Include="DB_Script\23.12.2018-19.31-Script.sql" />
     <Content Include="DB_Script\22.12.2018.sql" />
     <Content Include="DB_Script\23.20.2018_StokTakipDB.sql" />
+    <Content Include="DB_Script\23.20.2018_StokTakipDB_2.sql" />
     <Content Include="DB_Script\StokDBScprit.sql" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
