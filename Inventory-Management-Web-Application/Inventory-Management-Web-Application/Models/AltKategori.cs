@@ -12,6 +12,7 @@ namespace Inventory_Management_Web_Application.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AltKategori()
         {
+            KategoriRol = new HashSet<KategoriRol>();
             Urun = new HashSet<Urun>();
             YazılımUrun = new HashSet<YazılımUrun>();
         }
@@ -27,6 +28,9 @@ namespace Inventory_Management_Web_Application.Models
         public int? AnaKategorID { get; set; }
 
         public virtual AnaKategori AnaKategori { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<KategoriRol> KategoriRol { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Urun> Urun { get; set; }

@@ -156,14 +156,21 @@ namespace Inventory_Management_Web_Application.Controllers
                 return RedirectToAction("Hata", "Admin");
             }
 
+            ViewBag.KategoriRolleri = db.KategoriRol.Where(x => x.RolID == r.ID).ToList();
+            ViewBag.Kategoriler = db.AltKategori.ToList();
+
+            ViewBag.ErisimYetkileri = db.ErisimRol.Where(x => x.RolID == r.ID).ToList();
+            ViewBag.Erisim = db.IslemErisim.ToList();
+
             ViewBag.Yetkileri = db.MenuRol.Where(x => x.RolID == r.ID).ToList();
             ViewBag.Menuler = db.Menu.ToList();
             return View(r);
         }
 
         [HttpPost]
-        public ActionResult Yetkiler(int RolID,MenuList list)
+        public ActionResult Yetkiler(int RolID,MenuList list , IslemErisimList list2 , string katrol)
         {
+            //string[] parts = katrol.split("^");
 
             Rol r = db.Rol.Where(x => x.ID == RolID).FirstOrDefault(); // Düzenlenmek istenen Rolu bul
 
@@ -172,18 +179,32 @@ namespace Inventory_Management_Web_Application.Controllers
                 return RedirectToAction("Hata", "Admin");
             }
 
-            //Bu role ait tüm yetkileri sil
+            #region,Menü Rolleri update
+            //Bu role ait tüm yetkileri 
             List<MenuRol> menuRol = db.MenuRol.Where(x => x.RolID == r.ID).ToList();
-
+            // Menü rollerinin silinmesi
             foreach (var item in menuRol)
             {
                 db.MenuRol.Remove(item);
             }
-
             db.SaveChanges(); // roller sıfırlandı.
-
             //Tüm rolleri yeniden yükle ve değişiklikleri kayıt et.
             MenuList.RolKontrol(list, RolID);
+            #endregion
+
+            #region,İşlem Rolleri Update
+            //Bu role ait post izinleri
+            List<ErisimRol> erisimRol = db.ErisimRol.Where(x => x.RolID == r.ID).ToList();
+            // Erisim rollerinin silinmesi
+            foreach (var item in erisimRol)
+            {
+                db.ErisimRol.Remove(item);
+            }
+            db.SaveChanges(); // roller sıfırlandı.
+             //Tüm erisimleri yeniden yükle ve değişiklikleri kayıt et.
+            IslemErisimList.RolKontrol(list2, RolID);
+            #endregion
+
 
             //Sayfayı geri yükle
             ViewBag.Yetkileri = db.MenuRol.Where(x => x.RolID == r.ID).ToList();

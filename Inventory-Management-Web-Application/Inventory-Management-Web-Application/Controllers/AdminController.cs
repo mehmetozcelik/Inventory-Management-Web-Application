@@ -59,5 +59,11 @@ namespace Inventory_Management_Web_Application.Controllers
             k.roller = db.MenuRol.Where(x=>x.RolID==p.RolID).ToList();
             return  PartialView(k);
         }
+
+        [HttpGet]
+        public ActionResult YetkiBulunamadi()
+        {
+            return View();
+        }
     }
 }

@@ -12,6 +12,8 @@ namespace Inventory_Management_Web_Application.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Rol()
         {
+            ErisimRol = new HashSet<ErisimRol>();
+            KategoriRol = new HashSet<KategoriRol>();
             MenuRol = new HashSet<MenuRol>();
             Personel = new HashSet<Personel>();
         }
@@ -23,6 +25,12 @@ namespace Inventory_Management_Web_Application.Models
 
         [StringLength(500)]
         public string Aciklama { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ErisimRol> ErisimRol { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<KategoriRol> KategoriRol { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MenuRol> MenuRol { get; set; }

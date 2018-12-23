@@ -183,6 +183,8 @@
     <Content Include="DB_Script\12.12.2018_StokTakipDB.sql" />
     <Content Include="DB_Script\13.12.2018_StokTakipDB.sql" />
     <Content Include="DB_Script\23.12.2018-19.31-Script.sql" />
+    <Content Include="DB_Script\22.12.2018.sql" />
+    <Content Include="DB_Script\23.20.2018_StokTakipDB.sql" />
     <Content Include="DB_Script\StokDBScprit.sql" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -202,7 +204,10 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Classes\CheckBoxes.cs" />
     <Compile Include="App_Classes\Functions.cs" />
+    <Compile Include="App_Classes\IslemErisimList.cs" />
+    <Compile Include="App_Classes\KategoriList.cs" />
     <Compile Include="App_Classes\MenuList.cs" />
     <Compile Include="App_Classes\UrunCikis.cs" />
     <Compile Include="App_Classes\YazilimUrunCikis.cs" />
@@ -226,7 +231,10 @@
     <Compile Include="Models\ArizaDurum.cs" />
     <Compile Include="Models\Ayarlar.cs" />
     <Compile Include="Models\Birim.cs" />
+    <Compile Include="Models\ErisimRol.cs" />
     <Compile Include="Models\InventoryContext.cs" />
+    <Compile Include="Models\IslemErisim.cs" />
+    <Compile Include="Models\KategoriRol.cs" />
     <Compile Include="Models\Menu.cs" />
     <Compile Include="Models\MenuRol.cs" />
     <Compile Include="Models\Personel.cs" />
@@ -316,6 +324,7 @@
     <Content Include="Views\Rapor\CikanYazilimUrun_Print.cshtml" />
     <Content Include="Views\Urun\SilinenUrunler.cshtml" />
     <Content Include="Views\YazilimUrun\SilinenUrunler.cshtml" />
+    <Content Include="Views\Admin\YetkiBulunamadi.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
