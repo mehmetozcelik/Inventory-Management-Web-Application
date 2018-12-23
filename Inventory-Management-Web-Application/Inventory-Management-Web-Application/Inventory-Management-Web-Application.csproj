@@ -182,6 +182,7 @@
     <Content Include="Content\xchart.html" />
     <Content Include="DB_Script\12.12.2018_StokTakipDB.sql" />
     <Content Include="DB_Script\13.12.2018_StokTakipDB.sql" />
+    <Content Include="DB_Script\23.12.2018-19.31-Script.sql" />
     <Content Include="DB_Script\22.12.2018.sql" />
     <Content Include="DB_Script\23.20.2018_StokTakipDB.sql" />
     <Content Include="DB_Script\StokDBScprit.sql" />
@@ -320,6 +321,8 @@
     <Content Include="Views\Rapor\YazilimUrun_Print.cshtml" />
     <Content Include="Views\Rapor\CikanYazilimUrun.cshtml" />
     <Content Include="Views\Rapor\CikanYazilimUrun_Print.cshtml" />
+    <Content Include="Views\Urun\SilinenUrunler.cshtml" />
+    <Content Include="Views\YazilimUrun\SilinenUrunler.cshtml" />
     <Content Include="Views\Admin\YetkiBulunamadi.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

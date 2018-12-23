@@ -142,6 +142,10 @@
                 <h4 class="modal-title" id="myModalLabel">Bu Ürünü Silmek İstediğinizden Emin misiniz ?</h4>
             </div>
             <div class="modal-footer">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Ürünü Silme Nedeni </label>&nbsp;<span style="color: red;">*</span>
+                    <input type="text" class="form-control" placeholder="Ürünü Silme Nedenini Giriniz..." id="neden" required>
+                </div>
                 <button type="button" class="btn btn-danger" id="modal-btn-si">Sil</button>
                 <button type="button" class="btn btn-primary" id="modal-btn-no">Kapat</button>
             </div>
@@ -197,8 +201,13 @@
         modalConfirm(function (confirm) {
             if (confirm) {
                 $.ajax({
-                    url: '/YazilimUrun/Sil/' + id,
+                    url: '@Url.Action("Sil","YazilimUrun")',
                     type: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        id: id,
+                        neden: document.getElementById('neden').value
+                    }),
                     success: function (rs) {
                         if (rs === true) {
                             $('#' + id).remove();

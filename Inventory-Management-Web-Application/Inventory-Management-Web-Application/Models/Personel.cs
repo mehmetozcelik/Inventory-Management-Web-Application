@@ -13,8 +13,10 @@ namespace Inventory_Management_Web_Application.Models
         public Personel()
         {
             ArizaDurum = new HashSet<ArizaDurum>();
+            Urun = new HashSet<Urun>();
             UrunCikis = new HashSet<UrunCikis>();
             UrunGiris = new HashSet<UrunGiris>();
+            YazılımUrun = new HashSet<YazılımUrun>();
         }
 
         public int ID { get; set; }
@@ -42,9 +44,15 @@ namespace Inventory_Management_Web_Application.Models
         public virtual Rol Rol { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Urun> Urun { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UrunCikis> UrunCikis { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UrunGiris> UrunGiris { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<YazılımUrun> YazılımUrun { get; set; }
     }
 }
