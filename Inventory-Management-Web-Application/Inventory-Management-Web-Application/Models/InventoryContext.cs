@@ -17,6 +17,9 @@
         public virtual DbSet<ArizaDurum> ArizaDurum { get; set; }
         public virtual DbSet<Ayarlar> Ayarlar { get; set; }
         public virtual DbSet<Birim> Birim { get; set; }
+        public virtual DbSet<ErisimRol> ErisimRol { get; set; }
+        public virtual DbSet<IslemErisim> IslemErisim { get; set; }
+        public virtual DbSet<KategoriRol> KategoriRol { get; set; }
         public virtual DbSet<Menu> Menu { get; set; }
         public virtual DbSet<MenuRol> MenuRol { get; set; }
         public virtual DbSet<Personel> Personel { get; set; }
@@ -32,6 +35,11 @@
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<AltKategori>()
+                .HasMany(e => e.KategoriRol)
+                .WithOptional(e => e.AltKategori)
+                .HasForeignKey(e => e.KategoriID);
+
             modelBuilder.Entity<AnaKategori>()
                 .HasMany(e => e.AltKategori)
                 .WithOptional(e => e.AnaKategori)
@@ -41,6 +49,11 @@
                 .HasMany(e => e.TeslimAlanPersonel)
                 .WithOptional(e => e.Birim)
                 .HasForeignKey(e => e.TeslimBirimID);
+
+            modelBuilder.Entity<IslemErisim>()
+                .HasMany(e => e.ErisimRol)
+                .WithOptional(e => e.IslemErisim)
+                .HasForeignKey(e => e.ErisimID);
 
             modelBuilder.Entity<Menu>()
                 .HasMany(e => e.Menu1)
