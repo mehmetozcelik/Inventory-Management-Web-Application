@@ -22,6 +22,7 @@ namespace Inventory_Management_Web_Application.App_Classes
             urunler.RemoveAll(x => x.ID == urun.ID);
         }
 
+
         public void ListeTemizle()
         {
             urunler.Clear();

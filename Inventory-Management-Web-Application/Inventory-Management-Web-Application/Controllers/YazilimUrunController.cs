@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Inventory_Management_Web_Application.App_Classes;
 using Inventory_Management_Web_Application.Models;
 
 
@@ -17,7 +18,8 @@ namespace Inventory_Management_Web_Application.Controllers
         public ActionResult Listesi()
         {
             ViewBag.ayarlar = db.Ayarlar.FirstOrDefault();
-            return View(db.YazılımUrun.ToList());
+            List<YazılımUrun> urunler = UrunList.IzinliYazilimUrunler();
+            return View(urunler);
         }
 
         public PartialViewResult altKategoriDropdown(int id)
@@ -176,7 +178,7 @@ namespace Inventory_Management_Web_Application.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult stokCikarView(UrunCikis uc)
+        public ActionResult stokCikarView(Models.UrunCikis uc)
         {
             int Lastid = 0;
             if (db.UrunCikis.Count() != 0)
@@ -250,6 +252,25 @@ namespace Inventory_Management_Web_Application.Controllers
             db.UrunGiris.Add(veri);
             db.SaveChanges();
             return RedirectToAction("urunGirisleri","Urun");
+        }
+
+        [HttpGet]
+        public ActionResult SepetSil(int id)
+        {
+            var urunler = (App_Classes.YazilimUrunCikis)Session["YazilimUrun"];
+            YazılımUrun b = db.YazılımUrun.Where(x => x.ID == id).SingleOrDefault();
+            if (b == null)
+            {
+                RedirectToAction("Hata", "Admin");
+            }
+            urunler.ListedenCikart(b);
+            if (urunler.HepsiniGetir().Count == 0)
+            {
+                urunler.ListeTemizle();
+                Session.Remove("YazilimUrun");
+                return RedirectToAction("Listesi");
+            }
+            return RedirectToAction("stokCikarView");
         }
 
         [HttpGet]

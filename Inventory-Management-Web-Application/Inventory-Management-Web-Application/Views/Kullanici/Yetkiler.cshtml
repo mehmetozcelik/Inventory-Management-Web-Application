@@ -29,251 +29,270 @@
     </style>
 }
 
-    <form role="form" method="post" action="/Kullanici/Yetkiler">
+<form role="form" method="post" action="/Kullanici/Yetkiler">
 
-        <div class="row">
-            <div class="col-lg-12">
-                <section class="panel">
-                    <header class="panel-heading" style="padding-bottom: 10px;">
-                        <div class="col-lg-12" style="margin-bottom:10px;">
-                            @Model.RolAdi İsimli Profile Ait Yetkiler
-                            <button type="submit" class="btn btn-success" style="float: right">Kaydet</button>
-                            <a href="/Kullanici/ProfilListesi" class="btn btn-default" style="float: right;margin-right:5px;">Geri</a>
-                        </div>
-                    </header>
-                </section>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <section class="panel">
-                    <header class="panel-heading">
-                        Menü Erişim İzinleri
-                        <span class="tools pull-right">
-                            <a href="javascript:;" class="icon-chevron-down"></a>
-                        </span>
-                    </header>
-                    <div class="hidden">
-                        <input name="RolID" value="@Model.ID" />
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel">
+                <header class="panel-heading" style="padding-bottom: 10px;">
+                    <div class="col-lg-12" style="margin-bottom:10px;">
+                        @Model.RolAdi İsimli Profile Ait Yetkiler
+                        <button type="submit" class="btn btn-success" style="float: right">Kaydet</button>
+                        <a href="/Kullanici/ProfilListesi" class="btn btn-default" style="float: right;margin-right:5px;">Geri</a>
                     </div>
-                    <div class="panel-body">
-                        <div class="col-lg-12">
+                </header>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    Menü Erişim İzinleri
+                    <span class="tools pull-right">
+                        <a href="javascript:;" class="icon-chevron-down"></a>
+                    </span>
+                </header>
+                <div class="hidden">
+                    <input name="RolID" value="@Model.ID" />
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
 
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Menü Adı</th>
-                                        <th>Url</th>
-                                        <th>Yetki Durumu</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Menü Adı</th>
+                                    <th>Url</th>
+                                    <th>Yetki Durumu</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                                    @{
+                                @{
 
-                                        foreach (Menu menu in ViewBag.Menuler)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    @menu.Adi
-                                                </td>
-                                                <td>
-                                                    @menu.Controller/@menu.Action
-                                                </td>
-                                                @foreach (MenuRol yetki in ViewBag.Yetkileri)
-                                                {
-                                                    if (menu.ID == yetki.MenuID)
-                                                    {
-                                                        <td>
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input name="@menu.MenuList" value="true" type="checkbox" checked>
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        temp = 1;
-                                                        continue;
-                                                    }
-                                                }
-
-                                                @if (temp == 0)
+                                    foreach (Menu menu in ViewBag.Menuler)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @menu.Adi
+                                            </td>
+                                            <td>
+                                                @menu.Controller/@menu.Action
+                                            </td>
+                                            @foreach (MenuRol yetki in ViewBag.Yetkileri)
+                                            {
+                                                if (menu.ID == yetki.MenuID)
                                                 {
                                                     <td>
                                                         <div class="checkbox">
                                                             <label>
-                                                                <input name="@menu.MenuList" value="true" type="checkbox">
+                                                                @if (yetki.Rol.RolAdi == "Admin")
+                                                                {
+                                                                    <input disabled name="@menu.MenuList" value="true" type="checkbox" checked> }
+                                                                else
+                                                                {
+                                                                    <input name="@menu.MenuList" value="true" type="checkbox" checked>}
+
                                                             </label>
                                                         </div>
                                                     </td>
+                                                    temp = 1;
+                                                    continue;
                                                 }
-                                                @{
-                                                    temp = 0;
-                                                }
-                                            </tr>
-                                        }
+                                            }
 
+                                            @if (temp == 0)
+                                            {
+                                                <td>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input name="@menu.MenuList" value="true" type="checkbox">
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            }
+                                            @{
+                                                temp = 0;
+                                            }
+                                        </tr>
                                     }
-                                </tbody>
-                            </table>
 
-                        </div>
+                                }
+                            </tbody>
+                        </table>
+
                     </div>
-                </section>
-            </div>
+                </div>
+            </section>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <section class="panel">
-                    <header class="panel-heading">
-                        İşlem İzinleri
-                        <span class="tools pull-right">
-                            <a href="javascript:;" class="icon-chevron-down"></a>
-                        </span>
-                    </header>
-                    <div class="hidden">
-                        <input name="RolID" value="@Model.ID" />
-                    </div>
-                    <div class="panel-body">
-                        <div class="col-lg-12">
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    İşlem İzinleri
+                    <span class="tools pull-right">
+                        <a href="javascript:;" class="icon-chevron-down"></a>
+                    </span>
+                </header>
+                <div class="hidden">
+                    <input name="RolID" value="@Model.ID" />
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
 
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Menü Adı</th>
-                                        <th>Url</th>
-                                        <th>Yetki Durumu</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Menü Adı</th>
+                                    <th>Url</th>
+                                    <th>Yetki Durumu</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                                    @{
+                                @{
 
-                                        foreach (IslemErisim Islem in ViewBag.Erisim)
-                                        {
-                                            <tr>
-                                                <td>
-                                                    @Islem.Adı
-                                                </td>
-                                                <td>
-                                                    @Islem.Controller/@Islem.Action
-                                                </td>
-                                                @foreach (ErisimRol yetki in ViewBag.ErisimYetkileri)
-                                                {
-                                                    if (Islem.ID == yetki.ErisimID)
-                                                    {
-                                                        <td>
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input name="@Islem.MenuList" value="true" type="checkbox" checked>
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        temp = 1;
-                                                        continue;
-                                                    }
-                                                }
-
-                                                @if (temp == 0)
+                                    foreach (IslemErisim Islem in ViewBag.Erisim)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Islem.Adı
+                                            </td>
+                                            <td>
+                                                @Islem.Controller/@Islem.Action
+                                            </td>
+                                            @foreach (ErisimRol yetki in ViewBag.ErisimYetkileri)
+                                            {
+                                                if (Islem.ID == yetki.ErisimID)
                                                 {
                                                     <td>
                                                         <div class="checkbox">
                                                             <label>
-                                                                <input name="@Islem.MenuList" value="true" type="checkbox">
+                                                                @if (yetki.Rol.RolAdi == "Admin")
+                                                                {
+                                                                    <input disabled name="@Islem.MenuList" value="true" type="checkbox" checked> }
+                                                                else
+                                                                {
+                                                                    <input  name="@Islem.MenuList" value="true" type="checkbox" checked>}
+
                                                             </label>
                                                         </div>
                                                     </td>
+                                                    temp = 1;
+                                                    continue;
                                                 }
-                                                @{
-                                                    temp = 0;
-                                                }
-                                            </tr>
-                                        }
+                                            }
 
-                                    }
-                                </tbody>
-                            </table>
-
-                        </div>
-                    </div>
-                </section>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <section class="panel">
-                    <header class="panel-heading">
-                        Ürün Erişim İzinleri
-                        <span class="tools pull-right">
-                            <a href="javascript:;" class="icon-chevron-down"></a>
-                        </span>
-                    </header>
-                    <div class="hidden">
-                        <input name="RolID" value="@Model.ID" />
-                    </div>
-                    <div class="panel-body">
-                        <div class="col-lg-12">
-
-                            <table class="table table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>Menü Adı</th>
-                                        <th>Yetki Durumu</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    @{
-
-                                        foreach (AltKategori kategori in ViewBag.Kategoriler)
-                                        {
-                                            <tr>
+                                            @if (temp == 0)
+                                            {
                                                 <td>
-                                                    @kategori.KategoriAdi
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input name="@Islem.MenuList" value="true" type="checkbox">
+                                                        </label>
+                                                    </div>
                                                 </td>
+                                            }
+                                            @{
+                                                temp = 0;
+                                            }
+                                        </tr>
+                                    }
 
-                                                @foreach (KategoriRol yetki in ViewBag.KategoriRolleri)
-                                                {
-                                                    if (kategori.ID == yetki.KategoriID)
-                                                    {
-                                                        <td>
-                                                            <div class="checkbox">
-                                                                <label>
-                                                                    <input onclick="myFunction()"  class="messageCheckbox" value="@kategori.KategoriAdi" type="checkbox" checked>
-                                                                </label>
-                                                            </div>
-                                                        </td>
-                                                        temp = 1;
-                                                        continue;
-                                                    }
-                                                }
+                                }
+                            </tbody>
+                        </table>
 
-                                                @if (temp == 0)
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    Ürün Erişim İzinleri
+                    <span class="tools pull-right">
+                        <a href="javascript:;" class="icon-chevron-down"></a>
+                    </span>
+                </header>
+                <div class="hidden">
+                    <input name="RolID" value="@Model.ID" />
+                </div>
+                <div class="panel-body">
+                    <div class="col-lg-12">
+
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Menü Adı</th>
+                                    <th>Yetki Durumu</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @{
+
+                                    foreach (AltKategori kategori in ViewBag.Kategoriler)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @kategori.KategoriAdi
+                                            </td>
+
+                                            @foreach (KategoriRol yetki in ViewBag.KategoriRolleri)
+                                            {
+                                                if (kategori.ID == yetki.KategoriID)
                                                 {
                                                     <td>
                                                         <div class="checkbox">
                                                             <label>
-                                                                <input onclick="myFunction()" class="messageCheckbox" value="@kategori.KategoriAdi" type="checkbox">
+                                                                @if (yetki.Rol.RolAdi == "Admin")
+                                                                {
+                                                                    <input disabled onclick="myFunction()" class="messageCheckbox" value="@kategori.KategoriAdi" type="checkbox" checked >
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input  onclick="myFunction()" class="messageCheckbox" value="@kategori.KategoriAdi" type="checkbox" checked >
+                                                                }
                                                             </label>
                                                         </div>
                                                     </td>
+                                                    temp = 1;
+                                                    continue;
                                                 }
-                                                @{
-                                                    temp = 0;
-                                                }
-                                            </tr>
-                                        }
+                                            }
 
+                                            @if (temp == 0)
+                                            {
+                                                <td>
+                                                    <div class="checkbox">
+                                                        <label>
+                                                            <input onclick="myFunction()" class="messageCheckbox" value="@kategori.KategoriAdi" type="checkbox">
+                                                        </label>
+                                                    </div>
+                                                </td>
+                                            }
+                                            @{
+                                                temp = 0;
+                                            }
+                                        </tr>
                                     }
-                                </tbody>
-                            </table>
 
-                        </div>
+                                }
+                            </tbody>
+                        </table>
+
                     </div>
-                </section>
-            </div>
+                </div>
+            </section>
         </div>
-        <input class="hidden" type="text" name="katrol" id="katrol" size="50">
-    </form>
+    </div>
+    <input class="hidden" type="text" name="katrol" id="katrol" size="50">
+</form>
 
 
 
@@ -304,10 +323,10 @@
             var len = cboxes.length;
             for (var i = 0; i < len; i++) {
                 if (cboxes[i].checked) {
-                    checkedValue = cboxes[i].value + "^" + checkedValue ;
+                    checkedValue = cboxes[i].value + "^" + checkedValue;
                 }
             }
-          
+
             document.getElementById("katrol").value = checkedValue;
         }
     </script>

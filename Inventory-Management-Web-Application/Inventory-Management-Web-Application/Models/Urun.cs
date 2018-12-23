@@ -19,9 +19,6 @@ namespace Inventory_Management_Web_Application.Models
 
         public int ID { get; set; }
 
-        [StringLength(100)]
-        public string UrunSeriNo { get; set; }
-
         [StringLength(50)]
         public string UrunKodu { get; set; }
 

@@ -122,7 +122,7 @@
     modalConfirm(function (confirm) {
         if (confirm) {
             $.ajax({
-                url: '/Tanim/teslimBirimSil/' + id,
+                url: '/Kullanici/YetkiSil/' + id,
                 type: 'POST',
                 success: function (rs) {
                     if (rs === true) {
@@ -131,6 +131,14 @@
                     else if (rs === "FK")
                     {
                         alert("Bu Birime ait Personel kaydı Bulunduğundan dolayı bu Birimi Silemezsiniz. ");
+                    }
+                    else if (rs==="admin")
+                    {
+                        alert("Admin Yetkisi Silenemez.");
+                    }
+                    else if (rs==="ldap")
+                    {
+                        alert("LDAP Yetkisi Silinemez.");
                     }
                     else {
                         alert('Silme işlemi gerçekleşirken bir hata oluştu.');

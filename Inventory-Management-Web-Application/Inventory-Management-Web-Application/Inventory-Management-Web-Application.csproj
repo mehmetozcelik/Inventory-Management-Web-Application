@@ -203,12 +203,11 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Classes\CheckBoxes.cs" />
     <Compile Include="App_Classes\Functions.cs" />
     <Compile Include="App_Classes\IslemErisimList.cs" />
-    <Compile Include="App_Classes\KategoriList.cs" />
     <Compile Include="App_Classes\MenuList.cs" />
     <Compile Include="App_Classes\UrunCikis.cs" />
+    <Compile Include="App_Classes\UrunList.cs" />
     <Compile Include="App_Classes\YazilimUrunCikis.cs" />
     <Compile Include="App_Classes\_SecurityFilter.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />

@@ -1,4 +1,5 @@
-﻿using Inventory_Management_Web_Application.Models;
+﻿using Inventory_Management_Web_Application.App_Classes;
+using Inventory_Management_Web_Application.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,9 +15,10 @@ namespace Inventory_Management_Web_Application.Controllers
 
         [HttpGet]
         public ActionResult Listesi()
-        {
+        {           
             ViewBag.ayarlar = db.Ayarlar.FirstOrDefault();
-            return View(db.Urun.ToList());
+            List<Urun> urunler = UrunList.IzinliUrunler();
+            return View(urunler);
         }
 
         public PartialViewResult altKategoriDropdown(int id)
@@ -134,7 +136,7 @@ namespace Inventory_Management_Web_Application.Controllers
             gu.StokMiktari = u.StokMiktari;
             gu.UrunBirimID = u.UrunBirimID;
             gu.UrunKodu = u.UrunKodu;
-            gu.UrunSeriNo = u.UrunSeriNo;
+            //gu.UrunSeriNo = u.UrunSeriNo;
             db.SaveChanges();
             return RedirectToAction("Listesi");
         }
@@ -271,7 +273,7 @@ namespace Inventory_Management_Web_Application.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult stokCikarView(UrunCikis uc)
+        public ActionResult stokCikarView(Models.UrunCikis uc)
         {
             int Lastid = 0;
             if (db.UrunCikis.Count() !=0)
@@ -328,6 +330,26 @@ namespace Inventory_Management_Web_Application.Controllers
             {
                 var liste = urunler.HepsiniGetir();
             }
+        }
+
+
+        [HttpGet]
+        public ActionResult SepetSil(int id)
+        {
+            var urunler = (App_Classes.UrunCikis)Session["Urun"];
+            Urun b = db.Urun.Where(x => x.ID == id).SingleOrDefault();
+            if (b==null)
+            {
+                RedirectToAction("Hata","Admin");
+            }
+            urunler.ListedenCikart(b);
+            if (urunler.HepsiniGetir().Count==0)
+            {
+                urunler.ListeTemizle();
+                Session.Remove("Urun");
+                return RedirectToAction("Listesi");
+            }
+            return RedirectToAction("stokCikarView");
         }
 
         [HttpGet]

@@ -169,8 +169,7 @@ namespace Inventory_Management_Web_Application.Controllers
 
         [HttpPost]
         public ActionResult Yetkiler(int RolID,MenuList list , IslemErisimList list2 , string katrol)
-        {
-            //string[] parts = katrol.split("^");
+        {         
 
             Rol r = db.Rol.Where(x => x.ID == RolID).FirstOrDefault(); // Düzenlenmek istenen Rolu bul
 
@@ -190,6 +189,8 @@ namespace Inventory_Management_Web_Application.Controllers
             db.SaveChanges(); // roller sıfırlandı.
             //Tüm rolleri yeniden yükle ve değişiklikleri kayıt et.
             MenuList.RolKontrol(list, RolID);
+            ViewBag.Yetkileri = db.MenuRol.Where(x => x.RolID == r.ID).ToList();
+            ViewBag.Menuler = db.Menu.ToList();
             #endregion
 
             #region,İşlem Rolleri Update
@@ -205,12 +206,69 @@ namespace Inventory_Management_Web_Application.Controllers
             IslemErisimList.RolKontrol(list2, RolID);
             #endregion
 
-
+            #region, ürün Kategori rolleri
+            string[] parts = katrol.Split('^');
+            List<AltKategori> alts = new List<AltKategori>(); 
+            for (int i = 0; i < parts.Length; i++)
+            {
+                string s = parts[i].ToString();
+                AltKategori alt = db.AltKategori.Where(x => x.KategoriAdi == s).SingleOrDefault();
+                if (alt !=null)
+                {
+                    alts.Add(alt);
+                }
+            }
+            List<KategoriRol> kr = db.KategoriRol.Where(x => x.RolID == RolID).ToList();
+            foreach (var item in kr) // tüm kategori rollerini sil.
+            {
+                db.KategoriRol.Remove(item);
+            }
+            db.SaveChanges();
+            //tüm rolleri yeniden yükle
+            foreach (AltKategori item in alts)
+            {
+                KategoriRol ktr = new KategoriRol();
+                ktr.RolID = RolID;
+                ktr.KategoriID = item.ID;
+                db.KategoriRol.Add(ktr);
+                db.SaveChanges();
+            }
+            #endregion
             //Sayfayı geri yükle
-            ViewBag.Yetkileri = db.MenuRol.Where(x => x.RolID == r.ID).ToList();
-            ViewBag.Menuler = db.Menu.ToList();
             ViewBag.basarili = "Profil yetkileri başarılı bir şekilde güncellenmiştir.";
             return RedirectToAction("ProfilListesi");
+        }
+
+        [HttpPost]
+        public ActionResult YetkiSil(int id)
+        {
+            Rol b = db.Rol.Where(x => x.ID == id).SingleOrDefault();
+            if (b == null)
+            {
+                return Json(false);
+            }
+            else
+            {
+                try
+                {
+                    if (b.RolAdi=="Admin")
+                    {
+                        return Json("admin");
+                    }
+                    if (b.RolAdi== "LDAP")
+                    {
+                        return Json("ldap");
+                    }
+                    db.Rol.Remove(b);
+                    db.SaveChanges();
+                    return Json(true);
+                }
+                catch (Exception)
+                {
+                    return Json("FK");
+                }
+
+            }
         }
 
 
