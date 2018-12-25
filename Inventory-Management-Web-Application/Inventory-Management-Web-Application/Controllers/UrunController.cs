@@ -42,14 +42,14 @@ namespace Inventory_Management_Web_Application.Controllers
                 ID = x.ID,
                 TedarikciAdi = x.FirmaAdi
             });
-            var personeller = db.Personel.Select(x => new
+            var personelleri = db.Personel.Select(x => new
             {
                 ID = x.ID,
                 adiSoyadi = x.Adi + " " + x.Soyadi
             });
             ViewBag.tedarikciler = new SelectList(tedarikciler, "ID", "TedarikciAdi");
-            ViewBag.personeller = new SelectList(personeller, "ID", "adiSoyadi");
-
+            ViewBag.personelleri = new SelectList(personelleri, "ID", "adiSoyadi");
+            ViewBag.personeller = db.Personel.ToList();
 
             return View();
         }
@@ -303,7 +303,9 @@ namespace Inventory_Management_Web_Application.Controllers
                 ID = x.ID,
                 adiSoyadi = x.Adi + " " + x.Soyadi
             });
+            ViewBag.Birimler = db.Birim.ToList();
             var urunbirimler = db.UrunBirim.ToList();
+            ViewBag.personeller = db.Personel.ToList();
             ViewBag.teslimalanlar = new SelectList(personeller, "ID", "adiSoyadi");
             ViewBag.teslimverenler = new SelectList(personellerVeren, "ID", "adiSoyadi");
             return View();
@@ -404,7 +406,7 @@ namespace Inventory_Management_Web_Application.Controllers
             var urunbirimler = db.UrunBirim.ToList();
             ViewBag.tedarikciler = new SelectList(tedarikciler, "ID", "TedarikciAdi");
             ViewBag.personeller = new SelectList(personeller, "ID", "adiSoyadi");
-
+            ViewBag.personelleri = db.Personel.ToList();
             Urun eklenecekUrun = db.Urun.Where(x => x.ID == id).FirstOrDefault();
             return View(eklenecekUrun);
         }

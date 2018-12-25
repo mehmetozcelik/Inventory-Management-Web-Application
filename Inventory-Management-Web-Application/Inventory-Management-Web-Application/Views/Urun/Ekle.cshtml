@@ -2,6 +2,16 @@
 @{
     ViewBag.Title = "Ekle";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+}
+
+
+
+
+@using Inventory_Management_Web_Application.Models
+
+@{
+    Personel p = (Personel)Session["Kullanici"];
 }
 
 <div class="row">
@@ -21,6 +31,8 @@
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Kategori Seçiniz </label>&nbsp;<span style="color: red;">*</span>
                                     @Html.DropDownList("KategoriID", (SelectList)ViewBag.anakategoriler, "Seçiniz...", new { @class = "form-control", required = "required", id = "ana" })
+                                    @*@Html.DropDownList("KategoriID", (MultiSelectList)ViewBag.anakategoriler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", id = "ana" })*@
+
                                 </div>
 
                                 <div class="form-group alt">
@@ -41,10 +53,29 @@
                                     <label for="exampleInputEmail1">Birim Seçiniz </label>&nbsp;<span style="color: red;">*</span>
                                     @Html.DropDownList("UrunBirimID", (SelectList)ViewBag.urunbirimler, "Seçiniz...", new { @class = "form-control", required = "required" })
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Ekleyen Kişiyi Seçiniz </label>&nbsp;<span style="color: red;">*</span>
-                                    @Html.DropDownList("PersonelID", (SelectList)ViewBag.personeller, "Seçiniz...", new { @class = "form-control", required = "required" })
-                                </div>
+
+
+                                @{
+                                    if (p.Rol.RolAdi != "LDAP")
+                                    {
+
+                                        foreach (Personel item in ViewBag.personeller)
+                                        {
+                                            if (item.ID == p.ID)
+                                            {
+                                                <input type="text" class="form-control hidden" name="PersonelID" value="@item.ID" required>
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Ekleyen Kişiyi Seçiniz </label>&nbsp;<span style="color: red;">*</span>
+                                            @Html.DropDownList("PersonelID", (SelectList)ViewBag.personelleri, "Seçiniz...", new { @class = "form-control", required = "required" })
+                                        </div>
+                                    }
+                                }
+
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tedarikçi Seçiniz </label>&nbsp;<span style="color: red;">*</span>
                                     @Html.DropDownList("TedarikciID", (SelectList)ViewBag.tedarikciler, "Seçiniz...", new { @class = "form-control", required = "required" })
@@ -69,21 +100,21 @@
 
 
 @section script{
-       <script>
-           var id;
-           $("#ana").change(function () {
-               id = this.value;
-               $.ajax({
-                   url: '/Urun/altKategoriDropdown/' + id,
-                   type: 'GET',
-                   cache: false,
-                   success: function (data) {
-                       $('.alt').html(data);
-                   },
-                   error: function () {
-                       $('.alt').html("");
-                   }
-               });
-           });
+    <script>
+        var id;
+        $("#ana").change(function () {
+            id = this.value;
+            $.ajax({
+                url: '/Urun/altKategoriDropdown/' + id,
+                type: 'GET',
+                cache: false,
+                success: function (data) {
+                    $('.alt').html(data);
+                },
+                error: function () {
+                    $('.alt').html("");
+                }
+            });
+        });
     </script>
 }

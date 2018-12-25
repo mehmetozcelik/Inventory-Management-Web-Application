@@ -49,7 +49,6 @@ namespace Inventory_Management_Web_Application.App_Classes
         public bool Ayarlar { get; set; }
         public bool SilinenUrunler { get; set; }
         public bool SilinenYazilimUrunler { get; set; }
-        
 
         public static void RolKontrol(MenuList list ,int RolID)
         {

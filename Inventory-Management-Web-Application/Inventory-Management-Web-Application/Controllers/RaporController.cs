@@ -1,4 +1,5 @@
 ﻿using Inventory_Management_Web_Application.Models;
+using Inventory_Management_Web_Application.ReportFilters;
 using Rotativa;
 using System;
 using System.Collections.Generic;
@@ -39,9 +40,11 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult Urun(int? altKategoriID , int? stok ,DateTime? tarih , int? PersonelID , int? TedarikciID)
+        public ActionResult Urun(UrunFilter list)
         {
-            List<Urun> rapor = db.Urun.Where(x => x.altKategoriID == altKategoriID || x.StokMiktari <= stok || x.EklenmeTarihi>=tarih || x.PersonelID==PersonelID || x.TedarikciID==TedarikciID).ToList();
+            //int? altKategoriID, int? stok, DateTime? tarih , int? PersonelID, int? TedarikciID
+            //List<Urun> rapor = db.Urun.Where(x => x.altKategoriID == altKategoriID || x.StokMiktari <= stok || x.EklenmeTarihi>=tarih || x.PersonelID==PersonelID || x.TedarikciID==TedarikciID).ToList();
+            List<Urun> rapor = UrunFilter.UrunSorgu(list);
             var report = new ViewAsPdf("Urun_Print", rapor)
             { };
 
