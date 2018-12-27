@@ -20,44 +20,48 @@
 <body>
     <div style="align-items:center;text-align:center;">
         <h3>Düzce Üniversitesi Bilgi İşlem Daire Başkanlığı <br /> BISTOK Ürün Raporu </h3> <p>@DateTime.Now</p><br />
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Ürün Kodu</th>
-                    <th>Seri No</th>
-                    <th>Kategori</th>
-                    <th>Adı</th>
-                    <th>Stok</th>
-                    <th>Eklenme Tarihi</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
+        @if (Model.Count == 0)
+        {
+            <p>Girilen Özelliklerde herhangi bir kayıt bulunamadı.</p>
+        }
+        else
+        {
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>
-                            @item.UrunKodu
-                        </td>
-                        <td>
-                            @item.UrunSeriNo
-                        </td>
-                        <td>
-                            @item.AltKategori.KategoriAdi
-                        </td>
-                        <td>
-                            @item.UrunAdi
-                        </td>
-                        <td>
-                            @item.StokMiktari @item.UrunBirim.Adi
-                        </td>
-                        <td>
-                            @item.EklenmeTarihi.Value.Day/@item.EklenmeTarihi.Value.Month/@item.EklenmeTarihi.Value.Year
-                        </td>
+                        <th>Ürün Kodu</th>
+                        <th>Kategori</th>
+                        <th>Adı</th>
+                        <th>Stok</th>
+                        <th>Eklenme Tarihi</th>
                     </tr>
-                }
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td align="left">
+                                @item.UrunKodu
+                            </td>
+                            <td align="left">
+                                @item.AltKategori.KategoriAdi
+                            </td>
+                            <td align="left">
+                                @item.UrunAdi
+                            </td>
+                            <td align="left">
+                                @item.StokMiktari @item.UrunBirim.Adi
+                            </td>
+                            <td align="left">
+                                @item.EklenmeTarihi.Value.Day/@item.EklenmeTarihi.Value.Month/@item.EklenmeTarihi.Value.Year
+                            </td>
+                        </tr>
+                    }
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        }
+
     </div>
 </body>
 </html>

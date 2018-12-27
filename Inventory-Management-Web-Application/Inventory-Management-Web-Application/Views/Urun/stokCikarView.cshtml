@@ -2,15 +2,26 @@
 @{
     ViewBag.Title = "TeslimBirim";
 }
+@section head{
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+}
 
 @using Inventory_Management_Web_Application.Models
 
 @using Inventory_Management_Web_Application.App_Classes
 
 @{
-    var urunler = (Inventory_Management_Web_Application.App_Classes.UrunCikis)Session["Urun"];
+    var urunler = (Inventory_Management_Web_Application.App_Classes.UrunCikisSepet)Session["Urun"];
     List<Urun> liste = urunler.HepsiniGetir();
-} 
+}
+
+@{
+    Personel p = (Personel)Session["Kullanici"];
+}
+
 
 <div class="row">
     <div class="col-lg-12">
@@ -39,7 +50,7 @@
                                 @item.UrunAdi (@liste.Where(x => x.ID == item.ID).ToList().Count @item.UrunBirim.Adi)
                             </td>
                             <td>
-                                <a title="Sil" style="float:right;margin-left:5px;" class="btn btn-danger btn-xs btn-confirm" data-id="@item.ID"><i class="icon-trash"></i> Sil</a>
+                                <a title="Sil" href="/Urun/SepetSil/@item.ID" style="float:right;margin-left:5px;" class="btn btn-danger btn-xs btn-confirm"><i class="icon-trash"></i> Sil</a>
                             </td>
                         </tr>
                         temp.Add(item);
@@ -56,17 +67,37 @@
     <div class="col-lg-12">
         <section class="panel">
             <header class="panel-heading">
-                Birim Ekle (Fak / Myo)
+                Ürün çıkarma İşlemi
             </header>
             <div class="panel-body">
                 <form role="form" method="post" action="/Urun/stokCikarView">
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Ürünü Çıkartan Kişiyi Seçiniz </label>
-                        @Html.DropDownList("TeslimVerenID", (SelectList)ViewBag.teslimverenler, "Seçiniz...", new { @class = "form-control", required = "required" })
-                    </div>
+
+                    @{
+                        if (p.Rol.RolAdi != "LDAP")
+                        {
+
+                            foreach (Personel item in ViewBag.personeller)
+                            {
+                                if (item.ID == p.ID)
+                                {
+                                    <input type="text" class="form-control hidden" name="TeslimVerenID" value="@item.ID" required>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Ürünü Çıkartan Kişiyi Seçiniz </label>
+                                @Html.DropDownList("TeslimVerenID", (SelectList)ViewBag.teslimverenler, "Seçiniz...", new { @class = "form-control", required = "required" })
+
+                            </div>
+                        }
+                    }
                     <div class="form-group">
                         <label for="exampleInputEmail1">Ürünü Teslim Alan Kişiyi Seçiniz </label>
-                        @Html.DropDownList("TeslimAlanKisiID", (SelectList)ViewBag.teslimalanlar, "Seçiniz...", new { @class = "form-control", required = "required" })
+                        @Html.DropDownList("TeslimAlanKisiID", (SelectList)ViewBag.teslimalanlar, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true" })
+
+                        <a style="float:right;margin-top:5px;margin-bottom:10px;" href="#" class="btn btn-success btn-sm btn-confirm"><i class="icon-plus-sign"></i>  Yeni Kişi Ekle</a>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Teslim Tarihi Giriniz </label>
@@ -85,67 +116,87 @@
 </div>
 
 
-
-
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Bu Birimi Silmek İstediğinizden Emin misiniz ?</h4>
+                <h4 class="modal-title" id="myModalLabel">Yeni Kişi Ekleme</h4>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="modal-btn-si">Sil</button>
-                <button type="button" class="btn btn-primary" id="modal-btn-no">Kapat</button>
+            <div class="modal-body">
+                <form action="../Personel/TaEkle" method="post">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="col-lg-12">
+                                <input name="control" class="form-control hidden" type="text" value="1">
+                                <div class="form-group">
+                                    <label>Adı</label>&nbsp;<span style="color: red;">*</span>
+                                    <input name="Adi" class="form-control" placeholder="Personel Adı Giriniz...">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Soyadı</label>&nbsp;<span style="color: red;">*</span>
+                                    <input name="Soyadi" class="form-control" required="" placeholder="Personel Soyadı Giriniz...">
+                                </div>
+                                <div class="form-group">
+                                    <label>Birimi</label>&nbsp;<span style="color: red;">*</span>
+                                    <select onchange="show_selected()" id="gkk" class="form-control m-bot15" name="TeslimBirimID">
+                                        <option value="default">Birim Seçiniz</option>
+                                        @foreach (var item in ViewBag.Birimler)
+                                        {
+                                            <option value="@item.ID">@item.Adi</option>
+                                        }
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Telefon</label>&nbsp;<span style="color: red;">*</span>
+                                    <input name="Tel" class="form-control" required="" placeholder="Personel Tel No Giriniz...">
+                                </div>
+                                <div class="form-group">
+                                    <label>E-Posta</label>&nbsp;<span style="color: red;">*</span>
+                                    <input name="Email" class="form-control" required="" placeholder="Personel e-Posta Giriniz...">
+                                </div>
+                                <a style="float:right;margin-right:5px;" class="btn btn-danger" id="modal-btn-no">İptal</a>
+                                <button style="float:right;margin-right:5px;" type="reset" class="btn btn-default">Temizle</button>
+                                <button style="float:right;margin-right:5px;" type="submit" id="button" class="btn btn-info">Kaydet</button>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
-<script src="/Content/js/jquery.js"></script>
-<script src="/Content/js/jquery-1.8.3.min.js"></script>
+@section script{
 
-<script>
-    var id;
-    var modalConfirm = function (callback) {
-        $(".btn-confirm").on("click", function () {
-            id = $(this).attr("data-id");
-            $("#mi-modal").modal('show');
-        });
+    <script>
+        var id;
+        var modalConfirm = function () {
 
-        $("#modal-btn-si").on("click", function () {
-            callback(true);
-            $("#mi-modal").modal('hide');
-        });
-
-        $("#modal-btn-no").on("click", function () {
-            callback(false);
-            $("#mi-modal").modal('hide');
-        });
-    };
-
-    modalConfirm(function (confirm) {
-        if (confirm) {
-            $.ajax({
-                url: '/Tanim/teslimBirimSil/' + id,
-                type: 'POST',
-                success: function (rs) {
-                    if (rs === true) {
-                        $('#' + id).remove();
-                    }
-                    else if (rs === "FK") {
-                        alert("Bu Birime ait Personel kaydı Bulunduğundan dolayı bu Birimi Silemezsiniz. ");
-                    }
-                    else {
-                        alert('Silme işlemi gerçekleşirken bir hata oluştu.');
-                    }
-                },
-                error: function (rs) {
-                    alert('Bir hata oluştu');
-                }
+            $(".btn-confirm").on("click", function () {
+                $("#mi-modal").modal('show');
             });
-        } else {
-            console.log("vazgeci");
-        }
-    });
-</script>
+
+            $("#modal-btn-si").on("click", function () {
+                $("#mi-modal").modal('hide');
+            });
+
+            $("#modal-btn-no").on("click", function () {
+                $("#mi-modal").modal('hide');
+            });
+        };
+
+
+        modalConfirm(function (confirm) {
+            if (confirm) {
+                console.log("basarili");
+            } else {
+                console.log("basarisiz");
+            }
+        });
+
+    </script>
+
+    }

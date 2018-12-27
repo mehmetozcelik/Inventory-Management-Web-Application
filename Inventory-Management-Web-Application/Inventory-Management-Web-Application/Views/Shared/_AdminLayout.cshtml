@@ -63,7 +63,7 @@
 
                             if (urunler != null)
                             {
-                                List<YazılımUrun> liste = urunler.HepsiniGetir();
+                                List<YazilimUrun> liste = urunler.HepsiniGetir();
 
                                 <li id="header_notification_bar" class="dropdown" style="margin-right:5px;">
                                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -78,9 +78,9 @@
                                         </li>
 
 
-                                        @{List<YazılımUrun> temp = new List<YazılımUrun>();
+                                        @{List<YazilimUrun> temp = new List<YazilimUrun>();
                                         }
-                                        @foreach (YazılımUrun item in liste)
+                                        @foreach (YazilimUrun item in liste)
                                         {
                                             if (temp.Where(x => x.ID == item.ID).SingleOrDefault() != null)
                                             {
@@ -108,7 +108,7 @@
                     @{
                         if (Session["Urun"] != null)
                         {
-                            var urunler = (Inventory_Management_Web_Application.App_Classes.UrunCikis)Session["Urun"];
+                            var urunler = (Inventory_Management_Web_Application.App_Classes.UrunCikisSepet)Session["Urun"];
 
                             if (urunler != null)
                             {
@@ -154,7 +154,7 @@
 
                                             }
                     }
-                                <a href="#" class="btn btn-default">@aktifKullanici.Adi @aktifKullanici.Soyadi</a>
+                                <a href="#" class="btn btn-default"><i class="icon-user"></i>  @aktifKullanici.Adi @aktifKullanici.Soyadi</a>
                     <a href="/Admin/CikisYap" class="btn btn-danger">Çıkış Yap <i class="icon-arrow-right"></i></a>
                 </ul>
                 <!--search & user info end-->
@@ -209,7 +209,7 @@
     <!--script for this page-->
     <script src="/Content/js/sparkline-chart.js"></script>
     <script src="/Content/js/easy-pie-chart.js"></script>
-    <script src="/Content/js/count.js"></script>
+    @*<script src="/Content/js/count1.js"></script>*@
     @RenderSection("script", false)
     <script>
 

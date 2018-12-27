@@ -16,7 +16,7 @@ namespace Inventory_Management_Web_Application.Models
             Urun = new HashSet<Urun>();
             UrunCikis = new HashSet<UrunCikis>();
             UrunGiris = new HashSet<UrunGiris>();
-            YazılımUrun = new HashSet<YazılımUrun>();
+            YazilimUrun = new HashSet<YazilimUrun>();
         }
 
         public int ID { get; set; }
@@ -53,6 +53,6 @@ namespace Inventory_Management_Web_Application.Models
         public virtual ICollection<UrunGiris> UrunGiris { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<YazılımUrun> YazılımUrun { get; set; }
+        public virtual ICollection<YazilimUrun> YazilimUrun { get; set; }
     }
 }

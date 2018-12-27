@@ -185,6 +185,7 @@
     <Content Include="DB_Script\23.12.2018-19.31-Script.sql" />
     <Content Include="DB_Script\22.12.2018.sql" />
     <Content Include="DB_Script\23.20.2018_StokTakipDB.sql" />
+    <Content Include="DB_Script\23.20.2018_StokTakipDB_2.sql" />
     <Content Include="DB_Script\StokDBScprit.sql" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -204,12 +205,11 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Classes\CheckBoxes.cs" />
     <Compile Include="App_Classes\Functions.cs" />
     <Compile Include="App_Classes\IslemErisimList.cs" />
-    <Compile Include="App_Classes\KategoriList.cs" />
     <Compile Include="App_Classes\MenuList.cs" />
-    <Compile Include="App_Classes\UrunCikis.cs" />
+    <Compile Include="App_Classes\UrunCikisSepet.cs" />
+    <Compile Include="App_Classes\UrunList.cs" />
     <Compile Include="App_Classes\YazilimUrunCikis.cs" />
     <Compile Include="App_Classes\_SecurityFilter.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -246,9 +246,13 @@
     <Compile Include="Models\UrunBirim.cs" />
     <Compile Include="Models\UrunCikis.cs" />
     <Compile Include="Models\UrunGiris.cs" />
-    <Compile Include="Models\YazılımUrun.cs" />
+    <Compile Include="Models\YazilimUrun.cs" />
     <Compile Include="ModelViews\MenuControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportFilters\CikanYazilimUrunFilter.cs" />
+    <Compile Include="ReportFilters\UrunCikisFilter.cs" />
+    <Compile Include="ReportFilters\UrunFilter.cs" />
+    <Compile Include="ReportFilters\YazilimUrunFilter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
@@ -325,6 +329,7 @@
     <Content Include="Views\Urun\SilinenUrunler.cshtml" />
     <Content Include="Views\YazilimUrun\SilinenUrunler.cshtml" />
     <Content Include="Views\Admin\YetkiBulunamadi.cshtml" />
+    <Content Include="Views\Kullanici\YetkiDuzenle.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

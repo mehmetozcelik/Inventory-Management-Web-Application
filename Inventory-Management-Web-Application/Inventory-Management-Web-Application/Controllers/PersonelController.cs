@@ -26,12 +26,18 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult TaEkle(TeslimAlanPersonel veri)
+        public ActionResult TaEkle(TeslimAlanPersonel veri , int? control)
         {
-                    
-            db.TeslimAlanPersonel.Add(veri);        
-                    
+            db.TeslimAlanPersonel.Add(veri);                           
             db.SaveChanges();
+            if (control==1)
+            {
+                return RedirectToAction("stokCikarView","Urun");
+            }
+            else if (control == 0)
+            {
+                return RedirectToAction("stokCikarView", "YazilimUrun");
+            }
             return RedirectToAction("TaListesi");
         }
 

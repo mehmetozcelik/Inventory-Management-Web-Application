@@ -6,10 +6,11 @@ namespace Inventory_Management_Web_Application.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class YazılımUrun
+    [Table("YazilimUrun")]
+    public partial class YazilimUrun
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public YazılımUrun()
+        public YazilimUrun()
         {
             UrunCikis = new HashSet<UrunCikis>();
             UrunGiris = new HashSet<UrunGiris>();
@@ -31,9 +32,6 @@ namespace Inventory_Management_Web_Application.Models
         public DateTime? LisansBitisTarihi { get; set; }
 
         public int? KeyAdet { get; set; }
-
-        [StringLength(100)]
-        public string UrunSeriNo { get; set; }
 
         [StringLength(100)]
         public string LisansUyari { get; set; }

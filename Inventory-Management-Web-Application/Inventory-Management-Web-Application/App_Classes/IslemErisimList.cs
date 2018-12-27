@@ -12,6 +12,7 @@ namespace Inventory_Management_Web_Application.App_Classes
         public bool IKullaniciEkle { get; set; }
         public bool IKullaniciSil { get; set; }
         public bool IKullaniciGuncelle { get; set; }
+        public bool IKullaniciYetkiler { get; set; }
 
         public static void RolKontrol(IslemErisimList list, int RolID)
         {

@@ -26,12 +26,15 @@ namespace Inventory_Management_Web_Application.Models
         [Column(TypeName = "date")]
         public DateTime? GirisTarihi { get; set; }
 
+        [StringLength(100)]
+        public string UrunSeriNo { get; set; }
+
         public virtual Personel Personel { get; set; }
 
         public virtual Tedarikci Tedarikci { get; set; }
 
         public virtual Urun Urun { get; set; }
 
-        public virtual YazılımUrun YazılımUrun { get; set; }
+        public virtual YazilimUrun YazilimUrun { get; set; }
     }
 }

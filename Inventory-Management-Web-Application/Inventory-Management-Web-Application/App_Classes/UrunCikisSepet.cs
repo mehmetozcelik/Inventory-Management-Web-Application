@@ -6,7 +6,7 @@ using Inventory_Management_Web_Application.Models;
 
 namespace Inventory_Management_Web_Application.App_Classes
 {
-    public class UrunCikis
+    public class UrunCikisSepet
     {
         List<Urun> urunler = new List<Urun>();
 
@@ -21,6 +21,7 @@ namespace Inventory_Management_Web_Application.App_Classes
         {
             urunler.RemoveAll(x => x.ID == urun.ID);
         }
+
 
         public void ListeTemizle()
         {

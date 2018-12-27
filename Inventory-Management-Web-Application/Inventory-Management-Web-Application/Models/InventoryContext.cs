@@ -1,4 +1,4 @@
-﻿namespace Inventory_Management_Web_Application.Models
+namespace Inventory_Management_Web_Application.Models
 {
     using System;
     using System.Data.Entity;
@@ -31,7 +31,7 @@
         public virtual DbSet<UrunBirim> UrunBirim { get; set; }
         public virtual DbSet<UrunCikis> UrunCikis { get; set; }
         public virtual DbSet<UrunGiris> UrunGiris { get; set; }
-        public virtual DbSet<YazılımUrun> YazılımUrun { get; set; }
+        public virtual DbSet<YazilimUrun> YazilimUrun { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -81,7 +81,7 @@
                 .HasForeignKey(e => e.AlanPerID);
 
             modelBuilder.Entity<Personel>()
-                .HasMany(e => e.YazılımUrun)
+                .HasMany(e => e.YazilimUrun)
                 .WithOptional(e => e.Personel)
                 .HasForeignKey(e => e.SilenKisiID);
 
@@ -89,16 +89,6 @@
                 .HasMany(e => e.UrunCikis)
                 .WithOptional(e => e.TeslimAlanPersonel)
                 .HasForeignKey(e => e.TeslimAlanKisiID);
-
-            modelBuilder.Entity<YazılımUrun>()
-                .HasMany(e => e.UrunCikis)
-                .WithOptional(e => e.YazılımUrun)
-                .HasForeignKey(e => e.YazilimUrunID);
-
-            modelBuilder.Entity<YazılımUrun>()
-                .HasMany(e => e.UrunGiris)
-                .WithOptional(e => e.YazılımUrun)
-                .HasForeignKey(e => e.YazilimUrunID);
         }
     }
 }

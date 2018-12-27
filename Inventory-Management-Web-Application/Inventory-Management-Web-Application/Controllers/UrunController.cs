@@ -1,4 +1,6 @@
-﻿using Inventory_Management_Web_Application.Models;
+﻿using Inventory_Management_Web_Application.App_Classes;
+using Inventory_Management_Web_Application.Models;
+using Inventory_Management_Web_Application.ReportFilters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +17,51 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpGet]
         public ActionResult Listesi()
         {
+            List<Urun> urunler = new List<Urun>();
+            if (TempData["filtreliUrunler"] == null)
+            {
+                urunler = UrunList.IzinliUrunler();
+            }
+            else
+            {
+                urunler =  (List<Urun>)TempData["filtreliUrunler"];
+            }
             ViewBag.ayarlar = db.Ayarlar.FirstOrDefault();
-            return View(db.Urun.Where(x => x.Aktif != true).ToList());
+            var anakategoriler = db.AnaKategori.ToList();
+            ViewBag.anakategoriler = new SelectList(anakategoriler, "ID", "KategoriAdi");
+
+            var urunbirimler = db.UrunBirim.ToList();
+            ViewBag.urunbirimler = new SelectList(urunbirimler, "ID", "Adi");
+
+            var tedarikciler = db.Tedarikci.Select(x => new
+            {
+                ID = x.ID,
+                TedarikciAdi = x.FirmaAdi
+            });
+            var personeller = db.Personel.Select(x => new
+            {
+                ID = x.ID,
+                adiSoyadi = x.Adi + " " + x.Soyadi
+            });
+
+            var urunGirisler = db.UrunGiris.Where(x=>x.UrunID != null).Select(x => new
+            {
+                ID = x.ID,
+                seriNo = x.UrunSeriNo
+            });
+            ViewBag.tedarikciler = new SelectList(tedarikciler, "ID", "TedarikciAdi");
+            ViewBag.personeller = new SelectList(personeller, "ID", "adiSoyadi");
+            ViewBag.urunGirisler = new SelectList(urunGirisler, "ID", "seriNo");
+            return View(urunler);
+        }
+
+
+        [HttpPost]
+        public ActionResult UrunFiltrele(UrunFilter list)
+        {
+            List<Urun> rapor = UrunFilter.UrunSorgu(list);
+            TempData["filtreliUrunler"] = rapor;
+            return RedirectToAction("Listesi");
         }
 
         public PartialViewResult altKategoriDropdown(int id)
@@ -40,20 +85,20 @@ namespace Inventory_Management_Web_Application.Controllers
                 ID = x.ID,
                 TedarikciAdi = x.FirmaAdi
             });
-            var personeller = db.Personel.Select(x => new
+            var personelleri = db.Personel.Select(x => new
             {
                 ID = x.ID,
                 adiSoyadi = x.Adi + " " + x.Soyadi
             });
             ViewBag.tedarikciler = new SelectList(tedarikciler, "ID", "TedarikciAdi");
-            ViewBag.personeller = new SelectList(personeller, "ID", "adiSoyadi");
-
+            ViewBag.personelleri = new SelectList(personelleri, "ID", "adiSoyadi");
+            ViewBag.personeller = db.Personel.ToList();
 
             return View();
         }
 
         [HttpPost]
-        public ActionResult Ekle(Urun u)
+        public ActionResult Ekle(Urun u, string UrunSeriNo)
         {
             int Lastid = 0;
             if (db.Urun != null)
@@ -64,6 +109,7 @@ namespace Inventory_Management_Web_Application.Controllers
             string urunKodu = u.altKategoriID.ToString() + "1000" + DateTime.Now.Year.ToString() + (Lastid+1).ToString();
             u.UrunKodu = urunKodu;
             u.EklenmeTarihi= DateTime.Now;
+            u.Aktif = true;
             db.Urun.Add(u);
             db.SaveChanges();
 
@@ -74,6 +120,7 @@ namespace Inventory_Management_Web_Application.Controllers
             ug.AlanPerID = u.PersonelID;
             ug.TedarikciID = u.TedarikciID;
             ug.Aciklama = u.Aciklama;
+            ug.UrunSeriNo = UrunSeriNo;
             ug.GirisTarihi = DateTime.Now;
             db.UrunGiris.Add(ug);
             db.SaveChanges();
@@ -170,7 +217,7 @@ namespace Inventory_Management_Web_Application.Controllers
             gu.StokMiktari = u.StokMiktari;
             gu.UrunBirimID = u.UrunBirimID;
             gu.UrunKodu = u.UrunKodu;
-            gu.UrunSeriNo = u.UrunSeriNo;
+            //gu.UrunSeriNo = u.UrunSeriNo;
             db.SaveChanges();
             return RedirectToAction("Listesi");
         }
@@ -306,7 +353,7 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         // urun çıkarma
-        public ActionResult stokCikar(int id)
+        public ActionResult stokCikar(int urunGirisID, int id)
         {
             Urun u = db.Urun.Where(x => x.ID == id).SingleOrDefault();
             if (u.StokMiktari==0)
@@ -319,10 +366,10 @@ namespace Inventory_Management_Web_Application.Controllers
                 return RedirectToAction("Hata", "Admin");
             }
 
-            var urunSepet = (App_Classes.UrunCikis)Session["Urun"];
+            var urunSepet = (App_Classes.UrunCikisSepet)Session["Urun"];
             if (urunSepet == null)
             {
-                urunSepet = new App_Classes.UrunCikis();
+                urunSepet = new App_Classes.UrunCikisSepet();
                 Session["Urun"] = urunSepet;
             }
             urunSepet.ListeyeEkle(u);
@@ -342,13 +389,15 @@ namespace Inventory_Management_Web_Application.Controllers
                 ID = x.ID,
                 adiSoyadi = x.Adi + " " + x.Soyadi
             });
+            ViewBag.Birimler = db.Birim.ToList();
             var urunbirimler = db.UrunBirim.ToList();
+            ViewBag.personeller = db.Personel.ToList();
             ViewBag.teslimalanlar = new SelectList(personeller, "ID", "adiSoyadi");
             ViewBag.teslimverenler = new SelectList(personellerVeren, "ID", "adiSoyadi");
             return View();
         }
         [HttpPost]
-        public ActionResult stokCikarView(UrunCikis uc)
+        public ActionResult stokCikarView(Models.UrunCikis uc)
         {
             int Lastid = 0;
             if (db.UrunCikis.Count() !=0)
@@ -356,7 +405,7 @@ namespace Inventory_Management_Web_Application.Controllers
                 Lastid = db.UrunCikis.Max(x => x.ID);
             }
             int CikisNumarasi = 1000+ DateTime.Now.Year + (Lastid + 1);
-            var urunler = (App_Classes.UrunCikis)Session["Urun"];
+            var urunler = (App_Classes.UrunCikisSepet)Session["Urun"];
             List<Urun> liste = urunler.HepsiniGetir();
             List<Urun> temp = new List<Urun>();
             foreach (Urun item in liste)
@@ -400,11 +449,31 @@ namespace Inventory_Management_Web_Application.Controllers
 
         public void urunSepetAl()
         {
-            var urunler = (App_Classes.UrunCikis)Session["Urun"];
+            var urunler = (App_Classes.UrunCikisSepet)Session["Urun"];
             if (urunler !=null)
             {
                 var liste = urunler.HepsiniGetir();
             }
+        }
+
+
+        [HttpGet]
+        public ActionResult SepetSil(int id)
+        {
+            var urunler = (App_Classes.UrunCikisSepet)Session["Urun"];
+            Urun b = db.Urun.Where(x => x.ID == id).SingleOrDefault();
+            if (b==null)
+            {
+                RedirectToAction("Hata","Admin");
+            }
+            urunler.ListedenCikart(b);
+            if (urunler.HepsiniGetir().Count==0)
+            {
+                urunler.ListeTemizle();
+                Session.Remove("Urun");
+                return RedirectToAction("Listesi");
+            }
+            return RedirectToAction("stokCikarView");
         }
 
         [HttpGet]
@@ -423,7 +492,7 @@ namespace Inventory_Management_Web_Application.Controllers
             var urunbirimler = db.UrunBirim.ToList();
             ViewBag.tedarikciler = new SelectList(tedarikciler, "ID", "TedarikciAdi");
             ViewBag.personeller = new SelectList(personeller, "ID", "adiSoyadi");
-
+            ViewBag.personelleri = db.Personel.ToList();
             Urun eklenecekUrun = db.Urun.Where(x => x.ID == id).FirstOrDefault();
             return View(eklenecekUrun);
         }

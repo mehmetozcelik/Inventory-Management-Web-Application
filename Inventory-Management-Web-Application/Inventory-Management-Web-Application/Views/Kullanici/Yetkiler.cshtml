@@ -29,14 +29,14 @@
     </style>
 }
 
-    <form role="form" method="post" action="/Kullanici/Yetkiler">
+    <form  role="form" method="post" action="/Kullanici/Yetkiler">
 
         <div class="row">
             <div class="col-lg-12">
                 <section class="panel">
                     <header class="panel-heading" style="padding-bottom: 10px;">
                         <div class="col-lg-12" style="margin-bottom:10px;">
-                            @Model.RolAdi İsimli Profile Ait Yetkiler
+                            <b> @Model.RolAdi</b> İsimli Profile Ait Yetkiler
                             <button type="submit" class="btn btn-success" style="float: right">Kaydet</button>
                             <a href="/Kullanici/ProfilListesi" class="btn btn-default" style="float: right;margin-right:5px;">Geri</a>
                         </div>
@@ -64,7 +64,7 @@
                                     <tr>
                                         <th>Menü Adı</th>
                                         <th>Url</th>
-                                        <th>Yetki Durumu</th>
+                                        <th align="center" width="20%">Yetki Durumu</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -87,7 +87,19 @@
                                                         <td>
                                                             <div class="checkbox">
                                                                 <label>
-                                                                    <input name="@menu.MenuList" value="true" type="checkbox" checked>
+                                                                    @if (yetki.Rol.RolAdi == "Admin")
+                                                                    {
+                                                                        @*<input disabled name="@menu.MenuList" value="true" type="checkbox" checked>*@
+                                                                        <input disabled onclick="myFunction1()" class="menuizin" value="@menu.Adi" type="checkbox" checked>
+
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @*<input name="@menu.MenuList" value="true" type="checkbox" checked*@
+                                                                        <input onclick="myFunction1()" class="menuizin" value="@menu.Adi" type="checkbox" checked>
+
+                                                                    }
+
                                                                 </label>
                                                             </div>
                                                         </td>
@@ -101,7 +113,8 @@
                                                     <td>
                                                         <div class="checkbox">
                                                             <label>
-                                                                <input name="@menu.MenuList" value="true" type="checkbox">
+                                                                @*<input name="@menu.MenuList" value="true" type="checkbox">*@
+                                                                <input onclick="myFunction1()" class="menuizin" value="@menu.Adi" type="checkbox">
                                                             </label>
                                                         </div>
                                                     </td>
@@ -141,7 +154,7 @@
                                     <tr>
                                         <th>Menü Adı</th>
                                         <th>Url</th>
-                                        <th>Yetki Durumu</th>
+                                        <th width="20%" align="center">Yetki Durumu</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -164,7 +177,15 @@
                                                         <td>
                                                             <div class="checkbox">
                                                                 <label>
-                                                                    <input name="@Islem.MenuList" value="true" type="checkbox" checked>
+                                                                    @if (yetki.Rol.RolAdi == "Admin")
+                                                                    {
+                                                                        <input disabled onclick="myFunction2()" class="islemizin" value="@Islem.Adı" type="checkbox" checked>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <input onclick="myFunction2()" class="islemizin" value="@Islem.Adı" type="checkbox" checked>
+                                                                    }
+
                                                                 </label>
                                                             </div>
                                                         </td>
@@ -178,7 +199,7 @@
                                                     <td>
                                                         <div class="checkbox">
                                                             <label>
-                                                                <input name="@Islem.MenuList" value="true" type="checkbox">
+                                                                <input onclick="myFunction2()" class="islemizin" value="@Islem.Adı" type="checkbox">
                                                             </label>
                                                         </div>
                                                     </td>
@@ -217,7 +238,7 @@
                                 <thead>
                                     <tr>
                                         <th>Menü Adı</th>
-                                        <th>Yetki Durumu</th>
+                                        <th width="20%">Yetki Durumu</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -235,10 +256,17 @@
                                                 {
                                                     if (kategori.ID == yetki.KategoriID)
                                                     {
-                                                        <td>
+                                                        <td style="float:right;">
                                                             <div class="checkbox">
                                                                 <label>
-                                                                    <input onclick="myFunction()"  class="messageCheckbox" value="@kategori.KategoriAdi" type="checkbox" checked>
+                                                                    @if (yetki.Rol.RolAdi == "Admin")
+                                                                    {
+                                                                        <input disabled onclick="myFunction()" class="messageCheckbox" value="@kategori.KategoriAdi" type="checkbox" checked>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <input onclick="myFunction()" class="messageCheckbox" value="@kategori.KategoriAdi" type="checkbox" checked>
+                                                                    }
                                                                 </label>
                                                             </div>
                                                         </td>
@@ -272,7 +300,9 @@
                 </section>
             </div>
         </div>
-        <input class="hidden" type="text" name="katrol" id="katrol" size="50">
+        <input class="hidden" onload="myFunction()" type="text" name="katrol" id="katrol">
+        <input class="hidden" onload="myFunction1()" type="text" name="menuler" id="menurol" />
+        <input class="hidden" onload="myFunction2()" type="text" name="islemler" id="islemrol" />
     </form>
 
 
@@ -304,12 +334,47 @@
             var len = cboxes.length;
             for (var i = 0; i < len; i++) {
                 if (cboxes[i].checked) {
-                    checkedValue = cboxes[i].value + "^" + checkedValue ;
+                    checkedValue = cboxes[i].value + "^" + checkedValue;
                 }
             }
-          
+
             document.getElementById("katrol").value = checkedValue;
         }
+        function myFunction1() {
+
+            var checkedValue = "";
+            var cboxes = document.getElementsByClassName('menuizin');
+            var len = cboxes.length;
+            for (var i = 0; i < len; i++) {
+                if (cboxes[i].checked) {
+                    checkedValue = cboxes[i].value + "^" + checkedValue;
+                }
+            }
+
+            document.getElementById("menurol").value = checkedValue;
+        }
+
+        function myFunction2() {
+
+            var checkedValue = "";
+            var cboxes = document.getElementsByClassName('islemizin');
+            var len = cboxes.length;
+            for (var i = 0; i < len; i++) {
+                if (cboxes[i].checked) {
+                    checkedValue = cboxes[i].value + "^" + checkedValue;
+                }
+            }
+
+            document.getElementById("islemrol").value = checkedValue;
+        }
+
+
+        $(document).ready(function () {
+            myFunction();
+            myFunction1();
+            myFunction2();
+        });
+
     </script>
 
 }

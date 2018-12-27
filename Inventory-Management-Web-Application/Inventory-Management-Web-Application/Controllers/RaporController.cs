@@ -1,4 +1,6 @@
-﻿using Inventory_Management_Web_Application.Models;
+﻿using Inventory_Management_Web_Application.App_Classes;
+using Inventory_Management_Web_Application.Models;
+using Inventory_Management_Web_Application.ReportFilters;
 using Rotativa;
 using System;
 using System.Collections.Generic;
@@ -39,13 +41,11 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult Urun(int? altKategoriID , int? stok ,DateTime? tarih , int? PersonelID , int? TedarikciID)
+        public ActionResult Urun(UrunFilter list)
         {
-            List<Urun> rapor = db.Urun.Where(x => x.altKategoriID == altKategoriID || x.StokMiktari <= stok || x.EklenmeTarihi>=tarih || x.PersonelID==PersonelID || x.TedarikciID==TedarikciID).ToList();
+           List<Urun> rapor = UrunFilter.UrunSorgu(list);
             var report = new ViewAsPdf("Urun_Print", rapor)
             { };
-
-
 
             return report;
         }
@@ -59,31 +59,26 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpGet]
         public ActionResult UrunCikis()
         {
-            var anakategoriler = db.AnaKategori.ToList();
-            ViewBag.anakategoriler = new SelectList(anakategoriler, "ID", "KategoriAdi");
+            var urunler = UrunList.IzinliUrunler();
+            ViewBag.urunler = new SelectList(urunler, "ID", "UrunAdi");
 
             var urunbirimler = db.UrunBirim.ToList();
             ViewBag.urunbirimler = new SelectList(urunbirimler, "ID", "Adi");
 
-            var tedarikciler = db.Tedarikci.Select(x => new
-            {
-                ID = x.ID,
-                TedarikciAdi = x.FirmaAdi
-            });
+          
             var personeller = db.Personel.Select(x => new
             {
                 ID = x.ID,
                 adiSoyadi = x.Adi + " " + x.Soyadi
             });
-            ViewBag.tedarikciler = new SelectList(tedarikciler, "ID", "TedarikciAdi");
             ViewBag.personeller = new SelectList(personeller, "ID", "adiSoyadi");
             return View();
         }
 
         [HttpPost]
-        public ActionResult UrunCikis(int? altKategoriID, int? stok, DateTime? tarih, int? PersonelID)
+        public ActionResult UrunCikis(UrunCikisFilter urunCikisFilter)
         {
-            List<UrunCikis> rapor = db.UrunCikis.Where(x =>x.Urun.altKategoriID == altKategoriID || x.CikanMictar <= stok || x.TeslimTarihi <= tarih || x.Personel.ID == PersonelID || x.UrunID!=null).ToList();
+            List<UrunCikis> rapor = UrunCikisFilter.UrunSorgu(urunCikisFilter);
             var report = new ViewAsPdf("UrunCikis_Print", rapor)
             { };
             return report;
@@ -120,9 +115,9 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult YazilimUrun(int? altKategoriID, int? stok, DateTime? tarih, DateTime? tarihbaslangic, DateTime? tarihbitis, int? PersonelID ,int? TedarikciID)
+        public ActionResult YazilimUrun(YazilimUrunFilter yazilimUrunFilter)
         {
-            List<YazılımUrun> rapor = db.YazılımUrun.Where(x => x.altKategoriID == altKategoriID || x.KeyAdet <= stok || x.EklenmeTarihi >= tarih || x.PersonelID == PersonelID || x.TedarikciID==TedarikciID).ToList();
+            List<YazilimUrun> rapor = YazilimUrunFilter.UrunSorgu(yazilimUrunFilter);
             var report = new ViewAsPdf("YazilimUrun_Print", rapor)
             { };
             return report;
@@ -137,11 +132,8 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpGet]
         public ActionResult CikanYazilimUrun()
         {
-            var anakategoriler = db.AnaKategori.ToList();
-            ViewBag.anakategoriler = new SelectList(anakategoriler, "ID", "KategoriAdi");
-
-            var urunbirimler = db.UrunBirim.ToList();
-            ViewBag.urunbirimler = new SelectList(urunbirimler, "ID", "Adi");
+            var urunler = UrunList.IzinliUrunler();
+            ViewBag.urunler = new SelectList(urunler, "ID", "UrunAdi");
 
             var tedarikciler = db.Tedarikci.Select(x => new
             {
@@ -159,9 +151,9 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult CikanYazilimUrun(int? altKategoriID, int? stok, DateTime? tarih, int? PersonelID)
+        public ActionResult CikanYazilimUrun(CikanYazilimUrunFilter yazilimUrunFilter)
         {
-            List<UrunCikis> rapor = db.UrunCikis.Where(x =>x.YazilimUrunID !=null|| x.Urun.altKategoriID == altKategoriID || x.CikanMictar <= stok || x.TeslimTarihi <= tarih || x.Personel.ID == PersonelID).ToList();
+            List<UrunCikis> rapor = CikanYazilimUrunFilter.UrunSorgu(yazilimUrunFilter);
             var report = new ViewAsPdf("CikanYazilimUrun_Print", rapor)
             { };
             return report;

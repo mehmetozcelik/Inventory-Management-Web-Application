@@ -1,4 +1,5 @@
-﻿using Inventory_Management_Web_Application.Models;
+﻿using Inventory_Management_Web_Application.App_Classes;
+using Inventory_Management_Web_Application.Models;
 using Inventory_Management_Web_Application.ModelViews;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,13 @@ namespace Inventory_Management_Web_Application.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            ViewBag.yazilimlar= db.YazılımUrun.ToList();
-            ViewBag.urunler = db.Urun.ToList();
+            ViewBag.yazilimlar = UrunList.IzinliYazilimUrunler();
+            ViewBag.urunler = UrunList.IzinliUrunler();
+
+            ViewBag.yazilimsayisi = UrunList.IzinliYazilimUrunler().Count;
+            ViewBag.urunsayisi = UrunList.IzinliUrunler().Count;
+            ViewBag.kullanicisayisi = db.Personel.ToList().Count;
+            ViewBag.tedarikcisayisi = db.Tedarikci.ToList().Count;
             ViewBag.ayarlar = db.Ayarlar.FirstOrDefault();
             return View();
         }
@@ -49,7 +55,6 @@ namespace Inventory_Management_Web_Application.Controllers
             return RedirectToAction("Login","Kullanici");
         }
 
-        [HttpGet]
         public PartialViewResult MenuGetir()
         {
             Personel p = (Personel)Session["Kullanici"];
