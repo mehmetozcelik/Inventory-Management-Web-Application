@@ -43,8 +43,15 @@ namespace Inventory_Management_Web_Application.Controllers
                 ID = x.ID,
                 adiSoyadi = x.Adi + " " + x.Soyadi
             });
+
+            var urunGirisler = db.UrunGiris.Where(x=>x.UrunID != null).Select(x => new
+            {
+                ID = x.ID,
+                seriNo = x.UrunSeriNo
+            });
             ViewBag.tedarikciler = new SelectList(tedarikciler, "ID", "TedarikciAdi");
             ViewBag.personeller = new SelectList(personeller, "ID", "adiSoyadi");
+            ViewBag.urunGirisler = new SelectList(urunGirisler, "ID", "seriNo");
             return View(urunler);
         }
 
@@ -305,7 +312,7 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         // urun çıkarma
-        public ActionResult stokCikar(int id)
+        public ActionResult stokCikar(int urunGirisID, int id)
         {
             Urun u = db.Urun.Where(x => x.ID == id).SingleOrDefault();
             if (u.StokMiktari==0)

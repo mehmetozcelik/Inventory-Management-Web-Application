@@ -139,7 +139,7 @@
                                             <a title="Düzünle" style="float:right;margin-right:5px;" href="/Urun/Guncelle/@item.ID" class="btn btn-primary btn-xs"><i class="icon-pencil"></i> Düzenle</a>
                                             <a title="Garantiye Gönder" style="float:right;margin-right:5px;" href="/Urun/Garanti/@item.ID" class="btn btn-default btn-xs"><i class="icon-refresh"></i> Garanti</a>
                                             <a title="Stok Ekle" href="stokEkleView/@item.ID" style="float:right;margin-right:5px;" class="btn btn-warning btn-xs"><i class="icon-plus-sign-alt"></i> Stok Ekle</a>
-                                            <a title="Ürün Çıkışı" href="/Urun/stokCikar/@item.ID" style="float:right;margin-right:5px;" class="btn btn-info btn-xs"><i class="icon-mail-reply (alias)"></i> Ürün Çıkışı</a>
+                                            <a title="Ürün Çıkışı" @*href="/Urun/stokCikar/@item.ID"*@ data-id="@item.ID" style="float:right;margin-right:5px;" class="btn btn-info btn-xs btn-confirm1"><i class="icon-mail-reply (alias)"></i> Ürün Çıkışı</a>
                                         </td>
                                     </tr>
                                 }
@@ -153,7 +153,26 @@
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal1">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
 
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Çıkarmak İstediğiniz Ürünün Seri Numarasını Seçiniz ?</h4>
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Seri Numarasını Seçiniz </label>&nbsp;<span style="color: red;">*</span>
+                    @Html.DropDownList("urunGirisID", (SelectList)ViewBag.urunGirisler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true" })
+                </div>
+                <button type="button" class="btn btn-danger" id="modal-btn-si1">Çıkar</button>
+                <button type="button" class="btn btn-primary" id="modal-btn-no1">Kapat</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
     <div class="modal-dialog modal-sm">
@@ -252,6 +271,61 @@
         });
 
     </script>
+    
+<script>
+        var id;
+        var modalConfirm = function (callback) {
+
+            $(".btn-confirm1").on("click", function () {
+                id = $(this).attr("data-id");
+                $("#mi-modal1").modal('show');
+            });
+
+            $("#modal-btn-si1").on("click", function () {
+                callback(true);
+
+                $("#mi-modal").modal('hide');
+            });
+
+            $("#modal-btn-no1").on("click", function () {
+                callback(false);
+                $("#mi-modal").modal('hide');
+                return e.preventDefault();
+            });
+        };
+
+
+
+        modalConfirm(function (confirm) {
+            if (confirm) {
+                $.ajax({
+                    url: '@Url.Action("stokCikar", "Urun")',
+                    contentType: 'application/json',
+                    data: ({
+                        urunGirisID: document.getElementById('urunGirisID').value,
+                        id: id                    
+                    }),
+                    success: function (rs) {
+                        if (rs === true) {
+                            $('#' + id).remove();
+                        }
+                        else if (rs === "FK") {
+                            alert("Bu ürüne ait Garanti Kaydı , Ürün Giriş Kaydı veya Ürün Çıkış Kaydı Bulunduğundan dolayı bu Ürün Silemezsiniz. ");
+                        }
+                        else {
+                            alert('Silme işlemi gerçekleşirken bir hata oluştu.');
+                        }
+                    },
+                    error: function (rs) {
+                        alert('Bir hata oluştu');
+                    }
+                });
+            } else {
+                console.log("");
+            }
+        });
+
+</script>
 
     <script>
          id;

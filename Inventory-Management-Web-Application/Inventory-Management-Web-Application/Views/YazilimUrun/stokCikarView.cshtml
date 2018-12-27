@@ -9,7 +9,7 @@
 
 @{
     var urunler = (Inventory_Management_Web_Application.App_Classes.YazilimUrunCikis)Session["YazilimUrun"];
-    List<YazılımUrun> liste = urunler.HepsiniGetir();
+    List<YazilimUrun> liste = urunler.HepsiniGetir();
 }
 @{
     Personel p = (Personel)Session["Kullanici"];
@@ -34,9 +34,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @{List<YazılımUrun> temp = new List<YazılımUrun>();
+                    @{List<YazilimUrun> temp = new List<YazilimUrun>();
                     }
-                    @foreach (YazılımUrun item in liste)
+                    @foreach (YazilimUrun item in liste)
                     {
                         if (temp.Where(x => x.ID == item.ID).SingleOrDefault() != null)
                         {
