@@ -51,8 +51,8 @@
                                     <th>Kargo No</th>
                                     <th>Miktar</th>
                                     <th>Firma</th>
+                                    <th>İşlemler</th>
 
-                                    <th style="text-align:center;"> İşlemler</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -81,8 +81,9 @@
                                         <td>
                                             @item.GarantiFirma
                                         </td>
-                                        <td>
-                                            <a title="Stoğa Geri Ekle" href="/Urun/GarantiCikar/@item.ID" style="float:right;margin-right:5px;" class="btn btn-warning btn-xs"><i class="icon-plus-sign-alt"></i> Stoğa Geri Ekle</a>
+                                        <td>                                            
+                                               <button title="Stoğa Geri Ekle" id="abcd" onclick="modalConfirm()" data-toggle="modal" data-target="#mi-modal" data-id=@item.ID style="float:right;margin-right:5px;" class="btn btn-warning btn-xs"><i class="icon-plus-sign-alt"></i> Stoğa Geri Ekle</button>
+                                            
                                         </td>
                                     </tr>
                                 }
@@ -96,6 +97,24 @@
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Bu Ürünü Çıkartmak İstediğinizden Emin misiniz ?</h4>
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Garantiden Çıkacak Ürün Miktarı</label>&nbsp;<span style="color: red;">*</span>                   
+                    <input type="number" class="form-control" placeholder="Ürün Miktarını Giriniz..." id="adet" required>
+                </div>
+                <button type="button" onclick="cikar()" class="btn btn-danger" id="modal-btn-si">Çıkar</button>
+                <button type="button" onclick="modalOff()" class="btn btn-primary" id="modal-btn-no">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section script{
     <script type="text/javascript" src="/Content/assets/data-tables/jquery.dataTables.js"></script>
@@ -114,8 +133,95 @@
     <script>
         window.onload = function () {
             $('#listele').addClass('active');
-        }</script>
+        }
+    </script>
+
+ <script>
+         $(document).ready(function () {
+             $("#abcd").click(function () {
+                 id = $(this).attr("data-id");
+                 $("#mi-modal").modal();
+             });
+         });
+        function modalOff() {
+            $("#mi-modal").modal('hide');
+        }
+
+        function cikar() {
+            $.ajax({
+                    url: '@Url.Action("GarantiCikar", "Urun")',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        id: id,
+                        adet: document.getElementById('adet').value
+                    }),
+                    type: 'POST',
+                    success: function (rs) {
+                        if (rs === true) {
+                            //$('#' + id).remove();
+                        }
+                        else if (rs === "FK") {
+                            alert("Bu ürüne ait Garanti Kaydı , Ürün Giriş Kaydı veya Ürün Çıkış Kaydı Bulunduğundan dolayı bu Ürün Silemezsiniz. ");
+                        }
+                        else {
+                            alert('Silme işlemi gerçekleşirken bir hata oluştu.');
+                        }
+                    },
+                    error: function (rs) {
+                        alert('Bir hata oluştu');
+                    }
+                });
+        }
+        @*modalConfirm(function (confirm) {
+            if (confirm) {
+                $.ajax({
+                    url: '@Url.Action("GarantiCikar", "Urun")',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        id: id,
+                        adet: document.getElementById('adet').value
+                    }),
+                    type: 'POST',
+                    success: function (rs) {
+                        if (rs === true) {
+                            //$('#' + id).remove();
+                        }
+                        else if (rs === "FK") {
+                            alert("Bu ürüne ait Garanti Kaydı , Ürün Giriş Kaydı veya Ürün Çıkış Kaydı Bulunduğundan dolayı bu Ürün Silemezsiniz. ");
+                        }
+                        else {
+                            alert('Silme işlemi gerçekleşirken bir hata oluştu.');
+                        }
+                    },
+                    error: function (rs) {
+                        alert('Bir hata oluştu');
+                    }
+                });
+            } else {
+                console.log("");
+            }
+        });*@
+        //var id;
+        //var modalConfirm = function (callback) {
+
+        //    $(".btn-confirm").on("click", function () {
+        //        id = $(this).attr("data-id");
+        //        $("#mi-modal").modal('show');
+        //    });
+
+        //    $("#modal-btn-si").on("click", function () {
+        //        callback(true);
+
+        //        $("#mi-modal").modal('hide');
+        //    });
+
+        //    $("#modal-btn-no").on("click", function () {
+        //        callback(false);
+        //        $("#mi-modal").modal('hide');
+        //        return e.preventDefault()
+        //    });
+        //};
 
 
- 
+</script>
 }

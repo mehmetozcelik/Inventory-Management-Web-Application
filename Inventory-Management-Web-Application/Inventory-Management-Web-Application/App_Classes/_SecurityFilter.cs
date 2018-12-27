@@ -39,32 +39,32 @@ namespace Inventory_Management_Web_Application.App_Classes
 
                     if (metot == "POST")
                     {
-                        IslemErisim currentIslem = db.IslemErisim.Where(x => x.Action == actionName && x.Controller == controllerName).SingleOrDefault();
-                        if (currentIslem != null)
-                        {
-                            ErisimRol rol = db.ErisimRol.Where(x => x.RolID == p.RolID && x.ErisimID == currentIslem.ID).SingleOrDefault();
-                            if (rol == null)
-                            {
-                                if (actionName == "YetkiBulunamadi")
-                                {
-                                    return;
-                                }
-                                filterContext.Result = new RedirectResult("/Admin/YetkiBulunamadi");
-                            }
-                            else
-                            {
-                                if (controllerName != currentIslem.Controller && actionName != currentIslem.Action)
-                                {
+                        //IslemErisim currentIslem = db.IslemErisim.Where(x => x.Action == actionName && x.Controller == controllerName).SingleOrDefault();
+                        //if (currentIslem != null)
+                        //{
+                        //    ErisimRol rol = db.ErisimRol.Where(x => x.RolID == p.RolID && x.ErisimID == currentIslem.ID).SingleOrDefault();
+                        //    if (rol == null)
+                        //    {
+                        //        if (actionName == "YetkiBulunamadi")
+                        //        {
+                        //            return;
+                        //        }
+                        //        filterContext.Result = new RedirectResult("/Admin/YetkiBulunamadi");
+                        //    }
+                        //    else
+                        //    {
+                        //        if (controllerName != currentIslem.Controller && actionName != currentIslem.Action)
+                        //        {
 
-                                    filterContext.Result = new RedirectResult("/" + currentIslem.Controller + "/" + currentIslem.Action);
-                                }
-                                return;
-                            }
-                        }
-                        else
-                        {
-                            return;
-                        }
+                        //            filterContext.Result = new RedirectResult("/" + currentIslem.Controller + "/" + currentIslem.Action);
+                        //        }
+                        //        return;
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    return;
+                        //}
                     }
                     else
                     {
