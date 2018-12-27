@@ -196,7 +196,7 @@
 
 
     function countUp(count) {
-        var div_by = 10,
+        var div_by = @ViewBag.urunsayisi,
             speed = Math.round(count / div_by),
             $display = $('.count'),
             run_count = 0,
@@ -215,7 +215,7 @@
         }, int_speed);
     }
 
-    countUp(10);
+    countUp(@ViewBag.urunsayisi);
 
     function countUp2(count) {
         var div_by = @ViewBag.yazilimsayisi,

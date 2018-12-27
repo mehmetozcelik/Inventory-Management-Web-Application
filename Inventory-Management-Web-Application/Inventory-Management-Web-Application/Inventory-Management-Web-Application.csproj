@@ -330,6 +330,7 @@
     <Content Include="Views\YazilimUrun\SilinenUrunler.cshtml" />
     <Content Include="Views\Admin\YetkiBulunamadi.cshtml" />
     <Content Include="Views\Kullanici\YetkiDuzenle.cshtml" />
+    <Content Include="Views\Urun\uruncikarSeriNoGetir.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

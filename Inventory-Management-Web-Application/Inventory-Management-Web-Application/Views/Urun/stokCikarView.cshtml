@@ -15,7 +15,7 @@
 
 @{
     var urunler = (Inventory_Management_Web_Application.App_Classes.UrunCikisSepet)Session["Urun"];
-    List<Urun> liste = urunler.HepsiniGetir();
+    List<UrunGiris> liste = urunler.HepsiniGetir();
 }
 
 @{
@@ -37,9 +37,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @{List<Urun> temp = new List<Urun>();
+                    @{List<UrunGiris> temp = new List<UrunGiris>();
                     }
-                    @foreach (Urun item in liste)
+                    @foreach (UrunGiris item in liste)
                     {
                         if (temp.Where(x => x.ID == item.ID).SingleOrDefault() != null)
                         {
@@ -47,7 +47,7 @@
                         }
                         <tr id="@item.ID">
                             <td>
-                                @item.UrunAdi (@liste.Where(x => x.ID == item.ID).ToList().Count @item.UrunBirim.Adi)
+                                @item.Urun.UrunAdi (@liste.Where(x => x.ID == item.ID).ToList().Count @item.Urun.UrunBirim.Adi)
                             </td>
                             <td>
                                 <a title="Sil" href="/Urun/SepetSil/@item.ID" style="float:right;margin-left:5px;" class="btn btn-danger btn-xs btn-confirm"><i class="icon-trash"></i> Sil</a>
@@ -101,11 +101,11 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Teslim Tarihi Giriniz </label>
-                        <input type="date" class="form-control" placeholder="Birim Adı Giriniz..." name="TeslimTarihi" required>
+                        <input type="date" class="form-control" placeholder="Teslim Giriniz..." name="TeslimTarihi" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Açıklama Giriniz. </label>
-                        <input type="text" class="form-control" placeholder="Birim Adı Giriniz..." name="Aciklama" required>
+                        <input type="text" class="form-control" placeholder="Açıklama Giriniz..." name="Aciklama">
                     </div>
                     <button type="submit" class="btn btn-info">Kaydet</button>
                 </form>

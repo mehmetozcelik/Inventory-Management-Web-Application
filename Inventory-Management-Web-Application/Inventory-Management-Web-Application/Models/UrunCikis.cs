@@ -27,6 +27,9 @@ namespace Inventory_Management_Web_Application.Models
 
         public int? CikisNumarasi { get; set; }
 
+        [StringLength(100)]
+        public string UrunSeriNo { get; set; }
+
         public virtual Personel Personel { get; set; }
 
         public virtual TeslimAlanPersonel TeslimAlanPersonel { get; set; }

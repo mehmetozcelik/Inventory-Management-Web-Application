@@ -8,16 +8,16 @@ namespace Inventory_Management_Web_Application.App_Classes
 {
     public class UrunCikisSepet
     {
-        List<Urun> urunler = new List<Urun>();
+        List<UrunGiris> urunler = new List<UrunGiris>();
 
         InventoryContext db = new InventoryContext();
 
-        public void ListeyeEkle(Urun urun)
+        public void ListeyeEkle(UrunGiris urun)
         {
                 urunler.Add(urun);
         }
 
-        public void ListedenCikart(Urun urun)
+        public void ListedenCikart(UrunGiris urun)
         {
             urunler.RemoveAll(x => x.ID == urun.ID);
         }
@@ -28,7 +28,7 @@ namespace Inventory_Management_Web_Application.App_Classes
             urunler.Clear();
         }
 
-        public List<Urun> HepsiniGetir()
+        public List<UrunGiris> HepsiniGetir()
         {
             return urunler;
         }

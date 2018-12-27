@@ -26,7 +26,9 @@ namespace Inventory_Management_Web_Application.Controllers
             {
                 urunler =  (List<Urun>)TempData["filtreliUrunler"];
             }
+
             ViewBag.ayarlar = db.Ayarlar.FirstOrDefault();
+
             var anakategoriler = db.AnaKategori.ToList();
             ViewBag.anakategoriler = new SelectList(anakategoriler, "ID", "KategoriAdi");
 
@@ -44,17 +46,19 @@ namespace Inventory_Management_Web_Application.Controllers
                 adiSoyadi = x.Adi + " " + x.Soyadi
             });
 
-            var urunGirisler = db.UrunGiris.Where(x=>x.UrunID != null).Select(x => new
-            {
-                ID = x.ID,
-                seriNo = x.UrunSeriNo
-            });
+         
             ViewBag.tedarikciler = new SelectList(tedarikciler, "ID", "TedarikciAdi");
             ViewBag.personeller = new SelectList(personeller, "ID", "adiSoyadi");
-            ViewBag.urunGirisler = new SelectList(urunGirisler, "ID", "seriNo");
             return View(urunler);
         }
 
+        [HttpGet]
+        public PartialViewResult uruncikarSeriNoGetir(int id)
+        {
+            var urunGirisler = db.UrunGiris.Where(x => x.UrunID == id && x.KalanMiktar != 0).ToList();
+            ViewBag.urunGirisler = new SelectList(urunGirisler, "ID", "UrunSeriNo");
+            return PartialView();
+        }
 
         [HttpPost]
         public ActionResult UrunFiltrele(UrunFilter list)
@@ -117,6 +121,7 @@ namespace Inventory_Management_Web_Application.Controllers
             UrunGiris ug = new UrunGiris();
             ug.UrunID = ku.ID;
             ug.AlinanMiktar = ku.StokMiktari;
+            ug.KalanMiktar = ku.StokMiktari;
             ug.AlanPerID = u.PersonelID;
             ug.TedarikciID = u.TedarikciID;
             ug.Aciklama = u.Aciklama;
@@ -312,15 +317,18 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         // urun çıkarma
-        public ActionResult stokCikar(int urunGirisID, int id)
+        public ActionResult stokCikar(int urunGirisID)
         {
-            Urun u = db.Urun.Where(x => x.ID == id).SingleOrDefault();
-            if (u.StokMiktari==0)
+
+            // Urun u = db.Urun.Where(x => x.ID == id).SingleOrDefault();
+            UrunGiris ug = db.UrunGiris.Where(x => x.ID == urunGirisID).SingleOrDefault();
+
+            if (ug.KalanMiktar ==0)
             {
-                ViewBag.hata = "Bu ürün için stok bulunmamaktadır.";
+                ViewBag.hata = "Bu Seri Numaralı ürün için stok bulunmamaktadır.";
                 return RedirectToAction("Listesi");
             }
-            if (u == null)
+            if (ug == null)
             {
                 return RedirectToAction("Hata", "Admin");
             }
@@ -331,7 +339,7 @@ namespace Inventory_Management_Web_Application.Controllers
                 urunSepet = new App_Classes.UrunCikisSepet();
                 Session["Urun"] = urunSepet;
             }
-            urunSepet.ListeyeEkle(u);
+            urunSepet.ListeyeEkle(ug);
             return RedirectToAction("Listesi");
         }
 
@@ -365,25 +373,26 @@ namespace Inventory_Management_Web_Application.Controllers
             }
             int CikisNumarasi = 1000+ DateTime.Now.Year + (Lastid + 1);
             var urunler = (App_Classes.UrunCikisSepet)Session["Urun"];
-            List<Urun> liste = urunler.HepsiniGetir();
-            List<Urun> temp = new List<Urun>();
-            foreach (Urun item in liste)
+            List<UrunGiris> liste = urunler.HepsiniGetir();
+            List<UrunGiris> temp = new List<UrunGiris>();
+            foreach (UrunGiris item in liste)
             {
                 if (temp.Where(x => x.ID == item.ID).SingleOrDefault() != null)
                 {
                     continue;
                 }
-                Urun stokDus = db.Urun.Where(x => x.ID == item.ID).FirstOrDefault();
-                if (stokDus.StokMiktari==0)
+                UrunGiris stokDus = db.UrunGiris.Where(x => x.ID == item.ID).FirstOrDefault();
+                if (stokDus.KalanMiktar == 0)
                 {
                     ViewBag.hatali = "Çıkarılacak ürünler arasında stok miktarı 0 olan ürünler bulanmaktadır.";
                     return View();
                 }
-                stokDus.StokMiktari = stokDus.StokMiktari - liste.Where(x => x.ID == item.ID).ToList().Count;
+                stokDus.KalanMiktar = stokDus.KalanMiktar - liste.Where(x => x.ID == item.ID).ToList().Count;
                 db.SaveChanges();
-                uc.UrunID = item.ID;
+                uc.UrunID = item.Urun.ID;
                 uc.CikisNumarasi = CikisNumarasi;
                 uc.CikanMictar = liste.Where(x => x.ID == item.ID).ToList().Count;
+                uc.UrunSeriNo = item.UrunSeriNo;
                 db.UrunCikis.Add(uc);
                 db.SaveChanges();
                 temp.Add(item);
@@ -420,7 +429,7 @@ namespace Inventory_Management_Web_Application.Controllers
         public ActionResult SepetSil(int id)
         {
             var urunler = (App_Classes.UrunCikisSepet)Session["Urun"];
-            Urun b = db.Urun.Where(x => x.ID == id).SingleOrDefault();
+            UrunGiris b = db.UrunGiris.Where(x => x.ID == id).SingleOrDefault();
             if (b==null)
             {
                 RedirectToAction("Hata","Admin");
@@ -460,7 +469,7 @@ namespace Inventory_Management_Web_Application.Controllers
         public ActionResult stokEkle(UrunGiris veri)
         {
             var urun = db.Urun.FirstOrDefault(x => x.ID == veri.UrunID);
-            urun.StokMiktari = urun.StokMiktari + veri.AlinanMiktar;
+            veri.KalanMiktar = veri.AlinanMiktar;
             veri.YazilimUrunID = null;
             db.UrunGiris.Add(veri);
             db.SaveChanges();

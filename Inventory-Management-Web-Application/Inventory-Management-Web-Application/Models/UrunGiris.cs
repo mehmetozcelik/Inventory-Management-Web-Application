@@ -14,6 +14,8 @@ namespace Inventory_Management_Web_Application.Models
 
         public int? AlinanMiktar { get; set; }
 
+        public int? KalanMiktar { get; set; }
+
         public int? AlanPerID { get; set; }
 
         [StringLength(500)]

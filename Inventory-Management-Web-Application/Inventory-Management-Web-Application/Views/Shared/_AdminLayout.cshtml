@@ -112,7 +112,7 @@
 
                             if (urunler != null)
                             {
-                                List<Urun> liste = urunler.HepsiniGetir();
+                                List<UrunGiris> liste = urunler.HepsiniGetir();
 
                                 <li id="header_notification_bar" class="dropdown" style="margin-right:5px;">
                                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -127,9 +127,9 @@
                                         </li>
 
 
-                                        @{List<Urun> temp = new List<Urun>();
+                                        @{List<UrunGiris> temp = new List<UrunGiris>();
                                         }
-                                        @foreach (Urun item in liste)
+                                        @foreach (UrunGiris item in liste)
                                         {
                                             if (temp.Where(x => x.ID == item.ID).SingleOrDefault() != null)
                                             {
@@ -138,8 +138,8 @@
                                             <li>
                                                 <a href="#">
                                                     <span class="label label-info"><i class="icon-th-large"></i></span>
-                                                    <span> @item.UrunAdi</span>  
-                                                    <span class="small italic">(@liste.Where(x => x.ID == item.ID).ToList().Count @item.UrunBirim.Adi)</span>
+                                                    <span> @item.Urun.UrunAdi</span>  
+                                                    <span class="small italic">(@liste.Where(x => x.ID == item.ID).ToList().Count @item.Urun.UrunBirim.Adi)</span>
                                                 </a>
                                             </li>
                                             temp.Add(item);
