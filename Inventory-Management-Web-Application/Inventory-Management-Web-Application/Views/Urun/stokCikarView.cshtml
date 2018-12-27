@@ -14,7 +14,7 @@
 @using Inventory_Management_Web_Application.App_Classes
 
 @{
-    var urunler = (Inventory_Management_Web_Application.App_Classes.UrunCikis)Session["Urun"];
+    var urunler = (Inventory_Management_Web_Application.App_Classes.UrunCikisSepet)Session["Urun"];
     List<Urun> liste = urunler.HepsiniGetir();
 }
 
