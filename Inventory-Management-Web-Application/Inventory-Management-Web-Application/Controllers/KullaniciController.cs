@@ -168,9 +168,9 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult Yetkiler(int RolID,MenuList list , IslemErisimList list2 , string katrol)
-        {         
-
+        public ActionResult Yetkiler(int RolID, string menuler , string islemler , string katrol)
+        {
+            //, MenuList list , IslemErisimList list2
             Rol r = db.Rol.Where(x => x.ID == RolID).FirstOrDefault(); // Düzenlenmek istenen Rolu bul
 
             if (r == null) // rol boş ise hata döndür
@@ -181,14 +181,36 @@ namespace Inventory_Management_Web_Application.Controllers
             #region,Menü Rolleri update
             //Bu role ait tüm yetkileri 
             List<MenuRol> menuRol = db.MenuRol.Where(x => x.RolID == r.ID).ToList();
-            // Menü rollerinin silinmesi
-            foreach (var item in menuRol)
-            {
-                db.MenuRol.Remove(item);
-            }
-            db.SaveChanges(); // roller sıfırlandı.
+
+          
+                // Menü rollerinin silinmesi
+                foreach (var item in menuRol)
+                {
+                    db.MenuRol.Remove(item);
+                }
+                db.SaveChanges(); // roller sıfırlandı.
+         
             //Tüm rolleri yeniden yükle ve değişiklikleri kayıt et.
-            MenuList.RolKontrol(list, RolID);
+            string[] Menuparts = menuler.Split('^');
+            List<Menu> Eklenenmenuler = new List<Menu>();
+            for (int i = 0; i < Menuparts.Length; i++)
+            {
+                string s = Menuparts[i].ToString();
+                Menu alt = db.Menu.Where(x => x.Adi == s).FirstOrDefault();
+                if (alt != null)
+                {
+                    Eklenenmenuler.Add(alt);
+                }
+            }
+            foreach (Menu item in Eklenenmenuler)
+            {
+                MenuRol rol = new MenuRol();
+                rol.MenuID = item.ID;
+                rol.RolID = RolID;
+                db.MenuRol.Add(rol);
+                db.SaveChanges();
+            }
+            // MenuList.RolKontrol(list, RolID);
             ViewBag.Yetkileri = db.MenuRol.Where(x => x.RolID == r.ID).ToList();
             ViewBag.Menuler = db.Menu.ToList();
             #endregion
@@ -196,14 +218,39 @@ namespace Inventory_Management_Web_Application.Controllers
             #region,İşlem Rolleri Update
             //Bu role ait post izinleri
             List<ErisimRol> erisimRol = db.ErisimRol.Where(x => x.RolID == r.ID).ToList();
-            // Erisim rollerinin silinmesi
-            foreach (var item in erisimRol)
+
+           
+                // Erisim rollerinin silinmesi
+                foreach (var item in erisimRol)
+                {
+                    db.ErisimRol.Remove(item);
+                }
+                db.SaveChanges(); // roller sıfırlandı.
+  
+    
+
+            string[] Islemparts = islemler.Split('^');
+            List<IslemErisim> islemlerim = new List<IslemErisim>();
+            for (int i = 0; i < Islemparts.Length; i++)
             {
-                db.ErisimRol.Remove(item);
+                string s = Islemparts[i].ToString();
+                IslemErisim islemi = db.IslemErisim.Where(x => x.Adı == s).FirstOrDefault();
+                if (islemi != null)
+                {
+                    islemlerim.Add(islemi);
+                }
             }
-            db.SaveChanges(); // roller sıfırlandı.
-             //Tüm erisimleri yeniden yükle ve değişiklikleri kayıt et.
-            IslemErisimList.RolKontrol(list2, RolID);
+
+            //Tüm erisimleri yeniden yükle ve değişiklikleri kayıt et.
+            foreach (IslemErisim item in islemlerim)
+            {
+                ErisimRol rol = new ErisimRol();
+                rol.ErisimID = item.ID;
+                rol.RolID = RolID;
+                db.ErisimRol.Add(rol);
+                db.SaveChanges();
+
+            }
             #endregion
 
             #region, ürün Kategori rolleri
@@ -212,18 +259,21 @@ namespace Inventory_Management_Web_Application.Controllers
             for (int i = 0; i < parts.Length; i++)
             {
                 string s = parts[i].ToString();
-                AltKategori alt = db.AltKategori.Where(x => x.KategoriAdi == s).SingleOrDefault();
+                AltKategori alt = db.AltKategori.Where(x => x.KategoriAdi == s).FirstOrDefault();
                 if (alt !=null)
                 {
                     alts.Add(alt);
                 }
             }
             List<KategoriRol> kr = db.KategoriRol.Where(x => x.RolID == RolID).ToList();
-            foreach (var item in kr) // tüm kategori rollerini sil.
-            {
-                db.KategoriRol.Remove(item);
-            }
-            db.SaveChanges();
+        
+                foreach (var item in kr) // tüm kategori rollerini sil.
+                {
+                    db.KategoriRol.Remove(item);
+                }
+                db.SaveChanges();
+           
+      
             //tüm rolleri yeniden yükle
             foreach (AltKategori item in alts)
             {
