@@ -12,10 +12,10 @@
 
 <div class="row">
     <div class="col-lg-12">
-        @if (ViewBag.basarili !=null)
+        @if (TempData["Uyari"] != null)
         {
             <div class="alert alert-success">
-                <p>@ViewBag.basarili</p>
+                <p>@TempData["Uyari"]</p>
             </div>
         }
         <section class="panel">
@@ -67,7 +67,7 @@
                             </td>
                             <td>
                                 <a title="Sil" style="float:right;" class="btn btn-danger btn-xs btn-confirm" data-id="@item.ID"><i class="icon-trash"></i> Sil</a>
-                                <a style="float:right;margin-right:5px;" href="/Tanim/TeslimBirimDuzenle/@item.ID" class="btn btn-primary btn-xs"><i class="icon-pencil"></i> Düzenle</a>
+                                <a style="float:right;margin-right:5px;" href="/Kullanici/YetkiDuzenle/@item.ID" class="btn btn-primary btn-xs"><i class="icon-pencil"></i> Düzenle</a>
                                 <a style="float:right;margin-right:5px;" href="/Kullanici/Yetkiler/@item.ID" class="btn btn-warning btn-xs"><i class="icon-unlock-alt"></i> Yetkiler</a>
                             </td>
                         </tr>

@@ -48,5 +48,6 @@ namespace Inventory_Management_Web_Application.App_Classes
             return urunler;
         }
 
+
     }
 }

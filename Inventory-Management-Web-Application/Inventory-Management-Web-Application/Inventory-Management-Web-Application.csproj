@@ -329,6 +329,7 @@
     <Content Include="Views\Urun\SilinenUrunler.cshtml" />
     <Content Include="Views\YazilimUrun\SilinenUrunler.cshtml" />
     <Content Include="Views\Admin\YetkiBulunamadi.cshtml" />
+    <Content Include="Views\Kullanici\YetkiDuzenle.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
