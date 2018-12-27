@@ -6,7 +6,7 @@ using Inventory_Management_Web_Application.Models;
 
 namespace Inventory_Management_Web_Application.App_Classes
 {
-    public class UrunCikis
+    public class UrunCikisSepet
     {
         List<Urun> urunler = new List<Urun>();
 

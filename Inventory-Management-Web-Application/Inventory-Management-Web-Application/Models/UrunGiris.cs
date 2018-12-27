@@ -35,6 +35,6 @@ namespace Inventory_Management_Web_Application.Models
 
         public virtual Urun Urun { get; set; }
 
-        public virtual YazılımUrun YazılımUrun { get; set; }
+        public virtual YazilimUrun YazilimUrun { get; set; }
     }
 }

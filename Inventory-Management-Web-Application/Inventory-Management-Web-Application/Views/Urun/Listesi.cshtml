@@ -30,9 +30,52 @@
         }
     </style>
 }
+
 <div class="row">
-    <div class="col-lg-12" >
-        @if (ViewBag.hata !=null)
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                Ürün Filtre
+                <span class="tools pull-right">
+                    <a href="javascript:;" class="icon-chevron-down"></a>
+                </span>
+            </header>
+            <div class="panel-body">
+                <form role="form" method="post" action="/Urun/UrunFiltrele">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Kategori Seçiniz </label>&nbsp;<span style="color: red;">*</span>
+                        @Html.DropDownList("KategoriID", (SelectList)ViewBag.anakategoriler, "Seçiniz...", new { @class = "form-control", id = "ana" })
+                    </div>
+
+                    <div class="form-group alt">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Stok Miktarı (Küçük olanları Getirir.)</label>
+                        <input type="number" class="form-control" placeholder="Stok Giriniz..." name="StokMiktari">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Eklenme Tarihi (Seçilen tarihten sonra eklenen ürünleri getirir.) </label>
+                        <input type="date" class="form-control" placeholder="Eklenme Tarihi Giriniz..." name="EklenmeTarihi">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Ekleyen Kişiyi Seçiniz </label>&nbsp;<span style="color: red;">*</span>
+                        @Html.DropDownList("PersonelID", (SelectList)ViewBag.personeller, "Seçiniz...", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Tedarikçi Seçiniz </label>&nbsp;<span style="color: red;">*</span>
+                        @Html.DropDownList("TedarikciID", (SelectList)ViewBag.tedarikciler, "Seçiniz...", new { @class = "form-control" })
+                    </div>
+                    <button style="float:right;" type="submit" class="btn btn-info">Filtrele</button>
+                </form>
+
+            </div>
+        </section>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
+        @if (ViewBag.hata != null)
         {
             <div class="alert alert-danger">
                 <p>@ViewBag.hata</p>
@@ -52,8 +95,8 @@
                         <table class="table table-striped table-hover table-bordered" id="editable-sample">
                             <thead>
                                 <tr>
+                                    <th>Eklenme Tarihi</th>
                                     <th>Ürün Kodu</th>
-
                                     <th>Kategori</th>
                                     <th>Adı</th>
                                     <th>Açıklama</th>
@@ -65,6 +108,9 @@
                                 @foreach (var item in Model)
                                 {
                                     <tr id="@item.ID">
+                                        <td>
+                                            @item.EklenmeTarihi.Value.Day/@item.EklenmeTarihi.Value.Month/@item.EklenmeTarihi.Value.Year
+                                        </td>
                                         <td>
                                             @item.UrunKodu
                                         </td>
@@ -112,7 +158,7 @@
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
-            
+
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Bu Ürünü Silmek İstediğinizden Emin misiniz ?</h4>
@@ -173,7 +219,7 @@
             });
         };
 
-        
+
 
         modalConfirm(function (confirm) {
             if (confirm) {
@@ -206,4 +252,24 @@
         });
 
     </script>
+
+    <script>
+         id;
+        $("#ana").change(function () {
+            id = this.value;
+            $.ajax({
+                url: '/Urun/altKategoriDropdown/' + id,
+                type: 'GET',
+                cache: false,
+                success: function (data) {
+                    $('.alt').html(data);
+                },
+                error: function () {
+                    $('.alt').html("");
+                }
+            });
+        });
+    </script>
 }
+
+

@@ -50,8 +50,8 @@
                         <table class="table table-striped table-hover table-bordered" id="editable-sample">
                             <thead>
                                 <tr>
+                                    <th>Eklenme Tarihi</th>
                                     <th>Ürün Kodu</th>
-                                    <th>Seri No</th>
                                     <th>Kategori</th>
                                     <th>Adı</th>
                                     <th>Nedeni</th>
@@ -65,10 +65,10 @@
                                 {
                                     <tr id="@item.ID">
                                         <td>
-                                            @item.UrunKodu
+                                            @item.EklenmeTarihi.Value.Day/@item.EklenmeTarihi.Value.Month/@item.EklenmeTarihi.Value.Year
                                         </td>
                                         <td>
-                                            @item.UrunSeriNo
+                                            @item.UrunKodu
                                         </td>
                                         <td>
                                             @item.AltKategori.KategoriAdi
@@ -80,7 +80,7 @@
                                             @item.SilmeNedeni
                                         </td>
                                         <td>
-                                            @item.SilmeTarihi
+                                            @item.SilmeTarihi.Value.Day/@item.SilmeTarihi.Value.Month/@item.SilmeTarihi.Value.Year
                                         </td>
                                         <td>
                                             @item.Personel.Adi

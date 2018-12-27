@@ -9,45 +9,45 @@
 
     <div class="col-lg-3 col-sm-6">
         <section class="panel">
-            <div class="symbol blue">
-                <i class="icon-user"></i>
+            <div class="symbol red">
+                <i class="icon-tasks"></i>
             </div>
             <div class="value">
-                <h1 class=" count2">947</h1>
+                <h1 class=" count"></h1>
                 <p>Ürün Sayısı</p>
             </div>
         </section>
     </div>
     <div class="col-lg-3 col-sm-6">
         <section class="panel">
-            <div class="symbol red">
-                <i class="icon-tags"></i>
+            <div class="symbol blue">
+                <i class="icon-code"></i>
             </div>
             <div class="value">
-                <h1 class=" count2">947</h1>
-                <p>Garantideki Ürünler</p>
+                <h1 class=" count2"></h1>
+                <p>Yazılım Ürün Sayısı</p>
             </div>
         </section>
     </div>
     <div class="col-lg-3 col-sm-6">
         <section class="panel">
             <div class="symbol yellow">
-                <i class="icon-shopping-cart"></i>
+                <i class="icon-user"></i>
             </div>
             <div class="value">
-                <h1 class=" count3">328</h1>
-                <p>Yazılım Sayısı</p>
+                <h1 class=" count3"></h1>
+                <p>Kullanıcı Sayısı</p>
             </div>
         </section>
     </div>
     <div class="col-lg-3 col-sm-6">
         <section class="panel">
-            <div class="symbol blue">
-                <i class="icon-bar-chart"></i>
+            <div class="symbol terques">
+                <i class="icon-shopping-cart"></i>
             </div>
             <div class="value">
-                <h1 class=" count4">10328</h1>
-                <p>Kullanıcı Sayısı</p>
+                <h1 class=" count4"></h1>
+                <p>Tedarikçi Sayısı</p>
             </div>
         </section>
     </div>
@@ -65,7 +65,7 @@
                         @{
                             bool control = true;
                         }
-                        @foreach (YazılımUrun item in ViewBag.yazilimlar)
+                        @foreach (YazilimUrun item in ViewBag.yazilimlar)
                         {
                             var lisansUyari = (item.LisansBitisTarihi.Value.Date - DateTime.Now.Date).TotalDays;
                             if (lisansUyari <= ViewBag.ayarlar.YazilimUrun)
@@ -118,7 +118,7 @@
                         @{
                             control = true;
                         }
-                        @foreach (YazılımUrun item in ViewBag.yazilimlar)
+                        @foreach (YazilimUrun item in ViewBag.yazilimlar)
                         {
                             if (item.KeyAdet <= ViewBag.ayarlar.YazilimUrunStok)
                             {
@@ -189,3 +189,102 @@
         </section>
     </div>
 </div>
+
+@section  script{
+
+<script>
+
+
+    function countUp(count) {
+        var div_by = 10,
+            speed = Math.round(count / div_by),
+            $display = $('.count'),
+            run_count = 0,
+            int_speed = 24;
+
+        var int = setInterval(function () {
+            if (run_count < div_by) {
+                $display.text(speed * run_count);
+                run_count++;
+            } else if (parseInt($display.text()) < count) {
+                var curr_count = parseInt($display.text()) + 1;
+                $display.text(curr_count);
+            } else {
+                clearInterval(int);
+            }
+        }, int_speed);
+    }
+
+    countUp(10);
+
+    function countUp2(count) {
+        var div_by = @ViewBag.yazilimsayisi,
+            speed = Math.round(count / div_by),
+            $display = $('.count2'),
+            run_count = 0,
+            int_speed = 24;
+
+        var int = setInterval(function () {
+            if (run_count < div_by) {
+                $display.text(speed * run_count);
+                run_count++;
+            } else if (parseInt($display.text()) < count) {
+                var curr_count = parseInt($display.text()) + 1;
+                $display.text(curr_count);
+            } else {
+                clearInterval(int);
+            }
+        }, int_speed);
+    }
+
+    countUp2(@ViewBag.yazilimsayisi);
+
+    function countUp3(count) {
+        var div_by = @ViewBag.kullanicisayisi,
+            speed = Math.round(count / div_by),
+            $display = $('.count3'),
+            run_count = 0,
+            int_speed = 24;
+
+        var int = setInterval(function () {
+            if (run_count < div_by) {
+                $display.text(speed * run_count);
+                run_count++;
+            } else if (parseInt($display.text()) < count) {
+                var curr_count = parseInt($display.text()) + 1;
+                $display.text(curr_count);
+            } else {
+                clearInterval(int);
+            }
+        }, int_speed);
+    }
+
+    countUp3(@ViewBag.kullanicisayisi);
+
+    function countUp4(count) {
+        var div_by = @ViewBag.tedarikcisayisi,
+            speed = Math.round(count / div_by),
+            $display = $('.count4'),
+            run_count = 0,
+            int_speed = 24;
+
+        var int = setInterval(function () {
+            if (run_count < div_by) {
+                $display.text(speed * run_count);
+                run_count++;
+            } else if (parseInt($display.text()) < count) {
+                var curr_count = parseInt($display.text()) + 1;
+                $display.text(curr_count);
+            } else {
+                clearInterval(int);
+            }
+        }, int_speed);
+    }
+
+    /**/
+    countUp4(@ViewBag.tedarikcisayisi);
+/**/
+</script>
+
+
+}

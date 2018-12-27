@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Inventory_Management_Web_Application.App_Classes;
 using Inventory_Management_Web_Application.Models;
-
+using Inventory_Management_Web_Application.ReportFilters;
 
 namespace Inventory_Management_Web_Application.Controllers
 {
@@ -17,9 +17,46 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpGet]
         public ActionResult Listesi()
         {
+            List<YazilimUrun> urunler = new List<YazilimUrun>();
+            if (TempData["filtreliYazilimUrunler"] == null)
+            {
+                urunler = UrunList.IzinliYazilimUrunler();
+            }
+            else
+            {
+                urunler = (List<YazilimUrun>)TempData["filtreliYazilimUrunler"];
+            }
+
+
+            var anakategoriler = db.AnaKategori.ToList();
+            ViewBag.anakategoriler = new SelectList(anakategoriler, "ID", "KategoriAdi");
+
+            var urunbirimler = db.UrunBirim.ToList();
+            ViewBag.urunbirimler = new SelectList(urunbirimler, "ID", "Adi");
+
+            var tedarikciler = db.Tedarikci.Select(x => new
+            {
+                ID = x.ID,
+                TedarikciAdi = x.FirmaAdi
+            });
+            var personeller = db.Personel.Select(x => new
+            {
+                ID = x.ID,
+                adiSoyadi = x.Adi + " " + x.Soyadi
+            });
+            ViewBag.tedarikciler = new SelectList(tedarikciler, "ID", "TedarikciAdi");
+            ViewBag.personeller = new SelectList(personeller, "ID", "adiSoyadi");
+
             ViewBag.ayarlar = db.Ayarlar.FirstOrDefault();
-            List<YazılımUrun> urunler = UrunList.IzinliYazilimUrunler();
             return View(urunler);
+        }
+
+        [HttpPost]
+        public ActionResult UrunFiltrele(YazilimUrunFilter list)
+        {
+            List<YazilimUrun> rapor = YazilimUrunFilter.UrunSorgu(list);
+            TempData["filtreliYazilimUrunler"] = rapor;
+            return RedirectToAction("Listesi");
         }
 
         public PartialViewResult altKategoriDropdown(int id)
@@ -53,20 +90,20 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult Ekle(YazılımUrun u)
+        public ActionResult Ekle(YazilimUrun u)
         {
             int Lastid = 0;
-            if (db.YazılımUrun != null)
+            if (db.YazilimUrun != null)
             {
-                Lastid = db.YazılımUrun.Max(x => x.ID);
+                Lastid = db.YazilimUrun.Max(x => x.ID);
             }
             Lastid = db.Urun.Max(x => x.ID);
             string urunKodu = u.altKategoriID.ToString() + "1000" + DateTime.Now.Year.ToString() + (Lastid + 1).ToString();
             u.UrunID = urunKodu;
-            db.YazılımUrun.Add(u);
+            db.YazilimUrun.Add(u);
             db.SaveChanges();
 
-            YazılımUrun ku = db.YazılımUrun.Where(x => x.UrunID == urunKodu).SingleOrDefault();
+            YazilimUrun ku = db.YazilimUrun.Where(x => x.UrunID == urunKodu).SingleOrDefault();
             UrunGiris ug = new UrunGiris();
             ug.YazilimUrunID = ku.ID;
             ug.AlinanMiktar = ku.KeyAdet;
@@ -83,7 +120,7 @@ namespace Inventory_Management_Web_Application.Controllers
         public ActionResult Sil(int id, string neden)
         {
             Personel aktifKullanici = (Personel)Session["Kullanici"];
-            YazılımUrun b = db.YazılımUrun.Where(x => x.ID == id).SingleOrDefault();
+            YazilimUrun b = db.YazilimUrun.Where(x => x.ID == id).SingleOrDefault();
             var dateAndTime = DateTime.Now;
             var date = dateAndTime.Date;
             if (b == null)
@@ -112,13 +149,13 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpGet]
         public ActionResult SilinenUrunler()
         {
-            return View(db.YazılımUrun.Where(x => x.Aktif == false).ToList());
+            return View(db.YazilimUrun.Where(x => x.Aktif == false).ToList());
         }
 
         [HttpPost]
         public ActionResult SilSilinen(int id)
         {
-            YazılımUrun b = db.YazılımUrun.Where(x => x.ID == id).SingleOrDefault();
+            YazilimUrun b = db.YazilimUrun.Where(x => x.ID == id).SingleOrDefault();
             if (b == null)
             {
                 return Json(false);
@@ -142,7 +179,7 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpGet]
         public ActionResult Guncelle(int id)
         {
-            YazılımUrun u = db.YazılımUrun.Where(x => x.ID == id).FirstOrDefault();
+            YazilimUrun u = db.YazilimUrun.Where(x => x.ID == id).FirstOrDefault();
 
             var anakategoriler = db.AltKategori.ToList();
             ViewBag.anakategoriler = new SelectList(anakategoriler, "ID", "KategoriAdi");
@@ -154,9 +191,9 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult Guncelle(YazılımUrun u)
+        public ActionResult Guncelle(YazilimUrun u)
         {
-            YazılımUrun gu = db.YazılımUrun.Where(x => x.ID == u.ID).FirstOrDefault();
+            YazilimUrun gu = db.YazilimUrun.Where(x => x.ID == u.ID).FirstOrDefault();
             if (gu == null)
             {
                 return RedirectToAction("Hata", "Admin");
@@ -175,7 +212,7 @@ namespace Inventory_Management_Web_Application.Controllers
         // urun çıkarma
         public ActionResult stokCikar(int id)
         {
-            YazılımUrun u = db.YazılımUrun.Where(x => x.ID == id).SingleOrDefault();
+            YazilimUrun u = db.YazilimUrun.Where(x => x.ID == id).SingleOrDefault();
             if (u.KeyAdet == 0)
             {
                 ViewBag.hata = "Bu ürün için stok bulunmamaktadır.";
@@ -226,15 +263,15 @@ namespace Inventory_Management_Web_Application.Controllers
             }
             int CikisNumarasi = 1000 + DateTime.Now.Year + (Lastid + 1);
             var urunler = (App_Classes.YazilimUrunCikis)Session["YazilimUrun"];
-            List<YazılımUrun> liste = urunler.HepsiniGetir();
-            List<YazılımUrun> temp = new List<YazılımUrun>();
-            foreach (YazılımUrun item in liste)
+            List<YazilimUrun> liste = urunler.HepsiniGetir();
+            List<YazilimUrun> temp = new List<YazilimUrun>();
+            foreach (YazilimUrun item in liste)
             {
                 if (temp.Where(x => x.ID == item.ID).SingleOrDefault() != null)
                 {
                     continue;
                 }
-                YazılımUrun stokDus = db.YazılımUrun.Where(x => x.ID == item.ID).FirstOrDefault();
+                YazilimUrun stokDus = db.YazilimUrun.Where(x => x.ID == item.ID).FirstOrDefault();
                 if (stokDus.KeyAdet == 0)
                 {
                     ViewBag.hatali = "Çıkarılacak ürünler arasında stok miktarı 0 olan ürünler bulanmaktadır.";
@@ -278,14 +315,14 @@ namespace Inventory_Management_Web_Application.Controllers
             ViewBag.tedarikciler = new SelectList(tedarikciler, "ID", "TedarikciAdi");
             ViewBag.personeller = new SelectList(personeller, "ID", "adiSoyadi");
             ViewBag.personelleri = db.Personel.ToList();
-            YazılımUrun eklenecekUrun = db.YazılımUrun.Where(x => x.ID == id).FirstOrDefault();
+            YazilimUrun eklenecekUrun = db.YazilimUrun.Where(x => x.ID == id).FirstOrDefault();
             return View(eklenecekUrun);
         }
 
         [HttpPost]
         public ActionResult stokEkle(UrunGiris veri)
         {
-            var urun = db.YazılımUrun.FirstOrDefault(x => x.ID == veri.YazilimUrunID);
+            var urun = db.YazilimUrun.FirstOrDefault(x => x.ID == veri.YazilimUrunID);
             urun.KeyAdet = urun.KeyAdet + veri.AlinanMiktar;
             veri.UrunID = null;
             db.UrunGiris.Add(veri);
@@ -297,7 +334,7 @@ namespace Inventory_Management_Web_Application.Controllers
         public ActionResult SepetSil(int id)
         {
             var urunler = (App_Classes.YazilimUrunCikis)Session["YazilimUrun"];
-            YazılımUrun b = db.YazılımUrun.Where(x => x.ID == id).SingleOrDefault();
+            YazilimUrun b = db.YazilimUrun.Where(x => x.ID == id).SingleOrDefault();
             if (b == null)
             {
                 RedirectToAction("Hata", "Admin");

@@ -2,34 +2,34 @@
 using Inventory_Management_Web_Application.Models;
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Web;
 
 namespace Inventory_Management_Web_Application.ReportFilters
 {
-    public class UrunFilter
+    public class CikanYazilimUrunFilter
     {
-        public int altKategoriID { get; set; }
-        public int StokMiktari { get; set; }
-        public DateTime EklenmeTarihi { get; set; }
-        public int PersonelID { get; set; }
-        public int TedarikciID { get; set; }
 
-        public static List<Urun> UrunSorgu(UrunFilter list)
+
+        public int UrunID { get; set; }
+        public int CikanMictar { get; set; }
+        public DateTime TeslimTarihi { get; set; }
+        public int TeslimVerenID { get; set; }
+
+        public static List<UrunCikis> UrunSorgu(CikanYazilimUrunFilter list)
         {
             InventoryContext db = new InventoryContext();
             // Sorgu degiskenleri
-            var props = typeof(UrunFilter).GetProperties();
+            var props = typeof(CikanYazilimUrunFilter).GetProperties();
             int counter = 0;
             string isim;
-            StringBuilder Sorgu = new StringBuilder("SELECT * FROM Urun WHERE ");
+            StringBuilder Sorgu = new StringBuilder("SELECT * FROM UrunCikis WHERE ");
             while (counter != props.Count())
             {
                 var deger = props.ElementAt(counter).GetValue(list, null);
                 isim = Convert.ToString(props.ElementAt(counter).Name.ToString());
-                if (isim== "EklenmeTarihi")
+                if (isim == "TeslimTarihi")
                 {
                     string df = "1.01.0001 00:00:00";
                     DateTime d = Convert.ToDateTime(df);
@@ -39,9 +39,9 @@ namespace Inventory_Management_Web_Application.ReportFilters
                         Sorgu.Append(isim + " >= '" + tarihBicim.Year.ToString() + "." + tarihBicim.Month.ToString() + "." + tarihBicim.Day.ToString() + "' and ");
                     }
                 }
-                else if ( (int)deger != 0)
+                else if ((int)deger != 0)
                 {
-                    if (isim == "StokMiktari")
+                    if (isim == "CikanMictar")
                     {
                         Sorgu.Append(isim + " <= " + deger.ToString() + " and ");
                     }
@@ -52,13 +52,14 @@ namespace Inventory_Management_Web_Application.ReportFilters
                 }
                 counter++;
             }
-            Sorgu.Remove(Sorgu.ToString().Length-4, 4);
-            List<Urun> uruns = db.Urun.SqlQuery(Sorgu.ToString()).ToList();
-            List<Urun> izinliurunler = UrunList.IzinliUrunler();
-            List<Urun> donecekUrunler = new List<Urun>();
-            foreach (Urun item in uruns)
+            Sorgu.Remove(Sorgu.ToString().Length - 4, 4);
+
+            List<UrunCikis> uruns = db.UrunCikis.SqlQuery(Sorgu.ToString()).ToList();
+            List<YazilimUrun> izinliurunler = UrunList.IzinliYazilimUrunler();
+            List<UrunCikis> donecekUrunler = new List<UrunCikis>();
+            foreach (UrunCikis item in uruns)
             {
-                bool y = izinliurunler.Exists(x=>x.ID==item.ID);
+                bool y = izinliurunler.Exists(x => x.ID == item.YazilimUrunID);
                 if (y)
                 {
                     donecekUrunler.Add(item);

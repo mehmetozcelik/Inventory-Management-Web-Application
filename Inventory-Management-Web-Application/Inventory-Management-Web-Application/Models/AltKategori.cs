@@ -14,7 +14,7 @@ namespace Inventory_Management_Web_Application.Models
         {
             KategoriRol = new HashSet<KategoriRol>();
             Urun = new HashSet<Urun>();
-            YazılımUrun = new HashSet<YazılımUrun>();
+            YazilimUrun = new HashSet<YazilimUrun>();
         }
 
         public int ID { get; set; }
@@ -36,6 +36,6 @@ namespace Inventory_Management_Web_Application.Models
         public virtual ICollection<Urun> Urun { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<YazılımUrun> YazılımUrun { get; set; }
+        public virtual ICollection<YazilimUrun> YazilimUrun { get; set; }
     }
 }
