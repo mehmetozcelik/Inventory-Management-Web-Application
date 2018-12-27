@@ -34,9 +34,6 @@ namespace Inventory_Management_Web_Application.Models
         public int? KeyAdet { get; set; }
 
         [StringLength(100)]
-        public string UrunSeriNo { get; set; }
-
-        [StringLength(100)]
         public string LisansUyari { get; set; }
 
         public int? altKategoriID { get; set; }
