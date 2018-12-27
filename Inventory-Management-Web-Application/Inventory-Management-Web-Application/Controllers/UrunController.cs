@@ -267,22 +267,63 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         public ActionResult GarantiListesi()
-        {
+        {   
+                    
             return View(db.ArizaDurum.Where(x=>x.aktif==true).ToList());
+            
         }
 
-        public ActionResult GarantiCikar(int id)
+        public ActionResult GarantiCikar(int id, int adet)
         {
-            ArizaDurum ad = db.ArizaDurum.Where(x => x.ID == id).FirstOrDefault();
+            ArizaDurum ad = db.ArizaDurum.Where(x => x.ID == id).FirstOrDefault();          
+            Urun u = db.Urun.Where(x => x.ID == ad.UrunID).FirstOrDefault();
+
+            ArizaDurum adf= db.ArizaDurum.Where(x => x.UrunID == u.ID && x.aktif==false).FirstOrDefault();                                   
+                                                                 
+
             if (ad == null)
             {
                 return RedirectToAction("Hata", "Admin");
             }
-            Urun u = db.Urun.Where(x => x.ID == ad.UrunID).FirstOrDefault();
-
-            u.StokMiktari = u.StokMiktari + ad.Adet;
+            
+            
+            ad.Adet = ad.Adet - adet;                   
+            u.StokMiktari = u.StokMiktari + adet;       
             db.SaveChanges();
-            ad.aktif = false;
+
+            if (ad.Adet<=0)
+            {
+                ad.aktif = null;                
+                db.SaveChanges();
+            }
+            db.SaveChanges();
+
+
+
+
+            if (adf == null)
+            {
+
+                adf = ad;
+                adf.Adet = 0;
+                adf.Adet = adf.Adet + adet;
+                adf.aktif = false;
+                db.ArizaDurum.Add(adf);
+                db.SaveChanges();
+
+
+            }
+            else if (!(adf == null))
+            {
+                adf.Adet = 0;
+                adf.Adet = adf.Adet + adet;
+                db.ArizaDurum.Add(adf);
+                db.SaveChanges();
+
+            }
+
+
+
             db.SaveChanges();
             return RedirectToAction("GarantiListesi");
         }
