@@ -235,7 +235,7 @@ namespace Inventory_Management_Web_Application.Controllers
             }
             #endregion
             //Sayfayı geri yükle
-            ViewBag.basarili = "Profil yetkileri başarılı bir şekilde güncellenmiştir.";
+            TempData["Uyari"] = "Profil yetkileri başarılı bir şekilde güncellenmiştir.";
             return RedirectToAction("ProfilListesi");
         }
 
@@ -271,6 +271,27 @@ namespace Inventory_Management_Web_Application.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult YetkiDuzenle(int id)
+        {
+            Rol r = db.Rol.Where(x => x.ID == id).FirstOrDefault();
+            return View(r);
+        }
+
+        [HttpPost]
+        public ActionResult YetkiDuzenle(Rol rol)
+        {
+            Rol r = db.Rol.Where(x => x.ID == rol.ID).FirstOrDefault();
+            if (r==null)
+            {
+                return RedirectToAction("Hata", "Admin");
+            }
+            r.RolAdi = rol.RolAdi;
+            r.Aciklama = rol.Aciklama;
+            db.SaveChanges();
+            TempData["Uyari"] = "Profil bilgileri başarılı bir şekilde güncellenmiştir.";
+            return RedirectToAction("ProfilListesi");
+        }
 
     }
 }
