@@ -90,7 +90,7 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult Ekle(YazilimUrun u)
+        public ActionResult Ekle(YazilimUrun u, string UrunSeriNo)
         {
             int Lastid = 0;
             if (db.YazilimUrun != null)
@@ -100,6 +100,7 @@ namespace Inventory_Management_Web_Application.Controllers
             Lastid = db.Urun.Max(x => x.ID);
             string urunKodu = u.altKategoriID.ToString() + "1000" + DateTime.Now.Year.ToString() + (Lastid + 1).ToString();
             u.UrunID = urunKodu;
+            u.Aktif = true;
             db.YazilimUrun.Add(u);
             db.SaveChanges();
 
@@ -110,6 +111,7 @@ namespace Inventory_Management_Web_Application.Controllers
             ug.AlanPerID = u.PersonelID;
             ug.TedarikciID = u.TedarikciID;
             ug.Aciklama = u.Aciklama;
+            ug.UrunSeriNo = UrunSeriNo;
             ug.GirisTarihi = DateTime.Now;
             db.UrunGiris.Add(ug);
             db.SaveChanges();
@@ -204,7 +206,7 @@ namespace Inventory_Management_Web_Application.Controllers
             gu.KeyAdet = u.KeyAdet;
             gu.LisansBaslangicTarihi = u.LisansBaslangicTarihi;
             gu.LisansBitisTarihi = u.LisansBitisTarihi;
-            gu.UrunSeriNo = u.UrunSeriNo;
+            //gu.UrunSeriNo = u.UrunSeriNo;
             db.SaveChanges();
             return RedirectToAction("Listesi");
         }
@@ -327,7 +329,7 @@ namespace Inventory_Management_Web_Application.Controllers
             veri.UrunID = null;
             db.UrunGiris.Add(veri);
             db.SaveChanges();
-            return RedirectToAction("urunGirisleri","Urun");
+            return RedirectToAction("urunGirisleri","YazilimUrun");
         }
 
         [HttpGet]
@@ -354,6 +356,29 @@ namespace Inventory_Management_Web_Application.Controllers
         {
             var urunler = db.UrunGiris.Where(x => x.YazilimUrunID != null).ToList();
             return View(urunler);
+        }
+
+        [HttpPost]
+        public ActionResult urunGirisSil(int id)
+        {
+            UrunGiris b = db.UrunGiris.Where(x => x.ID == id).SingleOrDefault();
+            if (b == null)
+            {
+                return Json(false);
+            }
+            else
+            {
+                try
+                {
+                    db.UrunGiris.Remove(b);
+                    db.SaveChanges();
+                    return Json(true);
+                }
+                catch (Exception)
+                {
+                    return Json("FK");
+                }
+            }
         }
 
         public ActionResult UrunCikislar()

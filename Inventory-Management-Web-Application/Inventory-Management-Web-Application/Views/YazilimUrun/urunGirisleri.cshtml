@@ -58,6 +58,7 @@
                                     <th>Tedarikçi</th>
                                     <th>Giriş Tarihi</th>
                                     <th>Açıklama</th>
+                                    <th>İşlemler</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,7 +66,7 @@
                                 {
                                 <tr id="@item.ID">
                                     <td>
-                                        @item.YazılımUrun.UrunAdi
+                                        @item.YazilimUrun.UrunAdi
                                     </td>
                                     <td>
                                         @item.AlinanMiktar
@@ -83,6 +84,9 @@
                                     <td>
                                         @item.Aciklama
                                     </td>
+                                    <td>
+                                        <a title="Sil" style="float:right;" class="btn btn-danger btn-xs btn-confirm" data-id="@item.ID"><i class="icon-trash"></i> Sil</a>
+                                    </td>
                                 </tr>
                                 }
 
@@ -95,6 +99,20 @@
     </div>
 </div>
 
+<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Bu Kaydı Silmek İstediğinizden Emin misiniz ?</h4>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="modal-btn-si">Sil</button>
+                <button type="button" class="btn btn-primary" id="modal-btn-no">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section script{
     <script type="text/javascript" src="/Content/assets/data-tables/jquery.dataTables.js"></script>
@@ -111,7 +129,57 @@
         });
     </script>
     <script>
-        window.onload = function () {
-            $('#listele').addClass('active');
-        }</script>
+    window.onload = function () {
+        $('#listele').addClass('active');
+    }</script>
+    
+<script>
+        var id;
+        var modalConfirm = function (callback) {
+
+            $(".btn-confirm").on("click", function () {
+                id = $(this).attr("data-id");
+                $("#mi-modal").modal('show');
+            });
+
+            $("#modal-btn-si").on("click", function () {
+                callback(true);
+
+                $("#mi-modal").modal('hide');
+            });
+
+            $("#modal-btn-no").on("click", function () {
+                callback(false);
+                $("#mi-modal").modal('hide');
+                return e.preventDefault()
+            });
+        };
+
+
+        modalConfirm(function (confirm) {
+            if (confirm) {
+                $.ajax({
+                    url: '/Urun/urunGirisSil/' + id,
+                    type: 'POST',
+                    success: function (rs) {
+                        if (rs === true) {
+                            $('#' + id).remove();
+                        }
+                        else if (rs === "FK") {
+                            alert("Bu ürüne ait ... Kaydı , Ürün Giriş Kaydı veya Ürün Çıkış Kaydı Bulunduğundan dolayı bu Ürün Silemezsiniz. ");
+                        }
+                        else {
+                            alert('Silme işlemi gerçekleşirken bir hata oluştu.');
+                        }
+                    },
+                    error: function (rs) {
+                        alert('Bir hata oluştu');
+                    }
+                });
+            } else {
+                console.log("");
+            }
+        });
+
+</script>
 }

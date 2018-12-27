@@ -91,7 +91,7 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult Ekle(Urun u)
+        public ActionResult Ekle(Urun u, string UrunSeriNo)
         {
             int Lastid = 0;
             if (db.Urun != null)
@@ -102,6 +102,7 @@ namespace Inventory_Management_Web_Application.Controllers
             string urunKodu = u.altKategoriID.ToString() + "1000" + DateTime.Now.Year.ToString() + (Lastid+1).ToString();
             u.UrunKodu = urunKodu;
             u.EklenmeTarihi= DateTime.Now;
+            u.Aktif = true;
             db.Urun.Add(u);
             db.SaveChanges();
 
@@ -112,6 +113,7 @@ namespace Inventory_Management_Web_Application.Controllers
             ug.AlanPerID = u.PersonelID;
             ug.TedarikciID = u.TedarikciID;
             ug.Aciklama = u.Aciklama;
+            ug.UrunSeriNo = UrunSeriNo;
             ug.GirisTarihi = DateTime.Now;
             db.UrunGiris.Add(ug);
             db.SaveChanges();

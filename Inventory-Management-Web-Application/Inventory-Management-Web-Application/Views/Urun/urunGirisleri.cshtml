@@ -163,7 +163,7 @@
         modalConfirm(function (confirm) {
             if (confirm) {
                 $.ajax({
-                    url: '/Urun/urunGirisSil/' + id,
+                    url: '/YazilimUrun/urunGirisSil/' + id,
                     type: 'POST',
                     success: function (rs) {
                         if (rs === true) {
