@@ -162,13 +162,13 @@
                         }
                         @foreach (Urun item in ViewBag.urunler)
                         {
-                            if (item.StokMiktari <= ViewBag.ayarlar.UrunStok)
+                            if (item.UrunGiris.Where(x => x.UrunID == item.ID).Sum(y => y.KalanMiktar).Value <= ViewBag.ayarlar.UrunStok)
                             {
                                 <li class="list-warning">
                                     <i class=" icon-ellipsis-vertical"></i>
                                     <div class="task-title">
                                         <span class="task-title-sp">@item.UrunAdi  </span>	&nbsp;
-                                        <span class="badge badge-sm label-danger">  @item.StokMiktari @item.UrunBirim.Adi Kaldı</span>
+                                        <span class="badge badge-sm label-danger">  @item.UrunGiris.Where(x => x.UrunID == item.ID).Sum(y => y.KalanMiktar).Value @item.UrunBirim.Adi Kaldı</span>
                                     </div>
                                 </li>
                                 control = false;

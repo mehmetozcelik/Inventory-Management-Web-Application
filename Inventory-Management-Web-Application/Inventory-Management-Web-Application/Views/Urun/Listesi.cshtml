@@ -125,13 +125,13 @@
                                             @item.Aciklama
                                         </td>
                                         <td>
-                                            @if (item.StokMiktari <= ViewBag.ayarlar.UrunStok)
+                                            @if (@item.UrunGiris.Where(x => x.UrunID == item.ID).Sum(y => y.KalanMiktar).Value <= ViewBag.ayarlar.UrunStok)
                                             {
-                                                <span class="label label-danger label-mini">@item.StokMiktari @item.UrunBirim.Adi</span>
+                                                <span class="label label-danger label-mini">@item.UrunGiris.Where(x=>x.UrunID==item.ID).Sum(y=>y.KalanMiktar) @item.UrunBirim.Adi</span>
                                             }
                                             else
                                             {
-                                                <span class="label label-success label-mini">@item.StokMiktari @item.UrunBirim.Adi</span>
+                                                <span class="label label-success label-mini">@item.UrunGiris.Where(x => x.UrunID == item.ID).Sum(y => y.KalanMiktar) @item.UrunBirim.Adi</span>
                                             }
 
                                         </td>

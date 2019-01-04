@@ -21,15 +21,15 @@
                     <input hidden value="@Model.ID" name="UrunID" />
 
                     <div class="form-group">
-                        <label>Alınan Miktarı Giriniz </label>(@Model.UrunBirim.Adi)
-                        <input type="text" name="AlinanMiktar" class="form-control" placeholder="Alınan Miktarı Giriniz..." required="" />
+                        <label>Alınan Miktarı Giriniz </label> (@Model.UrunBirim.Adi) &nbsp;<span style="color: red;">*</span>
+                        <input type="text" name="AlinanMiktar" class="form-control" placeholder="Alınan Miktarı Giriniz..." required />
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Ürünün Seri Numarasını Giriniz. </label>
+                        <label for="exampleInputEmail1">Ürünün Seri Numarasını Giriniz. </label> &nbsp;<span style="color: red;">*</span>
                         <input type="text" class="form-control" placeholder="Ürünün Seri Numarasını Giriniz..." name="UrunSeriNo" required>
                     </div>
                     @{
-                        if (p.Rol.RolAdi == "LDAP")
+                        if (p.Rol.RolAdi != "LDAP")
                         {
 
                             foreach (Personel item in ViewBag.personelleri)
@@ -42,25 +42,22 @@
                         }
                         else
                         { <div class="form-group">
-                                <label for="exampleInputEmail1">Ürünü Alan Kişiyi Seçiniz </label>
+                                <label for="exampleInputEmail1">Ürünü Giren Kişiyi Seçiniz. </label> &nbsp;<span style="color: red;">*</span>
+
                                 @Html.DropDownList("AlanPerID", (SelectList)ViewBag.personeller, "Seçiniz...", new { @class = "form-control", required = "required" })
                             </div>
                         }
                     }
 
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Tedarikçiyi Seçiniz </label>
-                        @Html.DropDownList("TedarikciID", (SelectList)ViewBag.tedarikciler, "Seçiniz...", new { @class = "form-control", required = "required" })
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Teslim Tarihi Giriniz </label>
-                        <input type="date" class="form-control" placeholder="Birim Adı Giriniz..." name="GirisTarihi" required>
-                    </div>
+                          <div class="form-group">
+                              <label for="exampleInputEmail1">Tedarikçiyi Seçiniz </label> &nbsp;<span style="color: red;">*</span>
+                              @Html.DropDownList("TedarikciID", (SelectList)ViewBag.tedarikciler, "Seçiniz...", new { @class = "form-control", required = "required" })
+                          </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Açıklama Giriniz. </label>
-                        <input type="text" class="form-control" placeholder="Birim Adı Giriniz..." name="Aciklama" required>
+                        <input type="text" class="form-control" placeholder="Açıklama Adı Giriniz..." name="Aciklama">
                     </div>
-                    
+
                     <button type="submit" class="btn btn-info">Kaydet</button>
                 </form>
 

@@ -32,13 +32,19 @@
 }
 <div class="row">
     <div class="col-lg-12">
+        @if (ViewBag.Mesaj != null)
+        {
+            <div class="alert alert-success">
+                <p>@ViewBag.Mesaj</p>
+            </div>
+        }
         @if (ViewBag.hata != null)
         {
             <div class="alert alert-danger">
                 <p>@ViewBag.hata</p>
             </div>
         }
-        <section class="panel">           
+        <section class="panel">
             <header class="panel-heading" style="padding-bottom: 10px;">
                 <div class="col-lg-12" style="margin-bottom:10px;">
                     <b>Silinen Ürünler</b>
@@ -54,9 +60,9 @@
                                     <th>Ürün Kodu</th>
                                     <th>Kategori</th>
                                     <th>Adı</th>
-                                    <th>Nedeni</th>
-                                    <th>Tarihi</th>
-                                    <th>Silen Kişi</th>
+                                    <th>Pasif Etme Nedeni</th>
+                                    <th>Pasif Edlime Tarihi</th>
+                                    <th>Pasif Eden Kişi</th>
                                     <th style="text-align:center;"> İşlemler</th>
                                 </tr>
                             </thead>
@@ -65,7 +71,7 @@
                                 {
                                     <tr id="@item.ID">
                                         <td>
-                                            @item.EklenmeTarihi.Value.Day/@item.EklenmeTarihi.Value.Month/@item.EklenmeTarihi.Value.Year
+                                            @item.EklenmeTarihi.Value.ToShortDateString()
                                         </td>
                                         <td>
                                             @item.UrunKodu
@@ -80,13 +86,13 @@
                                             @item.SilmeNedeni
                                         </td>
                                         <td>
-                                            @item.SilmeTarihi.Value.Day/@item.SilmeTarihi.Value.Month/@item.SilmeTarihi.Value.Year
+                                            @item.SilmeTarihi.Value.ToShortDateString()
                                         </td>
                                         <td>
-                                            @item.Personel.Adi
+                                            @item.Personel.Adi   @item.Personel.Soyadi
                                         </td>
                                         <td>
-                                            <a title="Sil" class="btn btn-danger btn-xs btn-confirm" data-id="@item.ID"><i class="icon-trash"></i> Sil</a>
+                                            <a title="Tekrar Aktif Et" class="btn btn-success btn-xs btn-confirm" data-id="@item.ID"><i class="icon-mail-reply (alias)"></i> Aktif Et</a>
                                         </td>
                                     </tr>
                                 }
@@ -105,10 +111,10 @@
         <div class="modal-content">  
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Bu Ürünü Silmek İstediğinizden Emin misiniz ?</h4>
+                <h4 class="modal-title" id="myModalLabel">Bu Ürünü Aktif Etmek İstediğinizden Emin misiniz ?</h4>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" id="modal-btn-si">Sil</button>
+                <button type="button" class="btn btn-danger" id="modal-btn-si">Aktif Et</button>
                 <button type="button" class="btn btn-primary" id="modal-btn-no">Kapat</button>
             </div>
         </div>
@@ -162,7 +168,7 @@
         modalConfirm(function (confirm) {
             if (confirm) {
                 $.ajax({
-                    url: '@Url.Action("SilSilinen", "Urun")',
+                    url: '@Url.Action("SilinenAktif", "Urun")',
                     contentType: 'application/json',
                     data: JSON.stringify({
                         id: id,
@@ -170,13 +176,11 @@
                     type: 'POST',
                     success: function (rs) {
                         if (rs === true) {
-                            $('#' + id).remove();
-                        }
-                        else if (rs === "FK") {
-                            alert("Bu ürüne ait Garanti Kaydı , Ürün Giriş Kaydı veya Ürün Çıkış Kaydı Bulunduğundan dolayı bu Ürün Silemezsiniz. ");
+                            alert("Ürün başarılı bir şekilde aktif edilmiştir.");
+                            location.reload();
                         }
                         else {
-                            alert('Silme işlemi gerçekleşirken bir hata oluştu.');
+                            alert('İşlem gerçekleştirilirken bir hata oluştu.');
                         }
                     },
                     error: function (rs) {

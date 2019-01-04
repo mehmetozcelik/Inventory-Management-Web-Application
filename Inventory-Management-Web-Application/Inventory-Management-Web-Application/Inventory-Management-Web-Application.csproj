@@ -206,8 +206,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Classes\Functions.cs" />
-    <Compile Include="App_Classes\IslemErisimList.cs" />
-    <Compile Include="App_Classes\MenuList.cs" />
     <Compile Include="App_Classes\UrunCikisSepet.cs" />
     <Compile Include="App_Classes\UrunList.cs" />
     <Compile Include="App_Classes\YazilimUrunCikis.cs" />
@@ -229,6 +227,7 @@
     <Compile Include="Models\AltKategori.cs" />
     <Compile Include="Models\AnaKategori.cs" />
     <Compile Include="Models\ArizaDurum.cs" />
+    <Compile Include="Models\ArizaEskiKayitlar.cs" />
     <Compile Include="Models\Ayarlar.cs" />
     <Compile Include="Models\Birim.cs" />
     <Compile Include="Models\ErisimRol.cs" />
@@ -246,6 +245,7 @@
     <Compile Include="Models\UrunBirim.cs" />
     <Compile Include="Models\UrunCikis.cs" />
     <Compile Include="Models\UrunGiris.cs" />
+    <Compile Include="Models\UrunTip.cs" />
     <Compile Include="Models\YazilimUrun.cs" />
     <Compile Include="ModelViews\MenuControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -331,6 +331,8 @@
     <Content Include="Views\Admin\YetkiBulunamadi.cshtml" />
     <Content Include="Views\Kullanici\YetkiDuzenle.cshtml" />
     <Content Include="Views\Urun\uruncikarSeriNoGetir.cshtml" />
+    <Content Include="Views\Tanim\UrunTipiDuzenle.cshtml" />
+    <Content Include="Views\Tanim\UrunTipiTanimi.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

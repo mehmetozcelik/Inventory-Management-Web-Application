@@ -6,27 +6,24 @@ namespace Inventory_Management_Web_Application.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("IslemErisim")]
-    public partial class IslemErisim
+    [Table("UrunTip")]
+    public partial class UrunTip
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public IslemErisim()
+        public UrunTip()
         {
-            ErisimRol = new HashSet<ErisimRol>();
+            Urun = new HashSet<Urun>();
         }
 
         public int ID { get; set; }
 
         [StringLength(100)]
-        public string Adı { get; set; }
+        public string Adi { get; set; }
 
-        [StringLength(100)]
-        public string Controller { get; set; }
-
-        [StringLength(100)]
-        public string Action { get; set; }
+        [StringLength(500)]
+        public string Aciklama { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ErisimRol> ErisimRol { get; set; }
+        public virtual ICollection<Urun> Urun { get; set; }
     }
 }

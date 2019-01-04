@@ -151,7 +151,7 @@ namespace Inventory_Management_Web_Application.Controllers
             {
                 return RedirectToAction("Hata", "Admin");
             }
-            gu.ID = u.ID;
+            gu.AnaKategorID = u.AnaKategorID;
             gu.KategoriAdi = u.KategoriAdi;
             gu.Aciklama = u.Aciklama;
             db.SaveChanges();

@@ -13,6 +13,7 @@ namespace Inventory_Management_Web_Application.Models
         public Personel()
         {
             ArizaDurum = new HashSet<ArizaDurum>();
+            ArizaEskiKayitlar = new HashSet<ArizaEskiKayitlar>();
             Urun = new HashSet<Urun>();
             UrunCikis = new HashSet<UrunCikis>();
             UrunGiris = new HashSet<UrunGiris>();
@@ -40,6 +41,9 @@ namespace Inventory_Management_Web_Application.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArizaDurum> ArizaDurum { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ArizaEskiKayitlar> ArizaEskiKayitlar { get; set; }
 
         public virtual Rol Rol { get; set; }
 

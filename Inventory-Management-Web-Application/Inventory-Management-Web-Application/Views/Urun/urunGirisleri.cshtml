@@ -53,12 +53,14 @@
                             <thead>
                             <tr>
                                 <th>Alınan Ürün</th>
+                                <th>Ürün Kodu</th>
+                                <th>Ürün Seri No</th>
                                 <th>Alınan Miktar</th>
+                                <th>Kalan Miktar</th>
                                 <th>Alan Personel</th>
                                 <th>Tedarikçi</th>
                                 <th>Giriş Tarihi</th>
                                 <th>Açıklama</th>
-                                <th>İşlemler</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -69,7 +71,16 @@
                                         @item.Urun.UrunAdi
                                     </td>
                                     <td>
+                                        @item.Urun.UrunKodu
+                                    </td>
+                                    <td>
+                                        @item.UrunSeriNo
+                                    </td>
+                                    <td>
                                         @item.AlinanMiktar
+                                    </td>
+                                    <td>
+                                        @item.KalanMiktar
                                     </td>
                                     <td>
                                         @item.Personel.Adi @item.Personel.Soyadi
@@ -78,15 +89,11 @@
                                         @item.Tedarikci.FirmaAdi
                                     </td>
                                     <td>
-                                        @item.GirisTarihi
+                                        @item.GirisTarihi.Value.ToShortDateString()
                                     </td>
 
                                     <td>
                                         @item.Aciklama
-                                    </td>
-                                    
-                                    <td>
-                                        <a title="Sil" style="float:right;" class="btn btn-danger btn-xs btn-confirm" data-id="@item.ID"><i class="icon-trash"></i> Sil</a>
                                     </td>
                                 </tr>
                             }

@@ -155,18 +155,19 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult SilSilinen(int id)
+        public ActionResult SilinenAktif(int id)
         {
             YazilimUrun b = db.YazilimUrun.Where(x => x.ID == id).SingleOrDefault();
             if (b == null)
             {
-                return Json(false);
+                return RedirectToAction("Hata", "Admin");
             }
             else
             {
                 try
                 {
-                    b.Aktif = null;
+                    b.Aktif = true;
+                    ViewBag.Mesaj = "Ürün Tekrar Aktif Edilmiştir.";
                     db.SaveChanges();
                     return Json(true);
                 }
@@ -356,29 +357,6 @@ namespace Inventory_Management_Web_Application.Controllers
         {
             var urunler = db.UrunGiris.Where(x => x.YazilimUrunID != null).ToList();
             return View(urunler);
-        }
-
-        [HttpPost]
-        public ActionResult urunGirisSil(int id)
-        {
-            UrunGiris b = db.UrunGiris.Where(x => x.ID == id).SingleOrDefault();
-            if (b == null)
-            {
-                return Json(false);
-            }
-            else
-            {
-                try
-                {
-                    db.UrunGiris.Remove(b);
-                    db.SaveChanges();
-                    return Json(true);
-                }
-                catch (Exception)
-                {
-                    return Json("FK");
-                }
-            }
         }
 
         public ActionResult UrunCikislar()

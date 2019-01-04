@@ -192,6 +192,7 @@ namespace Inventory_Management_Web_Application.Controllers
          
             //Tüm rolleri yeniden yükle ve değişiklikleri kayıt et.
             string[] Menuparts = menuler.Split('^');
+            Array.Reverse(Menuparts);
             List<Menu> Eklenenmenuler = new List<Menu>();
             for (int i = 0; i < Menuparts.Length; i++)
             {
