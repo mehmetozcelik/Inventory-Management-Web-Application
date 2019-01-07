@@ -33,6 +33,13 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         [HttpGet]
+        public ActionResult sistemHata(string hata)
+        {
+            ViewBag.gelenhata = hata;
+            return View();
+        }
+
+        [HttpGet]
         public ActionResult Ayarlar()
         {
             return View(db.Ayarlar.FirstOrDefault());

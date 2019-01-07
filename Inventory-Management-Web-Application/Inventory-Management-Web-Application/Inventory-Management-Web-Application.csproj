@@ -224,6 +224,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Mail\Mail.cs" />
+    <Compile Include="Mail\MailGonder.cs" />
     <Compile Include="Models\AltKategori.cs" />
     <Compile Include="Models\AnaKategori.cs" />
     <Compile Include="Models\ArizaDurum.cs" />
@@ -245,6 +247,7 @@
     <Compile Include="Models\UrunBirim.cs" />
     <Compile Include="Models\UrunCikis.cs" />
     <Compile Include="Models\UrunGiris.cs" />
+    <Compile Include="Models\UrunStok.cs" />
     <Compile Include="Models\UrunTip.cs" />
     <Compile Include="Models\YazilimUrun.cs" />
     <Compile Include="ModelViews\MenuControl.cs" />
@@ -333,6 +336,9 @@
     <Content Include="Views\Urun\uruncikarSeriNoGetir.cshtml" />
     <Content Include="Views\Tanim\UrunTipiDuzenle.cshtml" />
     <Content Include="Views\Tanim\UrunTipiTanimi.cshtml" />
+    <Content Include="Views\Admin\sistemHata.cshtml" />
+    <Content Include="Views\Kullanici\KisiselBilgiler.cshtml" />
+    <Content Include="Views\Kullanici\SifremiUnuttum.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

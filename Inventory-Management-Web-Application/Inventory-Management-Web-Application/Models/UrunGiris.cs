@@ -10,8 +10,6 @@ namespace Inventory_Management_Web_Application.Models
     {
         public int ID { get; set; }
 
-        public int? UrunID { get; set; }
-
         public int? AlinanMiktar { get; set; }
 
         public int? KalanMiktar { get; set; }
@@ -28,14 +26,13 @@ namespace Inventory_Management_Web_Application.Models
         [Column(TypeName = "date")]
         public DateTime? GirisTarihi { get; set; }
 
-        [StringLength(100)]
-        public string UrunSeriNo { get; set; }
+        public int? StokID { get; set; }
 
         public virtual Personel Personel { get; set; }
 
         public virtual Tedarikci Tedarikci { get; set; }
 
-        public virtual Urun Urun { get; set; }
+        public virtual UrunStok UrunStok { get; set; }
 
         public virtual YazilimUrun YazilimUrun { get; set; }
     }

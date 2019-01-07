@@ -45,12 +45,11 @@
                             <thead>
                                 <tr>
                                     <th>Ürün Adı</th>
-                                    <th>Çıkan Miktar</th>
                                     <th>Teslim Alan</th>
                                     <th>Teslim Veren</th>
                                     <th>Teslim Tarihi</th>
                                     <th>Açıklama</th>
-                                    <th style="text-align:center;"> İşlemler</th>
+                                    <th style="text-align:center;"> Tutanak</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -58,10 +57,7 @@
                                 {
                                     <tr id="@item.ID">
                                         <td>
-                                            @item.Urun.UrunAdi
-                                        </td>
-                                        <td>
-                                            @item.CikanMictar
+                                            @item.UrunStok.Urun.UrunAdi
                                         </td>
                                         <td>
                                             @item.TeslimAlanPersonel.Adi @item.TeslimAlanPersonel.Soyadi
@@ -76,8 +72,7 @@
                                             @item.Aciklama
                                         </td>
                                         <td>
-                                          <a title="PDF Çıkar" target="_blank" href="/Print/UrunCikis/@item.CikisNumarasi" style="float:right;margin-right:5px;" class="btn btn-info btn-xs"><i class="icon-print"></i> Belge</a>
-                                          <a onclick="modalConfirm()" title="Sil" style="float:right;" class="btn btn-danger btn-xs btn-confirm" data-id="@item.ID"><i class="icon-trash"></i> Sil</a>
+                                          <a title="PDF Çıkar" target="_blank" href="/Print/UrunCikis/@item.CikisNumarasi" style="float:right;margin-right:5px;" class="btn btn-info btn-xs"><i class="icon-print"></i> Tutanağı Göster</a>
                                         </td>
                                     </tr>
                                 }
@@ -90,27 +85,6 @@
         </section>
     </div>
 </div>
-
-<div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Bu Ürünü Silmek İstediğinizden Emin misiniz ?</h4>
-            </div>
-            <div class="modal-footer">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Ürünü Silme Nedeni </label>&nbsp;<span style="color: red;">*</span>
-                    <input type="text" class="form-control" placeholder="Ürünü Silme Nedenini Giriniz..." id="neden" required>
-                </div>
-                <button type="button" class="btn btn-danger" id="modal-btn-si">Sil</button>
-                <button type="button" class="btn btn-primary" id="modal-btn-no">Kapat</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 
 @section script{
@@ -133,30 +107,5 @@
         }</script>
 
 
-   <script>
-       var id;
-       function modalConfirm()
-       {
-           $(".btn-confirm").on("click", function () {
-
-               $("#mi-modal").modal('show');
-           });
-
-           $("#modal-btn-si").on("click", function () {
-               callback(true);
-
-               $("#mi-modal").modal('hide');
-           });
-
-           $("#modal-btn-no").on("click", function () {
-               callback(false);
-               $("#mi-modal").modal('hide');
-               return e.preventDefault()
-           });
-       }
-
-        
-
-
-</script> 
+    
 }

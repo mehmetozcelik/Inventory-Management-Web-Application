@@ -46,23 +46,3 @@
     </div>
 </div>
 
-
-@section script{
-    <script>
-           var id;
-           $("#ana").change(function () {
-               id = this.value;
-               $.ajax({
-                   url: '/Urun/altKategoriDropdown/' + id,
-                   type: 'GET',
-                   cache: false,
-                   success: function (data) {
-                       $('.alt').html(data);
-                   },
-                   error: function () {
-                       alert("eror");
-                   }
-               });
-           });
-    </script>
-}

@@ -24,6 +24,11 @@
 
                     <div class="form-group alt">
                     </div>
+
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Ürün Tipi Seçiniz </label>
+                        @Html.DropDownList("UrunTipID", (SelectList)ViewBag.uruntipler, "Seçiniz...", new { @class = "form-control" })
+                    </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Ürün Adı </label>
                         <input type="text" class="form-control" placeholder="Ürün Adı Giriniz..." name="UrunAdi" value="@Model.UrunAdi" required>

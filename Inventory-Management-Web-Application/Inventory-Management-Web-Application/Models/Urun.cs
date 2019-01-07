@@ -12,9 +12,7 @@ namespace Inventory_Management_Web_Application.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Urun()
         {
-            ArizaDurum = new HashSet<ArizaDurum>();
-            UrunCikis = new HashSet<UrunCikis>();
-            UrunGiris = new HashSet<UrunGiris>();
+            UrunStok = new HashSet<UrunStok>();
         }
 
         public int ID { get; set; }
@@ -53,9 +51,6 @@ namespace Inventory_Management_Web_Application.Models
 
         public virtual AltKategori AltKategori { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ArizaDurum> ArizaDurum { get; set; }
-
         public virtual Personel Personel { get; set; }
 
         public virtual UrunBirim UrunBirim { get; set; }
@@ -63,9 +58,6 @@ namespace Inventory_Management_Web_Application.Models
         public virtual UrunTip UrunTip { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UrunCikis> UrunCikis { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<UrunGiris> UrunGiris { get; set; }
+        public virtual ICollection<UrunStok> UrunStok { get; set; }
     }
 }

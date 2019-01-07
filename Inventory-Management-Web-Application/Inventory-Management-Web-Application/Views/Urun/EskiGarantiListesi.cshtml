@@ -34,7 +34,7 @@
         <section class="panel">
             <header class="panel-heading" style="padding-bottom: 10px;">
                 <div class="col-lg-12" style="margin-bottom:10px;">
-                    <b>Garanti Kayıtları Listesi</b>
+                    <b>Eski Garanti Kayıtları Listesi</b>
                 </div>
             </header>
 
@@ -44,38 +44,53 @@
                         <table class="table table-striped table-hover table-bordered" id="editable-sample">
                             <thead>
                                 <tr>
+                                    <th>Urun Kodu</th>
                                     <th>Urun Adı</th>
-                                    <th>Çıkaran Personel</th>
+                                    <th>Seri Numarası</th>
+                                    <th>Garanti Veren Personel</th>
+                                    <th>Tekrar Stoğa Ek. Personel</th>
+                                    <th>Garanti Veriliş Tarihi</th>
                                     <th>Stoğa Tekrar Ek. Tar.</th>
-                                    <th>Kargo No</th>                                    
-                                    <th>Miktar</th>
+                                    <th>Kargo No</th>
                                     <th>Firma</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr id="@item.ID">
-                                        <td>
-                                            @item.ArizaDurum.Urun.UrunAdi
-                                        </td>
-                                        <td>
-                                            @item.Personel.Adi @item.Personel.Soyadi
-                                        </td>
-                                        <td>
-                                            @item.StokEklenmeTarihi.Value.ToUniversalTime()
-                                        </td>                                     
-                                        <td>
-                                            @item.ArizaDurum.KargoNo
-                                        </td>
-                                        <td>
-                                            <span class="label label-success label-mini">@item.Miktar @item.ArizaDurum.Urun.UrunBirim.Adi</span>
-
-                                        </td>
-                                        <td>
-                                            @item.ArizaDurum.GarantiFirma
-                                        </td>
-                                    </tr>
+                                <tr id="@item.ID">
+                                    <td>
+                                        @item.ArizaDurum.UrunStok.Urun.UrunKodu
+                                    </td>
+                                    <td>
+                                        @item.ArizaDurum.UrunStok.Urun.UrunAdi
+                                        @if (item.ArizaDurum.UrunStok.Urun.UrunTip != null)
+                                        {
+                                            <span style="color:coral;">(@item.ArizaDurum.UrunStok.Urun.UrunTip.Adi)</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @item.ArizaDurum.UrunStok.UrunSeriNo
+                                    </td>
+                                    <td>
+                                        @item.ArizaDurum.Personel.Adi @item.ArizaDurum.Personel.Soyadi
+                                    </td>
+                                    <td>
+                                        @item.Personel.Adi @item.Personel.Soyadi
+                                    </td>
+                                    <td>
+                                        @item.ArizaDurum.VerilisTarihi.Value.ToShortDateString()
+                                    </td>
+                                    <td>
+                                        @item.StokEklenmeTarihi.Value.ToUniversalTime()
+                                    </td>
+                                    <td>
+                                        @item.ArizaDurum.KargoNo
+                                    </td>
+                                    <td>
+                                        @item.ArizaDurum.GarantiFirma
+                                    </td>
+                                </tr>
                                 }
 
                             </tbody>

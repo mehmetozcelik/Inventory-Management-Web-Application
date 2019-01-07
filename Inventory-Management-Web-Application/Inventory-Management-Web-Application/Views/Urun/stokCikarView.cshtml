@@ -15,7 +15,7 @@
 
 @{
     var urunler = (Inventory_Management_Web_Application.App_Classes.UrunCikisSepet)Session["Urun"];
-    List<UrunGiris> liste = urunler.HepsiniGetir();
+    List<UrunStok> liste = urunler.HepsiniGetir();
 }
 
 @{
@@ -37,25 +37,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @{List<UrunGiris> temp = new List<UrunGiris>();
-                    }
-                    @foreach (UrunGiris item in liste)
-                    {
-                        if (temp.Where(x => x.ID == item.ID).SingleOrDefault() != null)
-                        {
-                            continue;
-                        }
-                        <tr id="@item.ID">
-                            <td>
-                                @item.Urun.UrunAdi (@liste.Where(x => x.ID == item.ID).ToList().Count @item.Urun.UrunBirim.Adi)
-                            </td>
-                            <td>
-                                <a title="Sil" href="/Urun/SepetSil/@item.ID" style="float:right;margin-left:5px;" class="btn btn-danger btn-xs btn-confirm"><i class="icon-trash"></i> Sil</a>
-                            </td>
-                        </tr>
-                        temp.Add(item);
-                    }
+                    @{List<UrunStok> temp = new List<UrunStok>();
 
+                        foreach(UrunStok item in liste)
+                        {
+                            if (temp.Where(x => x.ID == item.ID).SingleOrDefault() != null)
+                            {
+                                continue;
+                            }
+                            <tr id="@item.ID">
+                                <td>
+                                    @item.Urun.UrunAdi (@liste.Where(x => x.ID == item.ID).ToList().Count @item.Urun.UrunBirim.Adi)
+                                </td>
+                                <td>
+                                    <a title="Sil" href="/Urun/SepetSil/@item.ID" style="float:right;margin-left:5px;" class="btn btn-danger btn-xs"><i class="icon-trash"></i> Sil</a>
+                                </td>
+                            </tr>
+                            temp.Add(item);
+                        }
+                    }
                 </tbody>
             </table>
         </section>

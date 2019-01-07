@@ -18,7 +18,7 @@ namespace Inventory_Management_Web_Application.App_Classes
             string metot = filterContext.HttpContext.Request.RequestType;
             if (HttpContext.Current.Session["Kullanici"] == null)
             {
-                if ((controllerName != "Kullanici" || controllerName == "Kullanici") && actionName != "Login")
+                if ((controllerName != "Kullanici" || controllerName == "Kullanici") && actionName != "Login" && actionName != "SifremiUnuttum")
                 {
                     filterContext.Result = new RedirectResult("/Kullanici/Login");
                 }

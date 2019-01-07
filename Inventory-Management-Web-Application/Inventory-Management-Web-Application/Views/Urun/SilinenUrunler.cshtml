@@ -81,6 +81,10 @@
                                         </td>
                                         <td>
                                             @item.UrunAdi
+                                            @if (item.UrunTip != null)
+                                            {
+                                                <span style="color:blue;">@item.UrunTip.Adi</span>
+                                            }
                                         </td>
                                         <td>
                                             @item.SilmeNedeni

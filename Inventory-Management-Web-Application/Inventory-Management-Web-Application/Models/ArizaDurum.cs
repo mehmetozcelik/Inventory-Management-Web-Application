@@ -17,8 +17,6 @@ namespace Inventory_Management_Web_Application.Models
 
         public int ID { get; set; }
 
-        public int? UrunID { get; set; }
-
         public DateTime? VerilisTarihi { get; set; }
 
         public DateTime? TahminiGelisTarihi { get; set; }
@@ -38,9 +36,11 @@ namespace Inventory_Management_Web_Application.Models
 
         public bool? Aktif { get; set; }
 
+        public int? stkID { get; set; }
+
         public virtual Personel Personel { get; set; }
 
-        public virtual Urun Urun { get; set; }
+        public virtual UrunStok UrunStok { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArizaEskiKayitlar> ArizaEskiKayitlar { get; set; }
