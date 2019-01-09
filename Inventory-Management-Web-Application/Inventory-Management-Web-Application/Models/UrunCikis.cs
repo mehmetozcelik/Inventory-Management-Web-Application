@@ -25,6 +25,8 @@ namespace Inventory_Management_Web_Application.Models
 
         public int? StokID { get; set; }
 
+        public int? CikanMictar { get; set; }
+
         public virtual Personel Personel { get; set; }
 
         public virtual TeslimAlanPersonel TeslimAlanPersonel { get; set; }

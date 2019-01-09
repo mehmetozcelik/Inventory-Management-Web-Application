@@ -47,7 +47,7 @@ namespace Inventory_Management_Web_Application.Jobs
 
 
             string stokBody = MailGonder.urunStokBildirim(temp, YstokTemp,YLisansTemp);
-            MailGonder m = new MailGonder(ayar.mailUserName, "BISTOK - Ürün Stok Bilgilendirmesi", stokBody);
+            //MailGonder m = new MailGonder(ayar.mailUserName, "BISTOK - Ürün Stok Bilgilendirmesi", stokBody);
 
         }
     }
