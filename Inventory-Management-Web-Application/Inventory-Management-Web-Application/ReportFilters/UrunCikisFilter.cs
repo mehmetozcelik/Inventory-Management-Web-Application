@@ -63,10 +63,6 @@ namespace Inventory_Management_Web_Application.ReportFilters
                     {
                         if (item.UrunStok.UrunID== urnID)
                         {
-
-                        }
-                        else
-                        {
                             donecekUrunler.Add(item);
                         }
                     }

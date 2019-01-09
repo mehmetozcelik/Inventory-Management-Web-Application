@@ -283,7 +283,7 @@ namespace Inventory_Management_Web_Application.Controllers
                 db.SaveChanges();
                 uc.YazilimUrunID = item.ID;
                 uc.CikisNumarasi = CikisNumarasi;
-               // uc.CikanMictar = liste.Where(x => x.ID == item.ID).ToList().Count;
+                uc.CikanMictar = liste.Where(x => x.ID == item.ID).ToList().Count;
                 db.UrunCikis.Add(uc);
                 db.SaveChanges();
                 temp.Add(item);
@@ -326,7 +326,7 @@ namespace Inventory_Management_Web_Application.Controllers
         {
             var urun = db.YazilimUrun.FirstOrDefault(x => x.ID == veri.YazilimUrunID);
             urun.KeyAdet = urun.KeyAdet + veri.AlinanMiktar;
-            veri.UrunStok.UrunID = null;
+            veri.GirisTarihi = DateTime.Now;
             db.UrunGiris.Add(veri);
             db.SaveChanges();
             return RedirectToAction("urunGirisleri","YazilimUrun");

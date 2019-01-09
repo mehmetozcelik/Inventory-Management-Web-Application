@@ -45,9 +45,16 @@ namespace Inventory_Management_Web_Application.Jobs
             }
             // Lisans bitişi azalan Yazılımlar
 
+            string stokBody = MailGonder.urunStokBildirim(temp, YstokTemp, YLisansTemp);
+            // Atılacak mailler
+            string mailler = ayar.UserBilgiMail.ToString();
+            string[] Menuparts = mailler.Split(';');
+            Array.Reverse(Menuparts);
+            foreach (string mail in Menuparts)
+            {
+                MailGonder m = new MailGonder(mail, "BISTOK - Ürün Stok Bilgilendirmesi", stokBody);
+            }
 
-            string stokBody = MailGonder.urunStokBildirim(temp, YstokTemp,YLisansTemp);
-            //MailGonder m = new MailGonder(ayar.mailUserName, "BISTOK - Ürün Stok Bilgilendirmesi", stokBody);
 
         }
     }

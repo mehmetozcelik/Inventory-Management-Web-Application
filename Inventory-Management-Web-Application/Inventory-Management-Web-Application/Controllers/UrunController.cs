@@ -344,7 +344,7 @@ namespace Inventory_Management_Web_Application.Controllers
 
             //Stoğu aktif etme
             ad.UrunStok.Aktif = true;
-            if (serino != null)
+            if (serino != "")
             {
                 ad.UrunStok.UrunSeriNo = serino;
             }
