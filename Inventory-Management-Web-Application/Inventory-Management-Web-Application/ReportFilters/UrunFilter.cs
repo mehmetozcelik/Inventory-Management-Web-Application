@@ -16,6 +16,8 @@ namespace Inventory_Management_Web_Application.ReportFilters
         public DateTime EklenmeTarihi { get; set; }
         public int PersonelID { get; set; }
         public int TedarikciID { get; set; }
+        public int UrunTipID { get; set; }
+
 
         public static List<Urun> UrunSorgu(UrunFilter list)
         {
@@ -29,7 +31,7 @@ namespace Inventory_Management_Web_Application.ReportFilters
             {
                 var deger = props.ElementAt(counter).GetValue(list, null);
                 isim = Convert.ToString(props.ElementAt(counter).Name.ToString());
-                if (isim== "EklenmeTarihi")
+                if (isim == "EklenmeTarihi")
                 {
                     string df = "1.01.0001 00:00:00";
                     DateTime d = Convert.ToDateTime(df);
@@ -39,7 +41,7 @@ namespace Inventory_Management_Web_Application.ReportFilters
                         Sorgu.Append(isim + " >= '" + tarihBicim.Year.ToString() + "." + tarihBicim.Month.ToString() + "." + tarihBicim.Day.ToString() + "' and ");
                     }
                 }
-                else if ( (int)deger != 0)
+                else if ((int)deger != 0)
                 {
                     if (isim == "StokMiktari")
                     {
@@ -52,13 +54,13 @@ namespace Inventory_Management_Web_Application.ReportFilters
                 }
                 counter++;
             }
-            Sorgu.Remove(Sorgu.ToString().Length-4, 4);
+            Sorgu.Remove(Sorgu.ToString().Length - 4, 4);
             List<Urun> uruns = db.Urun.SqlQuery(Sorgu.ToString()).ToList();
             List<Urun> izinliurunler = UrunList.IzinliUrunler();
             List<Urun> donecekUrunler = new List<Urun>();
             foreach (Urun item in uruns)
             {
-                bool y = izinliurunler.Exists(x=>x.ID==item.ID);
+                bool y = izinliurunler.Exists(x => x.ID == item.ID);
                 if (y)
                 {
                     donecekUrunler.Add(item);

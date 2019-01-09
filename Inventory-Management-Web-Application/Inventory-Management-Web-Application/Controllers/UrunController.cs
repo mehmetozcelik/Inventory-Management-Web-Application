@@ -29,6 +29,9 @@ namespace Inventory_Management_Web_Application.Controllers
 
             ViewBag.ayarlar = db.Ayarlar.FirstOrDefault();
 
+            var uruntipler = db.UrunTip.ToList();
+            ViewBag.uruntipler = new SelectList(uruntipler, "ID", "Adi");
+
             var anakategoriler = db.AnaKategori.ToList();
             ViewBag.anakategoriler = new SelectList(anakategoriler, "ID", "KategoriAdi");
 

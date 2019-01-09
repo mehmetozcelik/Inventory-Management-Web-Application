@@ -55,6 +55,10 @@
                         <input type="number" class="form-control" placeholder="Stok Giriniz..." name="StokMiktari">
                     </div>
                     <div class="form-group">
+                        <label for="exampleInputEmail1">Ürün Tipi Seçiniz </label>
+                        @Html.DropDownList("UrunTipID", (SelectList)ViewBag.uruntipler, "Seçiniz...", new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
                         <label for="exampleInputEmail1">Eklenme Tarihi (Seçilen tarihten sonra eklenen ürünleri getirir.) </label>
                         <input type="date" class="form-control" placeholder="Eklenme Tarihi Giriniz..." name="EklenmeTarihi">
                     </div>

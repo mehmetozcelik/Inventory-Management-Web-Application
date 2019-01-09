@@ -189,6 +189,7 @@
     <Content Include="Content\widget.html" />
     <Content Include="Content\xchart.html" />
     <Content Include="DB_Script\07012019_StokTakipDB.sql" />
+    <Content Include="DB_Script\09012019.sql" />
     <Content Include="DB_Script\12.12.2018_StokTakipDB.sql" />
     <Content Include="DB_Script\13.12.2018_StokTakipDB.sql" />
     <Content Include="DB_Script\23.12.2018-19.31-Script.sql" />
@@ -236,6 +237,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Jobs\JobScheduler.cs" />
     <Compile Include="Jobs\MailJob.cs" />
     <Compile Include="Mail\Mail.cs" />
     <Compile Include="Mail\MailGonder.cs" />

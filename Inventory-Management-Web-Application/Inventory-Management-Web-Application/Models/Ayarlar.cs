@@ -16,5 +16,18 @@ namespace Inventory_Management_Web_Application.Models
         public int? UrunStok { get; set; }
 
         public int? YazilimUrunStok { get; set; }
+
+        [StringLength(100)]
+        public string mailUserName { get; set; }
+
+        [StringLength(100)]
+        public string mailPassword { get; set; }
+
+        [StringLength(100)]
+        public string mailHost { get; set; }
+
+        public int? mailSSL { get; set; }
+
+        public int? mailPort { get; set; }
     }
 }

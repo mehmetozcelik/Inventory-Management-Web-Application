@@ -17,8 +17,6 @@ namespace Inventory_Management_Web_Application.Models
 
         public DateTime? StokEklenmeTarihi { get; set; }
 
-        public int? Miktar { get; set; }
-
         public virtual ArizaDurum ArizaDurum { get; set; }
 
         public virtual Personel Personel { get; set; }
