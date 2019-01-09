@@ -38,10 +38,9 @@ namespace Inventory_Management_Web_Application.ReportFilters
                         Sorgu.Append(isim + " >= '" + tarihBicim.Year.ToString() +"." + tarihBicim.Month.ToString() + "." + tarihBicim.Day.ToString() + "' and ");
                     }
                 }
-                else if(isim== "UrunID")
+                else if(isim== "UrunID" && Convert.ToInt32(deger) !=0)
                 {
                     urnID =Convert.ToInt32(deger);
-                    continue;
                 }
                 else if ((int)deger != 0)
                 {
@@ -70,6 +69,10 @@ namespace Inventory_Management_Web_Application.ReportFilters
                         {
                             donecekUrunler.Add(item);
                         }
+                    }
+                    else
+                    {
+                        donecekUrunler.Add(item);
                     }
                 }
             }

@@ -18,5 +18,8 @@ namespace Inventory_Management_Web_Application
             GlobalFilters.Filters.Add(new _SecurityFilter());
             JobScheduler.Start();
         }
+
+        
+
     }
 }

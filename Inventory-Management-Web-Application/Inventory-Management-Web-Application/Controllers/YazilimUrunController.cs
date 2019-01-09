@@ -93,13 +93,13 @@ namespace Inventory_Management_Web_Application.Controllers
         public ActionResult Ekle(YazilimUrun u, string UrunSeriNo)
         {
             int Lastid = 0;
-            if (db.YazilimUrun != null)
+            if (db.YazilimUrun.ToList().Count != 0)
             {
                 Lastid = db.YazilimUrun.Max(x => x.ID);
             }
-            Lastid = db.Urun.Max(x => x.ID);
             string urunKodu = "BISTK" + DateTime.Now.Year.ToString() + u.altKategoriID.ToString() + (Lastid + 1).ToString();
             u.UrunID = urunKodu;
+            u.EklenmeTarihi = DateTime.Now;
             u.Aktif = true;
             db.YazilimUrun.Add(u);
             db.SaveChanges();
@@ -111,7 +111,6 @@ namespace Inventory_Management_Web_Application.Controllers
             ug.AlanPerID = u.PersonelID;
             ug.TedarikciID = u.TedarikciID;
             ug.Aciklama = u.Aciklama;
-            ug.UrunStok.UrunSeriNo = UrunSeriNo;
             ug.GirisTarihi = DateTime.Now;
             db.UrunGiris.Add(ug);
             db.SaveChanges();
