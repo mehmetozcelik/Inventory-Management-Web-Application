@@ -15,6 +15,7 @@ namespace Inventory_Management_Web_Application.Models
         public virtual DbSet<AltKategori> AltKategori { get; set; }
         public virtual DbSet<AnaKategori> AnaKategori { get; set; }
         public virtual DbSet<ArizaDurum> ArizaDurum { get; set; }
+        public virtual DbSet<ArizaEskiKayitlar> ArizaEskiKayitlar { get; set; }
         public virtual DbSet<Ayarlar> Ayarlar { get; set; }
         public virtual DbSet<Birim> Birim { get; set; }
         public virtual DbSet<ErisimRol> ErisimRol { get; set; }
@@ -30,6 +31,8 @@ namespace Inventory_Management_Web_Application.Models
         public virtual DbSet<UrunBirim> UrunBirim { get; set; }
         public virtual DbSet<UrunCikis> UrunCikis { get; set; }
         public virtual DbSet<UrunGiris> UrunGiris { get; set; }
+        public virtual DbSet<UrunStok> UrunStok { get; set; }
+        public virtual DbSet<UrunTip> UrunTip { get; set; }
         public virtual DbSet<YazilimUrun> YazilimUrun { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -65,6 +68,11 @@ namespace Inventory_Management_Web_Application.Models
                 .HasForeignKey(e => e.GarantiVerenKisiID);
 
             modelBuilder.Entity<Personel>()
+                .HasMany(e => e.ArizaEskiKayitlar)
+                .WithOptional(e => e.Personel)
+                .HasForeignKey(e => e.GarantiAlanID);
+
+            modelBuilder.Entity<Personel>()
                 .HasMany(e => e.Urun)
                 .WithOptional(e => e.Personel)
                 .HasForeignKey(e => e.SilenKisiID);
@@ -88,6 +96,21 @@ namespace Inventory_Management_Web_Application.Models
                 .HasMany(e => e.UrunCikis)
                 .WithOptional(e => e.TeslimAlanPersonel)
                 .HasForeignKey(e => e.TeslimAlanKisiID);
+
+            modelBuilder.Entity<UrunStok>()
+                .HasMany(e => e.ArizaDurum)
+                .WithOptional(e => e.UrunStok)
+                .HasForeignKey(e => e.stkID);
+
+            modelBuilder.Entity<UrunStok>()
+                .HasMany(e => e.UrunCikis)
+                .WithOptional(e => e.UrunStok)
+                .HasForeignKey(e => e.StokID);
+
+            modelBuilder.Entity<UrunStok>()
+                .HasMany(e => e.UrunGiris)
+                .WithOptional(e => e.UrunStok)
+                .HasForeignKey(e => e.StokID);
         }
     }
 }

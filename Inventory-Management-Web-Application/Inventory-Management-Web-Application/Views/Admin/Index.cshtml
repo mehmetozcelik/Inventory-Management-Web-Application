@@ -162,13 +162,13 @@
                         }
                         @foreach (Urun item in ViewBag.urunler)
                         {
-                            if (item.StokMiktari <= ViewBag.ayarlar.UrunStok)
+                            if (item.UrunStok.Where(x => x.UrunID == item.ID).ToList().Count <= ViewBag.ayarlar.UrunStok)
                             {
                                 <li class="list-warning">
                                     <i class=" icon-ellipsis-vertical"></i>
                                     <div class="task-title">
                                         <span class="task-title-sp">@item.UrunAdi  </span>	&nbsp;
-                                        <span class="badge badge-sm label-danger">  @item.StokMiktari @item.UrunBirim.Adi Kaldı</span>
+                                        <span class="badge badge-sm label-danger">  @item.UrunStok.Where(x => x.UrunID == item.ID).ToList().Count @item.UrunBirim.Adi Kaldı</span>
                                     </div>
                                 </li>
                                 control = false;
@@ -196,7 +196,7 @@
 
 
     function countUp(count) {
-        var div_by = 10,
+        var div_by = @ViewBag.urunsayisi,
             speed = Math.round(count / div_by),
             $display = $('.count'),
             run_count = 0,
@@ -215,7 +215,7 @@
         }, int_speed);
     }
 
-    countUp(10);
+    countUp(@ViewBag.urunsayisi);
 
     function countUp2(count) {
         var div_by = @ViewBag.yazilimsayisi,

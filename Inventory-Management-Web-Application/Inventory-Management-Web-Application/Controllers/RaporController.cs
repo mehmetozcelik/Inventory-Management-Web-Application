@@ -19,6 +19,9 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpGet]
         public ActionResult Urun()
         {
+            var uruntipler = db.UrunTip.ToList();
+            ViewBag.uruntipler = new SelectList(uruntipler, "ID", "Adi");
+
             var anakategoriler = db.AnaKategori.ToList();
             ViewBag.anakategoriler = new SelectList(anakategoriler, "ID", "KategoriAdi");
 

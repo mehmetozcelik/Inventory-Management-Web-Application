@@ -29,33 +29,37 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th>Ürün Kodu</th>
                         <th>Ürün Adı</th>
                         <th>Teslim Eden Personel</th>
                         <th>Teslim Alan Personel</th>
-                        <th>Miktar</th>
+                        <th>Seri No</th>
                         <th>Teslim Tarihi</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td align="left">
-                                @item.Urun.UrunAdi
-                            </td>
-                            <td align="left">
-                                @item.Personel.Adi @item.Personel.Soyadi
-                            </td>
-                            <td align="left">
-                                @item.TeslimAlanPersonel.Adi @item.TeslimAlanPersonel.Soyadi
-                            </td>
-                            <td align="left">
-                                @item.CikanMictar @item.Urun.UrunBirim.Adi
-                            </td>
-                            <td align="left">
-                                @item.TeslimTarihi.Value.Day/@item.TeslimTarihi.Value.Month/@item.TeslimTarihi.Value.Year
-                            </td>
-                        </tr>
+                    <tr>
+                        <td align="left">
+                            @item.UrunStok.Urun.UrunKodu
+                        </td>
+                        <td align="left">
+                            @item.UrunStok.Urun.UrunAdi
+                        </td>
+                        <td align="left">
+                            @item.Personel.Adi @item.Personel.Soyadi
+                        </td>
+                        <td align="left">
+                            @item.TeslimAlanPersonel.Adi @item.TeslimAlanPersonel.Soyadi
+                        </td>
+                        <td align="left">
+                            @item.UrunStok.UrunSeriNo
+                        </td>
+                        <td align="left">
+                            @item.TeslimTarihi.Value.ToShortDateString()
+                        </td>
+                    </tr>
                     }
 
                 </tbody>

@@ -1,4 +1,5 @@
 ﻿using Inventory_Management_Web_Application.App_Classes;
+using Inventory_Management_Web_Application.Jobs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace Inventory_Management_Web_Application
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             GlobalFilters.Filters.Add(new _SecurityFilter());
+            JobScheduler.Start();
         }
     }
 }

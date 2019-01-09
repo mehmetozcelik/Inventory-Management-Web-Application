@@ -6,8 +6,6 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-
-
 @using Inventory_Management_Web_Application.Controllers
 @using Inventory_Management_Web_Application.Models
 
@@ -29,6 +27,9 @@
             background-color: #EECBC4;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
 }
 
 <div class="row">
@@ -37,10 +38,10 @@
             <header class="panel-heading">
                 Ürün Filtre
                 <span class="tools pull-right">
-                    <a href="javascript:;" class="icon-chevron-down"></a>
+                    <a class="icon-chevron-down" data-toggle="collapse" data-target="#demo"></a>
                 </span>
             </header>
-            <div class="panel-body">
+            <div class="panel-body collapse"  id="demo">
                 <form role="form" method="post" action="/Urun/UrunFiltrele">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Kategori Seçiniz </label>&nbsp;<span style="color: red;">*</span>
@@ -52,6 +53,10 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Stok Miktarı (Küçük olanları Getirir.)</label>
                         <input type="number" class="form-control" placeholder="Stok Giriniz..." name="StokMiktari">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Ürün Tipi Seçiniz </label>
+                        @Html.DropDownList("UrunTipID", (SelectList)ViewBag.uruntipler, "Seçiniz...", new { @class = "form-control" })
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Eklenme Tarihi (Seçilen tarihten sonra eklenen ürünleri getirir.) </label>
@@ -81,6 +86,13 @@
                 <p>@ViewBag.hata</p>
             </div>
         }
+        @if (TempData["GenelMesaj"] != null)
+        {
+            <div class="alert alert-success">
+                <p>@TempData["GenelMesaj"]</p>
+            </div>
+        }
+      
         <section class="panel">
             <header class="panel-heading" style="padding-bottom: 10px;">
                 <div class="col-lg-12" style="margin-bottom:10px;">
@@ -101,7 +113,7 @@
                                     <th>Adı</th>
                                     <th>Açıklama</th>
                                     <th>Stok</th>
-                                    <th style="text-align:center;"> İşlemler</th>
+                                    <th style="text-align:center;width:360px;"> İşlemler</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -119,22 +131,27 @@
                                         </td>
                                         <td>
                                             @item.UrunAdi
+                                            @if (item.UrunTip != null)
+                                            {
+                                                <span style="color:coral;">(@item.UrunTip.Adi)</span>
+                                            }
+
                                         </td>
                                         <td>
                                             @item.Aciklama
                                         </td>
                                         <td>
-                                            @if (item.StokMiktari <= ViewBag.ayarlar.UrunStok)
+                                            @if (@item.UrunStok.Where(x => x.UrunID == item.ID).ToList().Count <= ViewBag.ayarlar.UrunStok)
                                             {
-                                                <span class="label label-danger label-mini">@item.StokMiktari @item.UrunBirim.Adi</span>
+                                                <span class="label label-danger label-mini">@item.UrunStok.Where(x => x.UrunID == item.ID && x.Aktif == true).ToList().Count @item.UrunBirim.Adi</span>
                                             }
                                             else
                                             {
-                                                <span class="label label-success label-mini">@item.StokMiktari @item.UrunBirim.Adi</span>
+                                                <span class="label label-success label-mini">@item.UrunStok.Where(x => x.UrunID == item.ID && x.Aktif == true).ToList().Count @item.UrunBirim.Adi</span>
                                             }
 
                                         </td>
-                                        <td>
+                                        <td align="center" style="width:360px;">
                                             <a title="Sil" style="float:right;" class="btn btn-danger btn-xs btn-confirm" data-id="@item.ID"><i class="icon-trash"></i> Sil</a>
                                             <a title="Düzünle" style="float:right;margin-right:5px;" href="/Urun/Guncelle/@item.ID" class="btn btn-primary btn-xs"><i class="icon-pencil"></i> Düzenle</a>
                                             <a title="Garantiye Gönder" style="float:right;margin-right:5px;" href="/Urun/Garanti/@item.ID" class="btn btn-default btn-xs"><i class="icon-refresh"></i> Garanti</a>
@@ -161,14 +178,15 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Çıkarmak İstediğiniz Ürünün Seri Numarasını Seçiniz ?</h4>
             </div>
-            <div class="modal-footer">
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Seri Numarasını Seçiniz </label>&nbsp;<span style="color: red;">*</span>
-                    @Html.DropDownList("urunGirisID", (SelectList)ViewBag.urunGirisler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true" })
+            <form method="post" action="/Urun/stokCikar">
+                <div class="modal-footer">
+                    <div class="form-group serurun">
+                        <label for="exampleInputEmail1">Seri Numarasını Seçiniz </label>&nbsp;<span style="color: red;">*</span>
+                    </div>
+                    <button type="submit" class="btn btn-danger">Çıkar</button>
                 </div>
-                <button type="button" class="btn btn-danger" id="modal-btn-si1">Çıkar</button>
-                <button type="button" class="btn btn-primary" id="modal-btn-no1">Kapat</button>
-            </div>
+            </form>
+
 
         </div>
     </div>
@@ -234,7 +252,7 @@
             $("#modal-btn-no").on("click", function () {
                 callback(false);
                 $("#mi-modal").modal('hide');
-                return e.preventDefault()
+                return e.preventDefault();
             });
         };
 
@@ -254,6 +272,12 @@
                         if (rs === true) {
                             $('#' + id).remove();
                         }
+                        else if (rs === "stok") {
+                            alert("Bu ürüne ait stok Kaydı Bulunduğundan dolayı bu Ürün Silemezsiniz. Mevcut Stokların çıkışını yaparak ürünü silebilirsiniz.");
+                        }
+                        else if (rs === "garanti") {
+                            alert("Bu ürüne ait Garanti Kaydı Bulunduğundan dolayı bu Ürün Silemezsiniz. ");
+                        }
                         else if (rs === "FK") {
                             alert("Bu ürüne ait Garanti Kaydı , Ürün Giriş Kaydı veya Ürün Çıkış Kaydı Bulunduğundan dolayı bu Ürün Silemezsiniz. ");
                         }
@@ -271,13 +295,24 @@
         });
 
     </script>
-    
-<script>
-        var id;
-        var modalConfirm = function (callback) {
+
+    <script>
+             id;
+            modalConfirm = function (callback) {
 
             $(".btn-confirm1").on("click", function () {
                 id = $(this).attr("data-id");
+                $.ajax({
+                    url: '/Urun/uruncikarSeriNoGetir/' + id,
+                    type: 'GET',
+                    cache: false,
+                    success: function (data) {
+                        $('.serurun').html(data);
+                    },
+                    error: function () {
+                       // $('.auult').html("");
+                    }
+                });
                 $("#mi-modal1").modal('show');
             });
 
@@ -303,7 +338,7 @@
                     contentType: 'application/json',
                     data: ({
                         urunGirisID: document.getElementById('urunGirisID').value,
-                        id: id                    
+                        id: id
                     }),
                     success: function (rs) {
                         if (rs === true) {
@@ -325,10 +360,10 @@
             }
         });
 
-</script>
+    </script>
 
     <script>
-         id;
+        id;
         $("#ana").change(function () {
             id = this.value;
             $.ajax({
@@ -344,6 +379,9 @@
             });
         });
     </script>
+
+
+
 }
 
 

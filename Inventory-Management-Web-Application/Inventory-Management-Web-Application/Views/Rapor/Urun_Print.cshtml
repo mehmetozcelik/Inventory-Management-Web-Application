@@ -38,7 +38,7 @@
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
-                    {
+                    {                      
                         <tr>
                             <td align="left">
                                 @item.UrunKodu
@@ -48,9 +48,13 @@
                             </td>
                             <td align="left">
                                 @item.UrunAdi
+                                @if (item.UrunTip != null)
+                                {
+                                    <span>(@item.UrunTip.Adi)</span>
+                                }
                             </td>
                             <td align="left">
-                                @item.StokMiktari @item.UrunBirim.Adi
+                                @item.UrunStok.Where(x => x.UrunID == item.ID).ToList().Count @item.UrunBirim.Adi
                             </td>
                             <td align="left">
                                 @item.EklenmeTarihi.Value.Day/@item.EklenmeTarihi.Value.Month/@item.EklenmeTarihi.Value.Year

@@ -34,20 +34,17 @@
                                     @*@Html.DropDownList("KategoriID", (MultiSelectList)ViewBag.anakategoriler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", id = "ana" })*@
 
                                 </div>
-
+                                <!--ürün alt kategori-->
                                 <div class="form-group alt">
                                 </div>
+
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Ürün Adı </label>&nbsp;<span style="color: red;">*</span>
                                     <input type="text" class="form-control" placeholder="Ürün Adı Giriniz..." name="UrunAdi" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleInputEmail1">Ürün Seri No </label>&nbsp;<span style="color: red;">*</span>
-                                    <input type="text" class="form-control" placeholder="Ürün Seri No Giriniz..." name="UrunSeriNo" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Stok Miktarı </label>&nbsp;<span style="color: red;">*</span>
-                                    <input type="text" class="form-control" placeholder="Stok Miktarı Giriniz..." name="StokMiktari" required>
+                                    <label for="exampleInputEmail1">Ürün Tipi Seçiniz </label>
+                                    @Html.DropDownList("UrunTipID", (SelectList)ViewBag.uruntipler, "Seçiniz...", new { @class = "form-control" })
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Birim Seçiniz </label>&nbsp;<span style="color: red;">*</span>
@@ -82,11 +79,22 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Ürün Açıklama </label>
-                                    <input type="text" class="form-control" placeholder="Açıklama Giriniz..." name="Aciklama">
+                                    <input type="text"  class="form-control" placeholder="Açıklama Giriniz..." name="Aciklama">
+                                </div>
+                                <div class="form-group">
+                                    <a id="seri" class="btn btn-success"> <i class="glyphicon-plus"></i>Stok Ekle</a>
+                                    <label for="exampleInputEmail1">Ürüne Stok eklemek için yandaki butona basarak istediğiniz kadar alan açabilirsiniz. </label>
+                                </div>
+                                <div class="serinumaralar">
+
+                                </div>
+                                <div class="hidden">
+                                    <input type="text" class="hidden seriler" name="UrunSeriNo" />
                                 </div>
                                 <button type="submit" id="button" class="btn btn-info">Kaydet</button>
                                 <a href="../Personel/TaListele" class="btn btn-danger">İptal</a>
                                 <button type="reset" class="btn btn-default">Temizle</button>
+
                             </div>
 
                         </div>
@@ -116,5 +124,28 @@
                 }
             });
         });
+
+
+        var seriSayac = 1;
+        $("#seri").click(function () {           
+                $('.serinumaralar').append('<div class="form-group">' +
+                    '<label for="exampleInputEmail1">' + seriSayac + '. Stok Seri No </label>&nbsp;<span style="color: red;">*</span>' +
+                    '<input type="text" class="form-control seridoldur" onblur="seridoldur()"  placeholder="' + seriSayac + '. Stok Seri No Giriniz..."  required>' +
+                '</div>');
+            seriSayac++;
+        });
+
+        function seridoldur() {
+            var tumSeriler = "";
+            var girisler = $(".seridoldur");
+            var len = girisler.length;
+            for (var i = 0; i < len; i++) {
+                if (girisler[i].value !== "") {
+                    tumSeriler = girisler[i].value + "^" + tumSeriler;
+                }
+            }
+            $('.seriler').val(tumSeriler);
+        }
+
     </script>
 }

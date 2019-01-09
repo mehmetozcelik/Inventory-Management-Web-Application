@@ -10,10 +10,6 @@ namespace Inventory_Management_Web_Application.Models
     {
         public int ID { get; set; }
 
-        public int? UrunID { get; set; }
-
-        public int? CikanMictar { get; set; }
-
         public int? TeslimAlanKisiID { get; set; }
 
         public DateTime? TeslimTarihi { get; set; }
@@ -27,11 +23,13 @@ namespace Inventory_Management_Web_Application.Models
 
         public int? CikisNumarasi { get; set; }
 
+        public int? StokID { get; set; }
+
         public virtual Personel Personel { get; set; }
 
         public virtual TeslimAlanPersonel TeslimAlanPersonel { get; set; }
 
-        public virtual Urun Urun { get; set; }
+        public virtual UrunStok UrunStok { get; set; }
 
         public virtual YazilimUrun YazilimUrun { get; set; }
     }

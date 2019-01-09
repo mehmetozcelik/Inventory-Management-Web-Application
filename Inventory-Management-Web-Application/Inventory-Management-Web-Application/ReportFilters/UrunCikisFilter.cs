@@ -12,7 +12,6 @@ namespace Inventory_Management_Web_Application.ReportFilters
     {
 
         public int UrunID { get; set; }
-        public int CikanMictar { get; set; }
         public DateTime TeslimTarihi { get; set; }
         public int TeslimVerenID { get; set; }
 
@@ -24,6 +23,7 @@ namespace Inventory_Management_Web_Application.ReportFilters
             int counter = 0;
             string isim;
             StringBuilder Sorgu = new StringBuilder("SELECT * FROM UrunCikis WHERE ");
+            int urnID=-1;
             while (counter != props.Count())
             {
                 var deger = props.ElementAt(counter).GetValue(list, null);
@@ -38,16 +38,15 @@ namespace Inventory_Management_Web_Application.ReportFilters
                         Sorgu.Append(isim + " >= '" + tarihBicim.Year.ToString() +"." + tarihBicim.Month.ToString() + "." + tarihBicim.Day.ToString() + "' and ");
                     }
                 }
+                else if(isim== "UrunID")
+                {
+                    urnID =Convert.ToInt32(deger);
+                    continue;
+                }
                 else if ((int)deger != 0)
                 {
-                    if (isim == "CikanMictar")
-                    {
-                        Sorgu.Append(isim + " <= " + deger.ToString() + " and ");
-                    }
-                    else
-                    {
+
                         Sorgu.Append(isim + " = " + deger.ToString() + " and ");
-                    }
                 }
                 counter++;
             }
@@ -58,10 +57,20 @@ namespace Inventory_Management_Web_Application.ReportFilters
             List<UrunCikis> donecekUrunler = new List<UrunCikis>();
             foreach (UrunCikis item in uruns)
             {
-                bool y = izinliurunler.Exists(x => x.ID==item.UrunID);
+                bool y = izinliurunler.Exists(x => x.ID==item.UrunStok.UrunID);
                 if (y)
                 {
-                    donecekUrunler.Add(item);
+                    if (urnID != -1)
+                    {
+                        if (item.UrunStok.UrunID== urnID)
+                        {
+
+                        }
+                        else
+                        {
+                            donecekUrunler.Add(item);
+                        }
+                    }
                 }
             }
             return donecekUrunler;

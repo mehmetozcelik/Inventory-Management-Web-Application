@@ -22,7 +22,7 @@
 </head>
 <body class="login-body">
     <div class="container">
-        <form class="form-signin" method="post" action="/Kullanici/Login">
+        <form class="form-signin" method="post" action="/Kullanici/SifremiUnuttum">
             <h2 class="form-signin-heading">BI STOK</h2>
             <div class="login-wrap">
                 @if (ViewBag.Hata != null)
@@ -33,9 +33,8 @@
                 }
                 <img src="~/Content/img/logo.png" style="margin-left: 32%;margin-bottom: 20px; margin-top: 5px;" />
                 <input name="mail" type="text" class="form-control" placeholder="Mail" autofocus required>
-                <input name="sifre" type="password" class="form-control" placeholder="Şifre" required>
-                <button type="submit" class="btn btn-success btn-lg btn-block">Giriş Yap</button>
-                <a href="/Kullanici/SifremiUnuttum" style="margin:30%;">Şifremi Unuttum</a>
+                <button type="submit" class="btn btn-success btn-sm btn-block">Şifremi Yenile</button>
+                <a href="/Admin/Giris" style="color:white;" class="btn btn-primary btn-sm btn-block">Giriş Yap</a>
             </div>
         </form>
     </div>

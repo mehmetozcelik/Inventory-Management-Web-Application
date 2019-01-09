@@ -44,19 +44,21 @@
                 </section>
             </div>
         </div>
+
+
         <div class="row">
             <div class="col-lg-12">
                 <section class="panel">
                     <header class="panel-heading">
                         Menü Erişim İzinleri
                         <span class="tools pull-right">
-                            <a href="javascript:;" class="icon-chevron-down"></a>
+                            <a class="icon-chevron-down" data-toggle="collapse" data-target="#demo"></a>
                         </span>
                     </header>
                     <div class="hidden">
                         <input name="RolID" value="@Model.ID" />
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body collapse"  id="demo">
                         <div class="col-lg-12">
 
                             <table class="table table-hover">
@@ -140,13 +142,13 @@
                     <header class="panel-heading">
                         İşlem İzinleri
                         <span class="tools pull-right">
-                            <a href="javascript:;" class="icon-chevron-down"></a>
+                            <a class="icon-chevron-down" data-toggle="collapse" data-target="#demo1"></a>
                         </span>
                     </header>
                     <div class="hidden">
                         <input name="RolID" value="@Model.ID" />
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body collapse"  id="demo1">
                         <div class="col-lg-12">
 
                             <table class="table table-hover">
@@ -225,13 +227,13 @@
                     <header class="panel-heading">
                         Ürün Erişim İzinleri
                         <span class="tools pull-right">
-                            <a href="javascript:;" class="icon-chevron-down"></a>
+                            <a class="icon-chevron-down" data-toggle="collapse" data-target="#demo2"></a>
                         </span>
                     </header>
                     <div class="hidden">
                         <input name="RolID" value="@Model.ID" />
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body collapse"  id="demo1">
                         <div class="col-lg-12">
 
                             <table class="table table-hover">
@@ -256,7 +258,7 @@
                                                 {
                                                     if (kategori.ID == yetki.KategoriID)
                                                     {
-                                                        <td style="float:right;">
+                                                        <td >
                                                             <div class="checkbox">
                                                                 <label>
                                                                     @if (yetki.Rol.RolAdi == "Admin")

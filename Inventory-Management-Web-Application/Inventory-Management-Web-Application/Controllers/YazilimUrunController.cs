@@ -98,7 +98,7 @@ namespace Inventory_Management_Web_Application.Controllers
                 Lastid = db.YazilimUrun.Max(x => x.ID);
             }
             Lastid = db.Urun.Max(x => x.ID);
-            string urunKodu = u.altKategoriID.ToString() + "1000" + DateTime.Now.Year.ToString() + (Lastid + 1).ToString();
+            string urunKodu = "BISTK" + DateTime.Now.Year.ToString() + u.altKategoriID.ToString() + (Lastid + 1).ToString();
             u.UrunID = urunKodu;
             u.Aktif = true;
             db.YazilimUrun.Add(u);
@@ -111,7 +111,7 @@ namespace Inventory_Management_Web_Application.Controllers
             ug.AlanPerID = u.PersonelID;
             ug.TedarikciID = u.TedarikciID;
             ug.Aciklama = u.Aciklama;
-            ug.UrunSeriNo = UrunSeriNo;
+            ug.UrunStok.UrunSeriNo = UrunSeriNo;
             ug.GirisTarihi = DateTime.Now;
             db.UrunGiris.Add(ug);
             db.SaveChanges();
@@ -155,18 +155,19 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult SilSilinen(int id)
+        public ActionResult SilinenAktif(int id)
         {
             YazilimUrun b = db.YazilimUrun.Where(x => x.ID == id).SingleOrDefault();
             if (b == null)
             {
-                return Json(false);
+                return RedirectToAction("Hata", "Admin");
             }
             else
             {
                 try
                 {
-                    b.Aktif = null;
+                    b.Aktif = true;
+                    ViewBag.Mesaj = "Ürün Tekrar Aktif Edilmiştir.";
                     db.SaveChanges();
                     return Json(true);
                 }
@@ -283,7 +284,7 @@ namespace Inventory_Management_Web_Application.Controllers
                 db.SaveChanges();
                 uc.YazilimUrunID = item.ID;
                 uc.CikisNumarasi = CikisNumarasi;
-                uc.CikanMictar = liste.Where(x => x.ID == item.ID).ToList().Count;
+               // uc.CikanMictar = liste.Where(x => x.ID == item.ID).ToList().Count;
                 db.UrunCikis.Add(uc);
                 db.SaveChanges();
                 temp.Add(item);
@@ -326,7 +327,7 @@ namespace Inventory_Management_Web_Application.Controllers
         {
             var urun = db.YazilimUrun.FirstOrDefault(x => x.ID == veri.YazilimUrunID);
             urun.KeyAdet = urun.KeyAdet + veri.AlinanMiktar;
-            veri.UrunID = null;
+            veri.UrunStok.UrunID = null;
             db.UrunGiris.Add(veri);
             db.SaveChanges();
             return RedirectToAction("urunGirisleri","YazilimUrun");
@@ -356,29 +357,6 @@ namespace Inventory_Management_Web_Application.Controllers
         {
             var urunler = db.UrunGiris.Where(x => x.YazilimUrunID != null).ToList();
             return View(urunler);
-        }
-
-        [HttpPost]
-        public ActionResult urunGirisSil(int id)
-        {
-            UrunGiris b = db.UrunGiris.Where(x => x.ID == id).SingleOrDefault();
-            if (b == null)
-            {
-                return Json(false);
-            }
-            else
-            {
-                try
-                {
-                    db.UrunGiris.Remove(b);
-                    db.SaveChanges();
-                    return Json(true);
-                }
-                catch (Exception)
-                {
-                    return Json("FK");
-                }
-            }
         }
 
         public ActionResult UrunCikislar()

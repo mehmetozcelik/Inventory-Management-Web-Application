@@ -15,22 +15,22 @@
                 Şu anda <b>@Model.KategoriAdi</b> kategorisini düzenliyorsunuz...
             </header>
             <div class="panel-body">
-                <form role="form" method="post" action="/Kategori/AnaKategoriGuncelle">
+                <form role="form" method="post" action="/Kategori/AltKategoriGuncelle">
                     @Html.Hidden("ID", Model.ID)
                     <div class="form-group">
                         <label for="exampleInputEmail1">Ana Kategori Seçiniz </label>&nbsp;<span style="color: red;">*</span>
                         @Html.DropDownList("AnaKategorID", (SelectList)ViewBag.kategoriler, "Seçiniz...", new { @class = "form-control", required = "required" })
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Ürün Adı </label>
+                        <label for="exampleInputEmail1">Ürün Adı </label> &nbsp;<span style="color: red;">*</span>
                         <input type="text" class="form-control" placeholder="Ürün Adı Giriniz..." name="KategoriAdi" value="@Model.KategoriAdi" required>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Ürün Kodu </label>
-                        <input type="text" class="form-control" placeholder="Ürün Kodu Giriniz..." name="Aciklama" value="@Model.Aciklama" required>
+                        <input type="text" class="form-control" placeholder="Ürün Kodu Giriniz..." name="Aciklama" value="@Model.Aciklama">
                     </div>
-                    <button style="float:right;" type="submit" class="btn btn-info">Kaydet</button>
-                    <a href="../Personel/TaListele" class="btn btn-danger">İptal</a>
+                    <button type="submit" class="btn btn-info">Kaydet</button>
+                    <a href="/Personel/TaListele" class="btn btn-danger">İptal</a>
                     <button type="reset" class="btn btn-default">Temizle</button>
                 </form>
 

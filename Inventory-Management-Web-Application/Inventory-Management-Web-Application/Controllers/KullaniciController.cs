@@ -1,4 +1,5 @@
 ﻿using Inventory_Management_Web_Application.App_Classes;
+using Inventory_Management_Web_Application.Mail;
 using Inventory_Management_Web_Application.Models;
 using System;
 using System.Collections.Generic;
@@ -94,6 +95,72 @@ namespace Inventory_Management_Web_Application.Controllers
 
 
         //----------------------- Diğer İşlemler -----------------------------------------
+
+        [HttpGet]
+        public ActionResult KisiselBilgiler()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult KisiselBilgiler(Personel personel)
+        {
+            Personel k = (Personel)Session["Kullanici"];
+            Personel current = db.Personel.Where(x => x.ID == k.ID).SingleOrDefault();
+            current.Adi = personel.Adi;
+            current.Soyadi = personel.Soyadi;
+            current.Tel = personel.Tel;
+            current.Email = personel.Email;
+            db.SaveChanges();
+            ViewBag.basarili = "Bilgileriniz başarılı bir şekilde güncellenmiştir.";
+            Session.Remove("Kullanici");
+            Session["Kullanici"] = current;
+
+            return View();
+        }
+
+
+        [HttpGet]
+        public ActionResult SifremiUnuttum()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult SifremiUnuttum(string mail)
+        {
+            try
+            {
+                Personel k = db.Personel.Where(x => x.Email == mail).SingleOrDefault();
+                if (k == null)
+                {
+                    ViewBag.bilgi = "Bu bilgilerde sisteme kayıtlı bir kullanıcı bulunamadı";
+                    return View();
+                }
+
+
+                int _min = 1000;
+                int _max = 9999;
+                Random _rdm = new Random();
+                int sifre = _rdm.Next(_min, _max);
+                string ss = Convert.ToString(sifre);
+                k.Sifre = ss;
+                db.SaveChanges();
+
+                //Personel mail ile bilgilendirme
+                string OnayBody = MailGonder.sifreYenileme(k);
+                MailGonder m = new MailGonder(k.Email, "Yeni Şifreniz", OnayBody);
+
+                ViewBag.bilgi = "Yeni Şifreniz Mail Adresinize Gönderilmiştir.";
+                return View();
+            }
+            catch (Exception)
+            {
+                return Redirect("/Admin/sistemHata");
+            }
+
+        }
+
         [HttpGet]
         public ActionResult Login()
         {
@@ -192,6 +259,7 @@ namespace Inventory_Management_Web_Application.Controllers
          
             //Tüm rolleri yeniden yükle ve değişiklikleri kayıt et.
             string[] Menuparts = menuler.Split('^');
+            Array.Reverse(Menuparts);
             List<Menu> Eklenenmenuler = new List<Menu>();
             for (int i = 0; i < Menuparts.Length; i++)
             {

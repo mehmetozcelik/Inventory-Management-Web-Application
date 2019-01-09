@@ -31,6 +31,13 @@
 }
 <div class="row">
     <div class="col-lg-12">
+        @if (TempData["GenelMesaj"] != null)
+        {
+            <div class="alert alert-success">
+                <p>@TempData["GenelMesaj"]</p>
+            </div>
+        }
+
         <section class="panel">
             <header class="panel-heading" style="padding-bottom: 10px;">
                 <div class="col-lg-12" style="margin-bottom:10px;">
@@ -44,12 +51,13 @@
                         <table class="table table-striped table-hover table-bordered" id="editable-sample">
                             <thead>
                                 <tr>
-                                    <th>Urun Adı</th>
+                                    <th>Ürün Kodu</th>
+                                    <th>Ürün Adı</th>
+                                    <th>Ürün Seri No</th>
                                     <th>Çıkaran Personel</th>
                                     <th>Verilis Tarihi</th>
                                     <th>Tahmini Geliş Tarihi</th>
                                     <th>Kargo No</th>
-                                    <th>Miktar</th>
                                     <th>Firma</th>
                                     <th>İşlemler</th>
 
@@ -58,32 +66,51 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
+                                    var TahminUyari = (item.TahminiGelisTarihi.Value.Date - DateTime.Now.Date).TotalDays;
                                     <tr id="@item.ID">
+                                        <th>
+                                            @item.UrunStok.Urun.UrunKodu
+                                        </th>
                                         <td>
-                                            @item.Urun.UrunAdi
+                                            @item.UrunStok.Urun.UrunAdi
+                                            @if (item.UrunStok.Urun.UrunTip != null)
+                                            {
+                                                <span style="color:coral;">(@item.UrunStok.Urun.UrunTip.Adi)</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @item.UrunStok.UrunSeriNo
                                         </td>
                                         <td>
                                             @item.Personel.Adi @item.Personel.Soyadi
                                         </td>
                                         <td>
-                                            @item.VerilisTarihi.Value.Day/@item.VerilisTarihi.Value.Month/@item.VerilisTarihi.Value.Year
+                                            @item.VerilisTarihi.Value.ToShortDateString()
                                         </td>
                                         <td>
-                                            @item.TahminiGelisTarihi.Value.Day/@item.TahminiGelisTarihi.Value.Month/@item.TahminiGelisTarihi.Value.Year
+                                            @if (TahminUyari > 0)
+                                            {
+                                                <span class="label label-success label-mini">@item.TahminiGelisTarihi.Value.ToShortDateString() / Süresi Var</span>
+                                            }
+                                            else if (TahminUyari == 0)
+                                            {
+                                                <span class="label label-warning label-mini">@item.TahminiGelisTarihi.Value.ToShortDateString() / Son Gün</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="label label-danger label-mini">@item.TahminiGelisTarihi.Value.ToShortDateString() / Süre Bitti</span>
+                                            }
+
                                         </td>
                                         <td>
                                             @item.KargoNo
                                         </td>
                                         <td>
-                                                <span class="label label-success label-mini">@item.Adet @item.Urun.UrunBirim.Adi</span>
-
-                                        </td>
-                                        <td>
                                             @item.GarantiFirma
                                         </td>
-                                        <td>                                            
-                                               <button title="Stoğa Geri Ekle" id="abcd" onclick="modalConfirm()" data-toggle="modal" data-target="#mi-modal" data-id=@item.ID style="float:right;margin-right:5px;" class="btn btn-warning btn-xs"><i class="icon-plus-sign-alt"></i> Stoğa Geri Ekle</button>
-                                            
+                                        <td>
+                                            <button title="Stoğa Geri Ekle" data-toggle="modal" data-target="#mi-modal" data-id=@item.ID style="float:right;margin-right:5px;" class="btn btn-warning btn-xs btn-confirm"><i class="icon-plus-sign-alt"></i> Stoğa Geri Ekle</button>
+
                                         </td>
                                     </tr>
                                 }
@@ -97,24 +124,27 @@
     </div>
 </div>
 
+
 <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="mi-modal">
     <div class="modal-dialog modal-sm">
         <div class="modal-content">
+
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Bu Ürünü Çıkartmak İstediğinizden Emin misiniz ?</h4>
+                <h4 class="modal-title" id="myModalLabel">Bu Ürünü Stoğa Tekrar Eklemek İstediğinizden Emin misiniz ?</h4>
             </div>
             <div class="modal-footer">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Garantiden Çıkacak Ürün Miktarı</label>&nbsp;<span style="color: red;">*</span>                   
-                    <input type="number" class="form-control" placeholder="Ürün Miktarını Giriniz..." id="adet" required>
+                    <label for="exampleInputEmail1">Ürün Seri Numarası Değişek ise yeni seri numarasınıa aşağıdaki alana girebilirsiniz.</label>&nbsp;<span style="color: red;">*</span>
+                    <input type="text" class="form-control" placeholder="Yeni Seri Numarası Giriniz..." id="adet">
                 </div>
-                <button type="button" onclick="cikar()" class="btn btn-danger" id="modal-btn-si">Çıkar</button>
-                <button type="button" onclick="modalOff()" class="btn btn-primary" id="modal-btn-no">Kapat</button>
+                <button type="button" class="btn btn-danger" id="modal-btn-si">Stoğa Ekle</button>
+                <button type="button" class="btn btn-primary" id="modal-btn-no">Kapat</button>
             </div>
         </div>
     </div>
 </div>
+
 
 @section script{
     <script type="text/javascript" src="/Content/assets/data-tables/jquery.dataTables.js"></script>
@@ -133,64 +163,51 @@
     <script>
         window.onload = function () {
             $('#listele').addClass('active');
-        }
+        };
     </script>
 
- <script>
-         $(document).ready(function () {
-             $("#abcd").click(function () {
-                 id = $(this).attr("data-id");
-                 $("#mi-modal").modal();
-             });
-         });
-        function modalOff() {
-            $("#mi-modal").modal('hide');
-        }
+    <script>
+        var id;
+        var modalConfirm = function (callback) {
 
-        function cikar() {
-            $.ajax({
-                    url: '@Url.Action("GarantiCikar", "Urun")',
-                    contentType: 'application/json',
-                    data: JSON.stringify({
-                        id: id,
-                        adet: document.getElementById('adet').value
-                    }),
-                    type: 'POST',
-                    success: function (rs) {
-                        if (rs === true) {
-                            //$('#' + id).remove();
-                        }
-                        else if (rs === "FK") {
-                            alert("Bu ürüne ait Garanti Kaydı , Ürün Giriş Kaydı veya Ürün Çıkış Kaydı Bulunduğundan dolayı bu Ürün Silemezsiniz. ");
-                        }
-                        else {
-                            alert('Silme işlemi gerçekleşirken bir hata oluştu.');
-                        }
-                    },
-                    error: function (rs) {
-                        alert('Bir hata oluştu');
-                    }
-                });
-        }
-        @*modalConfirm(function (confirm) {
+            $(".btn-confirm").on("click", function () {
+                id = $(this).attr("data-id");
+                $("#mi-modal").modal('show');
+            });
+
+            $("#modal-btn-si").on("click", function () {
+                callback(true);
+
+                $("#mi-modal").modal('hide');
+            });
+
+            $("#modal-btn-no").on("click", function () {
+                callback(false);
+                $("#mi-modal").modal('hide');
+                return e.preventDefault();
+            });
+        };
+
+
+
+        modalConfirm(function (confirm) {
             if (confirm) {
                 $.ajax({
                     url: '@Url.Action("GarantiCikar", "Urun")',
                     contentType: 'application/json',
                     data: JSON.stringify({
                         id: id,
-                        adet: document.getElementById('adet').value
+                        serino: document.getElementById('adet').value
                     }),
                     type: 'POST',
                     success: function (rs) {
-                        if (rs === true) {
-                            //$('#' + id).remove();
+                        if (rs === 1) {
+                            alert("Girdiğiniz değerden zaten stokta bulunmaktadır.");
                         }
-                        else if (rs === "FK") {
-                            alert("Bu ürüne ait Garanti Kaydı , Ürün Giriş Kaydı veya Ürün Çıkış Kaydı Bulunduğundan dolayı bu Ürün Silemezsiniz. ");
-                        }
+                     
                         else {
-                            alert('Silme işlemi gerçekleşirken bir hata oluştu.');
+                            alert('Ürün başarılı bir şekilde stoğa eklendi.');
+                            location.reload();
                         }
                     },
                     error: function (rs) {
@@ -200,28 +217,10 @@
             } else {
                 console.log("");
             }
-        });*@
-        //var id;
-        //var modalConfirm = function (callback) {
+        });
 
-        //    $(".btn-confirm").on("click", function () {
-        //        id = $(this).attr("data-id");
-        //        $("#mi-modal").modal('show');
-        //    });
-
-        //    $("#modal-btn-si").on("click", function () {
-        //        callback(true);
-
-        //        $("#mi-modal").modal('hide');
-        //    });
-
-        //    $("#modal-btn-no").on("click", function () {
-        //        callback(false);
-        //        $("#mi-modal").modal('hide');
-        //        return e.preventDefault()
-        //    });
-        //};
+    </script>
 
 
-</script>
 }
+

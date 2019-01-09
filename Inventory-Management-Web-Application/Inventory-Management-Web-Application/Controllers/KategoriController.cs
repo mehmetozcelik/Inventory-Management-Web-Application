@@ -30,6 +30,8 @@ namespace Inventory_Management_Web_Application.Controllers
         {
             db.AnaKategori.Add(cat);
             db.SaveChanges();
+
+
             return RedirectToAction("AnaKategoriListesi");
         }
 
@@ -103,6 +105,29 @@ namespace Inventory_Management_Web_Application.Controllers
         {
             db.AltKategori.Add(cat);
             db.SaveChanges();
+
+            #region, Kategori Rolleri Ekleme
+            int Lastid = 0;
+            if (db.AltKategori.ToList().Count != 0)
+            {
+                Lastid = db.AltKategori.Max(x => x.ID);
+            }
+            AltKategori k = db.AltKategori.Where(x => x.ID == Lastid).SingleOrDefault();
+           
+            int adminID = 1;
+            adminID =(int)db.Rol.Where(x => x.RolAdi == "Admin").SingleOrDefault().ID;
+            KategoriRol kr2 = new KategoriRol { RolID = adminID, KategoriID = k.ID };
+            db.KategoriRol.Add(kr2);
+            db.SaveChanges();
+
+            Personel p = (Personel)Session["Kullanici"];
+            if (p.RolID != adminID)
+            {            
+                KategoriRol kr = new KategoriRol { RolID = p.RolID, KategoriID = k.ID };
+                db.KategoriRol.Add(kr);
+                db.SaveChanges();
+            }
+            #endregion
             return RedirectToAction("AltKategoriListesi");
         }
 
@@ -151,7 +176,7 @@ namespace Inventory_Management_Web_Application.Controllers
             {
                 return RedirectToAction("Hata", "Admin");
             }
-            gu.ID = u.ID;
+            gu.AnaKategorID = u.AnaKategorID;
             gu.KategoriAdi = u.KategoriAdi;
             gu.Aciklama = u.Aciklama;
             db.SaveChanges();

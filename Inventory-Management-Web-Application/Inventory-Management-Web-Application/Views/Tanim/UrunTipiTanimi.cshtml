@@ -1,36 +1,30 @@
 ﻿
 @{
-    ViewBag.Title = "ProfilListesi";
+    ViewBag.Title = "UrunTipiTanimi";
 }
 
 
 
 @using Inventory_Management_Web_Application.Models
 
-@model List<Rol>
+@model List<UrunTip>
 
 
 <div class="row">
     <div class="col-lg-12">
-        @if (TempData["Uyari"] != null)
-        {
-            <div class="alert alert-success">
-                <p>@TempData["Uyari"]</p>
-            </div>
-        }
         <section class="panel">
             <header class="panel-heading">
-                Profil Ekle 
+               Ürün Tipi Tanımı
             </header>
             <div class="panel-body">
-                <form role="form" method="post" action="/Kullanici/ProfilEkle">
+                <form role="form" method="post" action="/Tanim/UrunTipiEkle">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Profil Adı </label>
-                        <input type="text" class="form-control" placeholder="Profil Adı Giriniz..." name="RolAdi" required>
+                        <label for="exampleInputEmail1">Tip Adı </label>
+                        <input type="text" class="form-control" placeholder="Tip Adı Giriniz..." name="Adi" required>
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Profil Açıklama </label>
-                        <input type="text" class="form-control" placeholder="Profil Açıklama Giriniz..." name="Aciklama" required>
+                        <label for="exampleInputEmail1">Tip Açıklama </label>
+                        <input type="text" class="form-control" placeholder="Tip Açıklama Giriniz..." name="Aciklama" >
                     </div>
                     <button type="submit" class="btn btn-info">Kaydet</button>
                 </form>
@@ -45,32 +39,31 @@
     <div class="col-lg-12">
         <section class="panel">
             <header class="panel-heading">
-                Profil Listesi
+                Tip Listesi
             </header>
             <table class="table table-striped table-advance table-hover">
                 <thead>
                     <tr>
-                        <th>Profil Adı</th>
-                        <th>Profil Açıklama</th>
+                        <th> Adı</th>
+                        <th> Açıklama</th>
                         <th style="float:right;"> İşlemler</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr id="@item.ID">
-                            <td>
-                                @item.RolAdi
-                            </td>
-                            <td>
-                                @item.Aciklama
-                            </td>
-                            <td>
-                                <a title="Sil" style="float:right;" class="btn btn-danger btn-xs btn-confirm" data-id="@item.ID"><i class="icon-trash"></i> Sil</a>
-                                <a style="float:right;margin-right:5px;" href="/Kullanici/YetkiDuzenle/@item.ID" class="btn btn-primary btn-xs"><i class="icon-pencil"></i> Düzenle</a>
-                                <a style="float:right;margin-right:5px;" href="/Kullanici/Yetkiler/@item.ID" class="btn btn-warning btn-xs"><i class="icon-unlock-alt"></i> Yetkiler</a>
-                            </td>
-                        </tr>
+                    <tr id="@item.ID">
+                        <td>
+                            @item.Adi
+                        </td>
+                        <td>
+                            @item.Aciklama
+                        </td>
+                        <td>
+                            <a title="Sil" style="float:right;margin-left:5px;" class="btn btn-danger btn-xs btn-confirm" data-id="@item.ID"><i class="icon-trash"></i> Sil</a>
+                            <a style="float:right;padding-right:5px;" href="/Tanim/UrunTipiDuzenle/@item.ID" class="btn btn-primary btn-xs"><i class="icon-pencil"></i> Düzenle</a>
+                        </td>
+                    </tr>
                     }
 
                 </tbody>
@@ -86,7 +79,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Bu Profili Silmek İstediğinizden Emin misiniz ?</h4>
+                <h4 class="modal-title" id="myModalLabel">Bu Ürün Tipini Silmek İstediğinizden Emin misiniz ?</h4>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" id="modal-btn-si">Sil</button>
@@ -122,7 +115,7 @@
     modalConfirm(function (confirm) {
         if (confirm) {
             $.ajax({
-                url: '/Kullanici/YetkiSil/' + id,
+                url: '/Tanim/UrunTipiSil/' + id,
                 type: 'POST',
                 success: function (rs) {
                     if (rs === true) {
@@ -130,15 +123,7 @@
                     }
                     else if (rs === "FK")
                     {
-                        alert("Bu Profile ait Personel kaydı Bulunduğundan dolayı bu Profili Silemezsiniz. ");
-                    }
-                    else if (rs==="admin")
-                    {
-                        alert("Admin Yetkisi Silenemez.");
-                    }
-                    else if (rs==="ldap")
-                    {
-                        alert("LDAP Yetkisi Silinemez.");
+                        alert("Bu Ürün Tipine ait ürün kaydı Bulunduğundan dolayı bu ürün tipini Silemezsiniz. ");
                     }
                     else {
                         alert('Silme işlemi gerçekleşirken bir hata oluştu.');
@@ -149,7 +134,7 @@
                 }
             });
         } else {
-            console.log("");
+            console.log("vazgeci");
         }
     });
 </script>

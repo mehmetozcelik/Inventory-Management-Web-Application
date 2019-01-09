@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "KisiselBilgiler";
+}
+
+
+@using Inventory_Management_Web_Application.Models
+
+@{
+    Personel k = (Personel)Session["Kullanici"];
+}
+
+
+<div class="row">
+    <div class="col-lg-12">
+        @if (ViewBag.basarili != null)
+        {
+            <div class="alert alert-success">
+                <p>@ViewBag.basarili</p>
+            </div>
+        }
+        <section class="panel">
+            <header class="panel-heading">
+                <i class="icon-user"></i>    Kişisel Bilgilerim
+            </header>
+            <div class="panel-body">
+                <form action="/Kullanici/KisiselBilgiler" method="post">
+                    @Html.Hidden("ID", k.ID)
+                    <div class="form-group">
+                        <label>Adınız</label>
+                        <input name="adi" type="text" class="form-control" value="@k.Adi">
+                    </div>
+                    <div class="form-group">
+                        <label>Soyadınız</label>
+                        <input name="soyadi" type="text" class="form-control" value="@k.Soyadi">
+                    </div>
+                    <div class="form-group">
+                        <label>Mailiniz</label>
+                        <input name="Email" type="text" class="form-control" value="@k.Email">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefonunuz</label>
+                        <input name="Tel" type="text" class="form-control" value="@k.Tel">
+                    </div>
+                    <div class="form-group">
+                        <label>Şifreniz</label>
+                        <input name="sifre" type="password" class="form-control" value="@k.Sifre">
+                    </div>
+                    <button class="btn btn-primary" type="submit">Bilgilerimi Güncelle</button>
+                </form>
+
+            </div>
+        </section>
+    </div>
+
+</div>
+

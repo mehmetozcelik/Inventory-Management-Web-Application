@@ -138,5 +138,70 @@ namespace Inventory_Management_Web_Application.Controllers
             }
         }
 
+        // ---------------------------------------------------------- Ürün tipi Tanımı ---------------------------------------------------------
+
+        public ActionResult UrunTipiTanimi()
+        {
+            return View(db.UrunTip.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult UrunTipiEkle(UrunTip b)
+        {
+            db.UrunTip.Add(b);
+            db.SaveChanges();
+            return RedirectToAction("UrunTipiTanimi");
+        }
+
+        [HttpPost]
+        public ActionResult UrunTipiSil(int id)
+        {
+            UrunTip b = db.UrunTip.Where(x => x.ID == id).SingleOrDefault();
+            if (b == null)
+            {
+                return Json(false);
+            }
+            else
+            {
+                try
+                {
+                    db.UrunTip.Remove(b);
+                    db.SaveChanges();
+                    return Json(true);
+                }
+                catch (Exception)
+                {
+                    return Json("FK");
+                }
+
+            }
+        }
+
+        [HttpGet]
+        public ActionResult UrunTipiDuzenle(int id)
+        {
+            UrunTip b = db.UrunTip.Where(x => x.ID == id).FirstOrDefault();
+            return View(b);
+        }
+
+        [HttpPost]
+        public ActionResult UrunTipiDuzenle(UrunTip b)
+        {
+            UrunTip bb = db.UrunTip.Where(x => x.ID == b.ID).SingleOrDefault();
+            if (bb != null)
+            {
+                bb.Adi = b.Adi;
+                bb.Aciklama = b.Aciklama;
+                db.SaveChanges();
+                return RedirectToAction("UrunTipiTanimi");
+            }
+            else
+            {
+
+                return RedirectToAction("UrunTipiTanimi");
+            }
+        }
+
+
     }
 }

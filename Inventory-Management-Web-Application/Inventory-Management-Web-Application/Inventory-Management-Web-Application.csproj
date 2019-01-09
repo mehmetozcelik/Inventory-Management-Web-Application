@@ -44,6 +44,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -85,6 +89,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Quartz, Version=2.2.4.400, Culture=neutral, PublicKeyToken=f6b8c98a402cc8a4, processorArchitecture=MSIL">
+      <HintPath>..\packages\Quartz.2.2.4\lib\net40\Quartz.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Rotativa, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Rotativa.1.7.4-rc\lib\net45\Rotativa.dll</HintPath>
       <Private>True</Private>
@@ -180,6 +188,8 @@
     <Content Include="Content\todo_list.html" />
     <Content Include="Content\widget.html" />
     <Content Include="Content\xchart.html" />
+    <Content Include="DB_Script\07012019_StokTakipDB.sql" />
+    <Content Include="DB_Script\09012019.sql" />
     <Content Include="DB_Script\12.12.2018_StokTakipDB.sql" />
     <Content Include="DB_Script\13.12.2018_StokTakipDB.sql" />
     <Content Include="DB_Script\23.12.2018-19.31-Script.sql" />
@@ -198,6 +208,9 @@
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
     <Content Include="App_Browsers\qt.browser" />
+    <None Include="job_scheduling_data_2_0.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="scripts\jquery-1.10.2.js" />
     <Content Include="scripts\jquery-1.10.2.min.js" />
@@ -206,8 +219,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Classes\Functions.cs" />
-    <Compile Include="App_Classes\IslemErisimList.cs" />
-    <Compile Include="App_Classes\MenuList.cs" />
     <Compile Include="App_Classes\UrunCikisSepet.cs" />
     <Compile Include="App_Classes\UrunList.cs" />
     <Compile Include="App_Classes\YazilimUrunCikis.cs" />
@@ -226,9 +237,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Jobs\JobScheduler.cs" />
+    <Compile Include="Jobs\MailJob.cs" />
+    <Compile Include="Mail\Mail.cs" />
+    <Compile Include="Mail\MailGonder.cs" />
     <Compile Include="Models\AltKategori.cs" />
     <Compile Include="Models\AnaKategori.cs" />
     <Compile Include="Models\ArizaDurum.cs" />
+    <Compile Include="Models\ArizaEskiKayitlar.cs" />
     <Compile Include="Models\Ayarlar.cs" />
     <Compile Include="Models\Birim.cs" />
     <Compile Include="Models\ErisimRol.cs" />
@@ -245,6 +261,8 @@
     <Compile Include="Models\UrunBirim.cs" />
     <Compile Include="Models\UrunCikis.cs" />
     <Compile Include="Models\UrunGiris.cs" />
+    <Compile Include="Models\UrunStok.cs" />
+    <Compile Include="Models\UrunTip.cs" />
     <Compile Include="Models\YazilimUrun.cs" />
     <Compile Include="ModelViews\MenuControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -329,6 +347,12 @@
     <Content Include="Views\YazilimUrun\SilinenUrunler.cshtml" />
     <Content Include="Views\Admin\YetkiBulunamadi.cshtml" />
     <Content Include="Views\Kullanici\YetkiDuzenle.cshtml" />
+    <Content Include="Views\Urun\uruncikarSeriNoGetir.cshtml" />
+    <Content Include="Views\Tanim\UrunTipiDuzenle.cshtml" />
+    <Content Include="Views\Tanim\UrunTipiTanimi.cshtml" />
+    <Content Include="Views\Admin\sistemHata.cshtml" />
+    <Content Include="Views\Kullanici\KisiselBilgiler.cshtml" />
+    <Content Include="Views\Kullanici\SifremiUnuttum.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

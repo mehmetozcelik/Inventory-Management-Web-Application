@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "UrunTipiDuzenle";
+}
+
+
+@using Inventory_Management_Web_Application.Models
+
+@model  UrunTip
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                Şuan da @Model.Adi isimli Ürün Tipini düzenliyorsunuz...
+            </header>
+            <div class="panel-body">
+                <form role="form" method="post" action="/Tanim/UrunTipiDuzenle">
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Ürü Adı </label>
+                        <input type="text" class="form-control" value="@Model.Adi" name="Adi">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Birim Adı </label>
+                        <input type="text" class="form-control" value="@Model.Aciklama" name="Aciklama">
+                    </div>
+                    @Html.Hidden("ID", Model.ID)
+                    <button type="submit" class="btn btn-info">Kaydet</button>
+                    <a href="/Tanim/UrunTipiTanimi" class="btn btn-danger">İptal</a>
+                    <button type="reset" class="btn btn-default">Temizle</button>
+                </form>
+
+            </div>
+        </section>
+    </div>
+</div>
+
+

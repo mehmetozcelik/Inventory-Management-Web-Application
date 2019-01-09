@@ -112,7 +112,7 @@
 
                             if (urunler != null)
                             {
-                                List<Urun> liste = urunler.HepsiniGetir();
+                                List<UrunStok> liste = urunler.HepsiniGetir();
 
                                 <li id="header_notification_bar" class="dropdown" style="margin-right:5px;">
                                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -127,9 +127,9 @@
                                         </li>
 
 
-                                        @{List<Urun> temp = new List<Urun>();
+                                        @{List<UrunStok> temp = new List<UrunStok>();
                                         }
-                                        @foreach (Urun item in liste)
+                                        @foreach (UrunStok item in liste)
                                         {
                                             if (temp.Where(x => x.ID == item.ID).SingleOrDefault() != null)
                                             {
@@ -138,8 +138,8 @@
                                             <li>
                                                 <a href="#">
                                                     <span class="label label-info"><i class="icon-th-large"></i></span>
-                                                    <span> @item.UrunAdi</span>  
-                                                    <span class="small italic">(@liste.Where(x => x.ID == item.ID).ToList().Count @item.UrunBirim.Adi)</span>
+                                                    <span> @item.Urun.UrunAdi</span>  
+                                                    <span class="small italic">(@liste.Where(x => x.ID == item.ID).ToList().Count @item.Urun.UrunBirim.Adi)</span>
                                                 </a>
                                             </li>
                                             temp.Add(item);
@@ -154,8 +154,8 @@
 
                                             }
                     }
-                                <a href="#" class="btn btn-default"><i class="icon-user"></i>  @aktifKullanici.Adi @aktifKullanici.Soyadi</a>
-                    <a href="/Admin/CikisYap" class="btn btn-danger">Çıkış Yap <i class="icon-arrow-right"></i></a>
+                    <a href="/Kullanici/KisiselBilgiler" title="Kişisel Bilgilerim" class="btn btn-default"><i class="icon-user"></i>  @aktifKullanici.Adi @aktifKullanici.Soyadi</a>
+                    <a href="/Admin/CikisYap" title="Çıkış Yap" class="btn btn-danger">Çıkış Yap <i class="icon-arrow-right"></i></a>
                 </ul>
                 <!--search & user info end-->
             </div>
