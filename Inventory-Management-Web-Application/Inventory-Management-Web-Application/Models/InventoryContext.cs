@@ -25,7 +25,6 @@ namespace Inventory_Management_Web_Application.Models
         public virtual DbSet<MenuRol> MenuRol { get; set; }
         public virtual DbSet<Personel> Personel { get; set; }
         public virtual DbSet<Rol> Rol { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tedarikci> Tedarikci { get; set; }
         public virtual DbSet<TeslimAlanPersonel> TeslimAlanPersonel { get; set; }
         public virtual DbSet<Urun> Urun { get; set; }
