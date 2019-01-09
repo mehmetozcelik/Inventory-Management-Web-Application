@@ -48,18 +48,27 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult Ayarlar(Ayarlar ayarlar)
         {
-            Ayarlar a = db.Ayarlar.FirstOrDefault();
-            a.UrunStok = ayarlar.UrunStok;
-            a.YazilimUrun = ayarlar.YazilimUrun;
-            a.YazilimUrunStok = ayarlar.YazilimUrunStok;
-            db.SaveChanges();
-            return View(db.Ayarlar.FirstOrDefault());
+            try
+            {
+                Ayarlar a = db.Ayarlar.FirstOrDefault();
+                a.UrunStok = ayarlar.UrunStok;
+                a.YazilimUrun = ayarlar.YazilimUrun;
+                a.YazilimUrunStok = ayarlar.YazilimUrunStok;
+                db.SaveChanges();
+                TempData["GenelMesaj"] = "Ayarlar başarılı bir şekilde güncellenmiştir.";
+                return View(db.Ayarlar.FirstOrDefault());
+            }
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
         }
 
         public ActionResult CikisYap()
         {
             Session.Abandon();
-            return RedirectToAction("Login","Kullanici");
+            return RedirectToAction("Login", "Kullanici");
         }
 
         public PartialViewResult MenuGetir()
@@ -68,8 +77,8 @@ namespace Inventory_Management_Web_Application.Controllers
 
             MenuControl k = new MenuControl();
             k.menuler = db.Menu.ToList();
-            k.roller = db.MenuRol.Where(x=>x.RolID==p.RolID).ToList();
-            return  PartialView(k);
+            k.roller = db.MenuRol.Where(x => x.RolID == p.RolID).ToList();
+            return PartialView(k);
         }
 
         [HttpGet]

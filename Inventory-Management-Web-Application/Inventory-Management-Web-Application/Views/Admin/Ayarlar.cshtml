@@ -10,6 +10,13 @@
 <div class="row">
 
     <div class="col-lg-12">
+        @if (TempData["GenelMesaj"] != null)
+        {
+            <div class="alert alert-success">
+                <p>@TempData["GenelMesaj"]</p>
+            </div>
+        }
+
         <section class="panel">
             <header class="panel-heading">
                 <div class="col-lg-12">

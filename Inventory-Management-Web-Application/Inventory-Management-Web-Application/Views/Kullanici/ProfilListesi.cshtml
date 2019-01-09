@@ -18,9 +18,16 @@
                 <p>@TempData["Uyari"]</p>
             </div>
         }
+
+        @if (TempData["GenelMesaj"] != null)
+        {
+            <div class="alert alert-success">
+                <p>@TempData["GenelMesaj"]</p>
+            </div>
+        }
         <section class="panel">
             <header class="panel-heading">
-                Profil Ekle 
+                Profil Ekle
             </header>
             <div class="panel-body">
                 <form role="form" method="post" action="/Kullanici/ProfilEkle">

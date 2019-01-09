@@ -27,9 +27,19 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult Ekle(Tedarikci u)
         {
-            db.Tedarikci.Add(u);
-            db.SaveChanges();
-            return RedirectToAction("Listesi");
+
+            try
+            {
+                db.Tedarikci.Add(u);
+                db.SaveChanges();
+                TempData["GenelMesaj"] = "Tedarikçi ekleme işlemi başarılı bir şekilde tamamlanmıştır.";
+                return RedirectToAction("Listesi");
+            }
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
         }
 
         [HttpPost]
@@ -70,23 +80,32 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult Guncelle(Tedarikci u)
         {
-            Tedarikci gu = db.Tedarikci.Where(x => x.ID == u.ID).FirstOrDefault();
-            if (gu == null)
+            try
             {
-                return RedirectToAction("Hata", "Admin");
+                Tedarikci gu = db.Tedarikci.Where(x => x.ID == u.ID).FirstOrDefault();
+                if (gu == null)
+                {
+                    return RedirectToAction("Hata", "Admin");
+                }
+
+                gu.FirmaAdi = u.FirmaAdi;
+                gu.FirmaTel = u.FirmaTel;
+                gu.FirmaAdres = u.FirmaAdres;
+                gu.FirmaMail = u.FirmaMail;
+                gu.YetkiliAdi = u.YetkiliAdi;
+                gu.YetkiliSoyadi = u.YetkiliSoyadi;
+                gu.YetkiliUnvani = u.YetkiliUnvani;
+                gu.YetkiliTel = u.YetkiliTel;
+                gu.YetkiliMail = u.YetkiliMail;
+                db.SaveChanges();
+                TempData["GenelMesaj"] = "Tedarikçi güncelleme işlemi başarılı bir şekilde tamamlanmıştır.";
+                return RedirectToAction("Listesi");
             }
-          
-            gu.FirmaAdi = u.FirmaAdi;
-            gu.FirmaTel = u.FirmaTel;
-            gu.FirmaAdres = u.FirmaAdres;
-            gu.FirmaMail = u.FirmaMail;
-            gu.YetkiliAdi = u.YetkiliAdi;
-            gu.YetkiliSoyadi = u.YetkiliSoyadi;
-            gu.YetkiliUnvani = u.YetkiliUnvani;
-            gu.YetkiliTel = u.YetkiliTel;
-            gu.YetkiliMail = u.YetkiliMail;
-            db.SaveChanges();
-            return RedirectToAction("Listesi");
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
         }
 
         [HttpGet]

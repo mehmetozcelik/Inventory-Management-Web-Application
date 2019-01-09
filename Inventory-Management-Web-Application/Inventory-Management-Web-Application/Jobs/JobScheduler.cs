@@ -10,20 +10,27 @@ namespace Inventory_Management_Web_Application.Jobs
     {
         public static void Start()
         {
+            try
+            {
+                IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
+                scheduler.Start();
 
-            IScheduler scheduler = StdSchedulerFactory.GetDefaultScheduler();
-            scheduler.Start();
+                IJobDetail job = JobBuilder.Create<MailJob>().Build();
 
-            IJobDetail job = JobBuilder.Create<MailJob>().Build();
+                ITrigger trigger = TriggerBuilder.Create()
+                .WithIdentity("trigger1", "group1")
+                .StartNow()
+                .WithSimpleSchedule(x => x
+                .WithIntervalInHours(24)
+                .RepeatForever())
+                .Build();
+                scheduler.ScheduleJob(job, trigger);
+            }
+            catch (Exception)
+            {
+                HttpContext.Current.Response.Redirect("/Admin/Hata");
+            }
 
-            ITrigger trigger = TriggerBuilder.Create()
-            .WithIdentity("trigger1", "group1")
-            .StartNow()
-            .WithSimpleSchedule(x => x
-            .WithIntervalInHours(24)
-            .RepeatForever())
-            .Build();
-            scheduler.ScheduleJob(job, trigger);
         }
     }
 }

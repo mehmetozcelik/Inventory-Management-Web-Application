@@ -39,6 +39,12 @@
                 <p>@ViewBag.hata</p>
             </div>
         }
+        @if (TempData["GenelMesaj"] != null)
+        {
+            <div class="alert alert-success">
+                <p>@TempData["GenelMesaj"]</p>
+            </div>
+        }
         <section class="panel">
             <header class="panel-heading" style="padding-bottom: 10px;">
                 <div class="col-lg-12" style="margin-bottom:10px;">
@@ -63,27 +69,27 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                <tr id="@item.ID">
-                                    <td>
-                                        @item.YazilimUrun.UrunAdi
-                                    </td>
-                                    <td>
-                                        @item.AlinanMiktar
-                                    </td>
-                                    <td>
-                                        @item.Personel.Adi @item.Personel.Soyadi
-                                    </td>
-                                    <td>
-                                        @item.Tedarikci.FirmaAdi
-                                    </td>
-                                    <td>
-                                        @item.GirisTarihi.Value.Day/@item.GirisTarihi.Value.Month/@item.GirisTarihi.Value.Year
-                                    </td>
+                                    <tr id="@item.ID">
+                                        <td>
+                                            @item.YazilimUrun.UrunAdi
+                                        </td>
+                                        <td>
+                                            @item.AlinanMiktar
+                                        </td>
+                                        <td>
+                                            @item.Personel.Adi @item.Personel.Soyadi
+                                        </td>
+                                        <td>
+                                            @item.Tedarikci.FirmaAdi
+                                        </td>
+                                        <td>
+                                            @item.GirisTarihi.Value.Day/@item.GirisTarihi.Value.Month/@item.GirisTarihi.Value.Year
+                                        </td>
 
-                                    <td>
-                                        @item.Aciklama
-                                    </td>
-                                </tr>
+                                        <td>
+                                            @item.Aciklama
+                                        </td>
+                                    </tr>
                                 }
 
                             </tbody>

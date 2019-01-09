@@ -1,0 +1,14 @@
+﻿@using Inventory_Management_Web_Application.Models
+
+@model List<UrunStok>
+<ul>
+
+
+    @foreach (UrunStok item in Model)
+    {
+    <li>
+        <i class=" icon-circle text-success"></i>   @item.UrunSeriNo
+    </li>
+    }
+</ul>
+<p>Toplam Stok : @Model.Count</p>

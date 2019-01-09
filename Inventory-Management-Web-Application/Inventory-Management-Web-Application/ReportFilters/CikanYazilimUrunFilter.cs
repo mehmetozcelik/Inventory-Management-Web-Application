@@ -12,7 +12,7 @@ namespace Inventory_Management_Web_Application.ReportFilters
     {
 
 
-        public int UrunID { get; set; }
+        public int YazilimUrunID { get; set; }
         public int CikanMictar { get; set; }
         public DateTime TeslimTarihi { get; set; }
         public int TeslimVerenID { get; set; }

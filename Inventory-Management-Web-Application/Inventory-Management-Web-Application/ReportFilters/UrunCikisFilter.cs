@@ -56,6 +56,10 @@ namespace Inventory_Management_Web_Application.ReportFilters
             List<UrunCikis> donecekUrunler = new List<UrunCikis>();
             foreach (UrunCikis item in uruns)
             {
+                if (item.YazilimUrunID !=null)
+                {
+                    continue;
+                }
                 bool y = izinliurunler.Exists(x => x.ID==item.UrunStok.UrunID);
                 if (y)
                 {

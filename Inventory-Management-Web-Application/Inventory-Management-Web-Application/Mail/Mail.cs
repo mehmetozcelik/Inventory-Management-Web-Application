@@ -49,9 +49,9 @@ namespace Inventory_Management_Web_Application.Mail
                     smtp.Send(message);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                HttpContext.Current.Response.Redirect("/Admin/sistemHata/"+e.ToString());
+                HttpContext.Current.Response.Redirect("/Admin/Hata");
             }
 
         }

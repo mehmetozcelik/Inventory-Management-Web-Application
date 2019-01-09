@@ -46,11 +46,19 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult Urun(UrunFilter list)
         {
-           List<Urun> rapor = UrunFilter.UrunSorgu(list);
-            var report = new ViewAsPdf("Urun_Print", rapor)
-            { };
+            try
+            {
+                List<Urun> rapor = UrunFilter.UrunSorgu(list);
+                var report = new ViewAsPdf("Urun_Print", rapor)
+                { };
 
-            return report;
+                return report;
+            }
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
         }
 
         public ActionResult Urun_Print()
@@ -68,7 +76,7 @@ namespace Inventory_Management_Web_Application.Controllers
             var urunbirimler = db.UrunBirim.ToList();
             ViewBag.urunbirimler = new SelectList(urunbirimler, "ID", "Adi");
 
-          
+
             var personeller = db.Personel.Select(x => new
             {
                 ID = x.ID,
@@ -81,10 +89,18 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult UrunCikis(UrunCikisFilter urunCikisFilter)
         {
+            try
+            {
             List<UrunCikis> rapor = UrunCikisFilter.UrunSorgu(urunCikisFilter);
             var report = new ViewAsPdf("UrunCikis_Print", rapor)
             { };
             return report;
+            }
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
         }
 
         public ActionResult UrunCikis_Print()
@@ -120,10 +136,18 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult YazilimUrun(YazilimUrunFilter yazilimUrunFilter)
         {
+            try
+            {
             List<YazilimUrun> rapor = YazilimUrunFilter.UrunSorgu(yazilimUrunFilter);
             var report = new ViewAsPdf("YazilimUrun_Print", rapor)
             { };
             return report;
+            }
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
         }
 
         public ActionResult YazilimUrun_Print()
@@ -135,7 +159,7 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpGet]
         public ActionResult CikanYazilimUrun()
         {
-            var urunler = UrunList.IzinliUrunler();
+            var urunler = UrunList.IzinliYazilimUrunler();
             ViewBag.urunler = new SelectList(urunler, "ID", "UrunAdi");
 
             var tedarikciler = db.Tedarikci.Select(x => new
@@ -156,10 +180,18 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult CikanYazilimUrun(CikanYazilimUrunFilter yazilimUrunFilter)
         {
+            try
+            {
             List<UrunCikis> rapor = CikanYazilimUrunFilter.UrunSorgu(yazilimUrunFilter);
             var report = new ViewAsPdf("CikanYazilimUrun_Print", rapor)
             { };
             return report;
+            }
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
         }
 
         public ActionResult CikanYazilimUrun_Print()

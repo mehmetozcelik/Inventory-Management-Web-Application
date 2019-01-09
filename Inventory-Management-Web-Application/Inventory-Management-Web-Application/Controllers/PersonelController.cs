@@ -26,19 +26,31 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult TaEkle(TeslimAlanPersonel veri , int? control)
+        public ActionResult TaEkle(TeslimAlanPersonel veri, int? control)
         {
-            db.TeslimAlanPersonel.Add(veri);                           
-            db.SaveChanges();
-            if (control==1)
+
+            try
             {
-                return RedirectToAction("stokCikarView","Urun");
+
+
+                db.TeslimAlanPersonel.Add(veri);
+                db.SaveChanges();
+                if (control == 1)
+                {
+                    return RedirectToAction("stokCikarView", "Urun");
+                }
+                else if (control == 0)
+                {
+                    return RedirectToAction("stokCikarView", "YazilimUrun");
+                }
+                TempData["GenelMesaj"] = " işlemi başarılı bir şekilde tamamlanmıştır.";
+                return RedirectToAction("TaListesi");
             }
-            else if (control == 0)
+            catch (Exception)
             {
-                return RedirectToAction("stokCikarView", "YazilimUrun");
+                return Redirect("/Admin/Hata");
             }
-            return RedirectToAction("TaListesi");
+
         }
 
         public ActionResult TaDuzenle(int ID)
@@ -51,15 +63,25 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult TaDuzenle(TeslimAlanPersonel veri)
         {
-            db.Entry(veri).State = EntityState.Modified;
-            db.SaveChanges();
-            return RedirectToAction("TaListesi");
+            try
+            {
+                db.Entry(veri).State = EntityState.Modified;
+                db.SaveChanges();
+                TempData["GenelMesaj"] = " işlemi başarılı bir şekilde tamamlanmıştır.";
+                return RedirectToAction("TaListesi");
+
+            }
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
         }
 
         [HttpPost]
         public ActionResult TaSil(int id)
         {
-            
+
 
             TeslimAlanPersonel b = db.TeslimAlanPersonel.Where(x => x.ID == id).SingleOrDefault();
             if (b == null)

@@ -14,18 +14,35 @@ namespace Inventory_Management_Web_Application.Controllers
 
         public ActionResult UrunCikis(int id)
         {
-           List<UrunCikis> uc = db.UrunCikis.Where(x => x.CikisNumarasi == id).ToList();
-            var report = new ViewAsPdf("UrunCikis", uc)
+            try
+            {
+                List<UrunCikis> uc = db.UrunCikis.Where(x => x.CikisNumarasi == id).ToList();
+                var report = new ViewAsPdf("UrunCikis", uc)
                 { };
-            return report;
+                return report;
+
+            }
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
         }
 
         public ActionResult yazilimUrunCikis(int id)
         {
-            List<UrunCikis> uc = db.UrunCikis.Where(x => x.CikisNumarasi == id).ToList();
-            var report = new ViewAsPdf("yazilimUrunCikis", uc)
-            { };
-            return report;
+            try
+            {
+                List<UrunCikis> uc = db.UrunCikis.Where(x => x.CikisNumarasi == id).ToList();
+                var report = new ViewAsPdf("yazilimUrunCikis", uc)
+                { };
+                return report;
+            }
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
         }
     }
 }

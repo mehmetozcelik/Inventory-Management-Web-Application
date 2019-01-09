@@ -31,6 +31,12 @@
 }
 <div class="row">
     <div class="col-lg-12">
+        @if (TempData["GenelMesaj"] != null)
+        {
+            <div class="alert alert-success">
+                <p>@TempData["GenelMesaj"]</p>
+            </div>
+        }
         <section class="panel">
             <header class="panel-heading" style="padding-bottom: 10px;">
                 <div class="col-lg-12" style="margin-bottom:10px;">
@@ -71,7 +77,7 @@
                                         <td>
                                             <a title="Sil" style="float:right;" class="btn btn-danger btn-xs btn-confirm" data-id="@item.ID"><i class="icon-trash"></i> Sil</a>
                                             <a title="Düzünle" style="float:right;margin-right:5px;" href="/Kullanici/Guncelle/@item.ID" class="btn btn-primary btn-xs"><i class="icon-pencil"></i> Düzenle</a>
-                                     </td>
+                                        </td>
                                     </tr>
                                 }
 

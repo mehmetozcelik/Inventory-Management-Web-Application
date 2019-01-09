@@ -226,6 +226,7 @@
     <Compile Include="App_Classes\_SecurityFilter.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\KategoriController.cs" />
     <Compile Include="Controllers\KullaniciController.cs" />
     <Compile Include="Controllers\PrintController.cs" />
@@ -355,6 +356,8 @@
     <Content Include="Views\Admin\sistemHata.cshtml" />
     <Content Include="Views\Kullanici\KisiselBilgiler.cshtml" />
     <Content Include="Views\Kullanici\SifremiUnuttum.cshtml" />
+    <Content Include="Views\Urun\uruncikarSeriNoGetirStok.cshtml" />
+    <Content Include="Views\Error\PageError.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

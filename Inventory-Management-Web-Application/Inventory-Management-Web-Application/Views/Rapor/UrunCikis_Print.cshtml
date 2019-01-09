@@ -31,9 +31,10 @@
                     <tr>
                         <th>Ürün Kodu</th>
                         <th>Ürün Adı</th>
+                        <th>Seri No</th>
                         <th>Teslim Eden Personel</th>
                         <th>Teslim Alan Personel</th>
-                        <th>Seri No</th>
+
                         <th>Teslim Tarihi</th>
                     </tr>
                 </thead>
@@ -48,14 +49,15 @@
                             @item.UrunStok.Urun.UrunAdi
                         </td>
                         <td align="left">
+                            @item.UrunStok.UrunSeriNo
+                        </td>
+                        <td align="left">
                             @item.Personel.Adi @item.Personel.Soyadi
                         </td>
                         <td align="left">
                             @item.TeslimAlanPersonel.Adi @item.TeslimAlanPersonel.Soyadi
                         </td>
-                        <td align="left">
-                            @item.UrunStok.UrunSeriNo
-                        </td>
+
                         <td align="left">
                             @item.TeslimTarihi.Value.ToShortDateString()
                         </td>

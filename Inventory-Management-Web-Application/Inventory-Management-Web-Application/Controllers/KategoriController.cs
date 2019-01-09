@@ -28,11 +28,18 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult AnaKategoriTanimi(AnaKategori cat)
         {
-            db.AnaKategori.Add(cat);
-            db.SaveChanges();
+            try
+            {
+                db.AnaKategori.Add(cat);
+                db.SaveChanges();
+                TempData["GenelMesaj"] = "Kategori tanımı başarılı bir şekilde tamamlanmıştır.";
+                return RedirectToAction("AnaKategoriListesi");
+            }
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
 
-
-            return RedirectToAction("AnaKategoriListesi");
         }
 
         [HttpPost]
@@ -63,7 +70,7 @@ namespace Inventory_Management_Web_Application.Controllers
         public ActionResult AnaKategoriGuncelle(int id)
         {
             AnaKategori u = db.AnaKategori.Where(x => x.ID == id).FirstOrDefault();
-            if (u==null)
+            if (u == null)
             {
                 return RedirectToAction("Hata", "Admin");
             }
@@ -73,16 +80,25 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult AnaKategoriGuncelle(AnaKategori u)
         {
-            AnaKategori gu = db.AnaKategori.Where(x => x.ID == u.ID).FirstOrDefault();
-            if (gu==null)
+            try
             {
-                return RedirectToAction("Hata", "Admin");
+                AnaKategori gu = db.AnaKategori.Where(x => x.ID == u.ID).FirstOrDefault();
+                if (gu == null)
+                {
+                    return RedirectToAction("Hata", "Admin");
+                }
+                gu.ID = u.ID;
+                gu.KategoriAdi = u.KategoriAdi;
+                gu.Aciklama = u.Aciklama;
+                db.SaveChanges();
+                return RedirectToAction("AnaKategoriListesi");
             }
-            gu.ID = u.ID;
-            gu.KategoriAdi = u.KategoriAdi;
-            gu.Aciklama = u.Aciklama;
-            db.SaveChanges();
-            return RedirectToAction("AnaKategoriListesi");
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
+
         }
 
         // ---------------------------------------- Alt Kategori -------------------------------------- //
@@ -103,32 +119,43 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult AltKategoriTanimi(AltKategori cat)
         {
-            db.AltKategori.Add(cat);
-            db.SaveChanges();
-
-            #region, Kategori Rolleri Ekleme
-            int Lastid = 0;
-            if (db.AltKategori.ToList().Count != 0)
+            try
             {
-                Lastid = db.AltKategori.Max(x => x.ID);
-            }
-            AltKategori k = db.AltKategori.Where(x => x.ID == Lastid).SingleOrDefault();
-           
-            int adminID = 1;
-            adminID =(int)db.Rol.Where(x => x.RolAdi == "Admin").SingleOrDefault().ID;
-            KategoriRol kr2 = new KategoriRol { RolID = adminID, KategoriID = k.ID };
-            db.KategoriRol.Add(kr2);
-            db.SaveChanges();
 
-            Personel p = (Personel)Session["Kullanici"];
-            if (p.RolID != adminID)
-            {            
-                KategoriRol kr = new KategoriRol { RolID = p.RolID, KategoriID = k.ID };
-                db.KategoriRol.Add(kr);
+                db.AltKategori.Add(cat);
                 db.SaveChanges();
+
+                #region, Kategori Rolleri Ekleme
+                int Lastid = 0;
+                if (db.AltKategori.ToList().Count != 0)
+                {
+                    Lastid = db.AltKategori.Max(x => x.ID);
+                }
+                AltKategori k = db.AltKategori.Where(x => x.ID == Lastid).SingleOrDefault();
+
+                int adminID = 1;
+                adminID = (int)db.Rol.Where(x => x.RolAdi == "Admin").SingleOrDefault().ID;
+                KategoriRol kr2 = new KategoriRol { RolID = adminID, KategoriID = k.ID };
+                db.KategoriRol.Add(kr2);
+                db.SaveChanges();
+
+                Personel p = (Personel)Session["Kullanici"];
+                if (p.RolID != adminID)
+                {
+                    KategoriRol kr = new KategoriRol { RolID = p.RolID, KategoriID = k.ID };
+                    db.KategoriRol.Add(kr);
+                    db.SaveChanges();
+                }
+                #endregion
+
+                TempData["GenelMesaj"] = "Kategori tanımı başarılı bir şekilde tamamlanmıştır.";
+                return RedirectToAction("AltKategoriListesi");
             }
-            #endregion
-            return RedirectToAction("AltKategoriListesi");
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
         }
 
         [HttpPost]
@@ -158,6 +185,7 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpGet]
         public ActionResult AltKategoriGuncelle(int id)
         {
+
             AltKategori u = db.AltKategori.Where(x => x.ID == id).FirstOrDefault();
             if (u == null)
             {
@@ -165,22 +193,32 @@ namespace Inventory_Management_Web_Application.Controllers
             }
             var AnaKategoriler = db.AnaKategori.ToList();
             ViewBag.kategoriler = new SelectList(AnaKategoriler, "ID", "KategoriAdi");
+            TempData["GenelMesaj"] = "Kategori güncellenmesi başarılı bir şekilde tamamlanmıştır.";
             return View(u);
         }
 
         [HttpPost]
         public ActionResult AltKategoriGuncelle(AltKategori u)
         {
-            AltKategori gu = db.AltKategori.Where(x => x.ID == u.ID).FirstOrDefault();
-            if (gu == null)
+            try
             {
-                return RedirectToAction("Hata", "Admin");
+                AltKategori gu = db.AltKategori.Where(x => x.ID == u.ID).FirstOrDefault();
+                if (gu == null)
+                {
+                    return RedirectToAction("Hata", "Admin");
+                }
+                gu.AnaKategorID = u.AnaKategorID;
+                gu.KategoriAdi = u.KategoriAdi;
+                gu.Aciklama = u.Aciklama;
+                db.SaveChanges();
+                return RedirectToAction("AltKategoriListesi");
             }
-            gu.AnaKategorID = u.AnaKategorID;
-            gu.KategoriAdi = u.KategoriAdi;
-            gu.Aciklama = u.Aciklama;
-            db.SaveChanges();
-            return RedirectToAction("AltKategoriListesi");
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
+
         }
     }
 }

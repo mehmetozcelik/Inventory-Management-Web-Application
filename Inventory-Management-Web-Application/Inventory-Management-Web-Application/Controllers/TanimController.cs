@@ -22,9 +22,18 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult TeslimBirimEkle(Birim b)
         {
-            db.Birim.Add(b);
-            db.SaveChanges();
-            return RedirectToAction("TeslimBirim");
+            try
+            {
+                db.Birim.Add(b);
+                db.SaveChanges();
+                TempData["GenelMesaj"] = "Teslim birimi ekleme işlemi başarılı bir şekilde tamamlanmıştır.";
+                return RedirectToAction("TeslimBirim");
+            }
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
         }
 
         [HttpPost]
@@ -39,9 +48,9 @@ namespace Inventory_Management_Web_Application.Controllers
             {
                 try
                 {
-                db.Birim.Remove(b);
-                db.SaveChanges();
-                return Json(true);
+                    db.Birim.Remove(b);
+                    db.SaveChanges();
+                    return Json(true);
                 }
                 catch (Exception)
                 {
@@ -61,18 +70,27 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult TeslimBirimDuzenle(Birim b)
         {
-            Birim bb = db.Birim.Where(x => x.ID == b.ID).SingleOrDefault();
-            if (bb != null)
+            try
             {
-                bb.Adi = b.Adi;
-                db.SaveChanges();
-                return RedirectToAction("TeslimBirim");
-            }
-            else
-            {
+                Birim bb = db.Birim.Where(x => x.ID == b.ID).SingleOrDefault();
+                if (bb != null)
+                {
+                    bb.Adi = b.Adi;
+                    db.SaveChanges();
+                    TempData["GenelMesaj"] = "Teslim birimi güncelleme işlemi başarılı bir şekilde tamamlanmıştır.";
+                    return RedirectToAction("TeslimBirim");
+                }
+                else
+                {
 
-                return RedirectToAction("TeslimBirim");
+                    return RedirectToAction("TeslimBirim");
+                }
             }
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
         }
 
         // ---------------------------------------------------------- Ürün birimi Tanımı ---------------------------------------------------------
@@ -85,9 +103,18 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult UrunBirimEkle(UrunBirim b)
         {
-            db.UrunBirim.Add(b);
-            db.SaveChanges();
-            return RedirectToAction("UrunBirimTanimi");
+            try
+            {
+                db.UrunBirim.Add(b);
+                db.SaveChanges();
+                TempData["GenelMesaj"] = "Ürün birimi ekleme işlemi başarılı bir şekilde tamamlanmıştır.";
+                return RedirectToAction("UrunBirimTanimi");
+            }
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
         }
 
         [HttpPost]
@@ -102,9 +129,9 @@ namespace Inventory_Management_Web_Application.Controllers
             {
                 try
                 {
-                db.UrunBirim.Remove(b);
-                db.SaveChanges();
-                return Json(true);
+                    db.UrunBirim.Remove(b);
+                    db.SaveChanges();
+                    return Json(true);
                 }
                 catch (Exception)
                 {
@@ -124,18 +151,28 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult UrunBirimDuzenle(UrunBirim b)
         {
-            UrunBirim bb = db.UrunBirim.Where(x => x.ID == b.ID).SingleOrDefault();
-            if (bb != null)
+            try
             {
-                bb.Adi = b.Adi;
-                db.SaveChanges();
-                return RedirectToAction("UrunBirimTanimi");
-            }
-            else
-            {
+                UrunBirim bb = db.UrunBirim.Where(x => x.ID == b.ID).SingleOrDefault();
+                if (bb != null)
+                {
+                    bb.Adi = b.Adi;
+                    db.SaveChanges();
+                    TempData["GenelMesaj"] = "Ürün birimi düzenleme işlemi başarılı bir şekilde tamamlanmıştır.";
+                    return RedirectToAction("UrunBirimTanimi");
+                }
+                else
+                {
 
-                return RedirectToAction("UrunBirimTanimi");
+                    return RedirectToAction("UrunBirimTanimi");
+                }
             }
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
+
         }
 
         // ---------------------------------------------------------- Ürün tipi Tanımı ---------------------------------------------------------
@@ -148,9 +185,18 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult UrunTipiEkle(UrunTip b)
         {
-            db.UrunTip.Add(b);
-            db.SaveChanges();
-            return RedirectToAction("UrunTipiTanimi");
+            try
+            {
+                db.UrunTip.Add(b);
+                db.SaveChanges();
+                TempData["GenelMesaj"] = "Ürün Tipi ekleme işlemi başarılı bir şekilde tamamlanmıştır.";
+                return RedirectToAction("UrunTipiTanimi");
+            }
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
         }
 
         [HttpPost]
@@ -187,19 +233,28 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult UrunTipiDuzenle(UrunTip b)
         {
-            UrunTip bb = db.UrunTip.Where(x => x.ID == b.ID).SingleOrDefault();
-            if (bb != null)
+            try
             {
-                bb.Adi = b.Adi;
-                bb.Aciklama = b.Aciklama;
-                db.SaveChanges();
-                return RedirectToAction("UrunTipiTanimi");
-            }
-            else
-            {
+                UrunTip bb = db.UrunTip.Where(x => x.ID == b.ID).SingleOrDefault();
+                if (bb != null)
+                {
+                    bb.Adi = b.Adi;
+                    bb.Aciklama = b.Aciklama;
+                    db.SaveChanges();
+                    TempData["GenelMesaj"] = "Ürün Tipi düzenleme işlemi başarılı bir şekilde tamamlanmıştır.";
+                    return RedirectToAction("UrunTipiTanimi");
+                }
+                else
+                {
 
-                return RedirectToAction("UrunTipiTanimi");
+                    return RedirectToAction("UrunTipiTanimi");
+                }
             }
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
         }
 
 

@@ -19,7 +19,7 @@
 </head>
 <body>
     <div style="align-items:center;text-align:center;">
-        <h3>Düzce Üniversitesi Bilgi İşlem Daire Başkanlığı <br /> BISTOK Ürün Çıkışları Raporu</h3> <p>@DateTime.Now</p><br />
+        <h3>Düzce Üniversitesi Bilgi İşlem Daire Başkanlığı <br /> BISTOK Yazılım Ürün Çıkışları Raporu</h3> <p>@DateTime.Now</p><br />
         <table class="table">
             <thead>
                 <tr>
@@ -34,19 +34,19 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
+                        <td align="left">
                             @item.YazilimUrun.UrunAdi
                         </td>
-                        <td>
+                        <td align="left">
                             @item.Personel.Adi @item.Personel.Soyadi
                         </td>
-                        <td>
+                        <td align="left">
                             @item.TeslimAlanPersonel.Adi @item.TeslimAlanPersonel.Soyadi
                         </td>
-                        <td>
+                        <td align="left">
                             @item.CikanMictar
                         </td>
-                        <td>
+                        <td align="left">
                             @item.TeslimTarihi.Value.Day/@item.TeslimTarihi.Value.Month/@item.TeslimTarihi.Value.Year
                         </td>
                     </tr>
