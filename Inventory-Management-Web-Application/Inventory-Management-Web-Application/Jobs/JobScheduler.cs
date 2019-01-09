@@ -23,7 +23,6 @@ namespace Inventory_Management_Web_Application.Jobs
             .WithIntervalInHours(24)
             .RepeatForever())
             .Build();
-
             scheduler.ScheduleJob(job, trigger);
         }
     }

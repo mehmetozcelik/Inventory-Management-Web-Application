@@ -256,6 +256,7 @@
     <Compile Include="Models\MenuRol.cs" />
     <Compile Include="Models\Personel.cs" />
     <Compile Include="Models\Rol.cs" />
+    <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Models\Tedarikci.cs" />
     <Compile Include="Models\TeslimAlanPersonel.cs" />
     <Compile Include="Models\Urun.cs" />
