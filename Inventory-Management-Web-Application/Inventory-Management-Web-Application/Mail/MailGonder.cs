@@ -10,8 +10,8 @@ namespace Inventory_Management_Web_Application.Mail
     {
         public MailGonder(string ToMail, string Subject, string Body)
         {
-            Mail.mailUserName = "hamza.tas610@gmail.com";
-            Mail.mailPassword = "b.1411230131B";
+            Mail.mailUserName = "Buraya Sistem Maili gelecek";
+            Mail.mailPassword = "Buara mail şifresi gelecek";
 
             Mail mailer = new Mail();
             mailer.ToEmail = ToMail;
