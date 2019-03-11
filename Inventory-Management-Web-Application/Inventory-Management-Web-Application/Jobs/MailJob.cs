@@ -1,4 +1,5 @@
-﻿using Inventory_Management_Web_Application.Mail;
+﻿using Inventory_Management_Web_Application.App_Classes;
+using Inventory_Management_Web_Application.Mail;
 using Inventory_Management_Web_Application.Models;
 using Quartz;
 using System;
@@ -20,7 +21,7 @@ namespace Inventory_Management_Web_Application.Jobs
                 Ayarlar ayar = db.Ayarlar.FirstOrDefault();
 
                 // Stoğa azalan Ürünler
-                List<Urun> stok = db.Urun.Where(x => x.Aktif == true).ToList();
+                List<Urun> stok = UrunList.IzinliUrunler();//db.Urun.Where(x => x.Aktif == true).ToList();
                 List<Urun> temp = new List<Urun>();
                 foreach (Urun item in stok)
                 {
@@ -30,7 +31,7 @@ namespace Inventory_Management_Web_Application.Jobs
                     }
                 }
                 // Stoğa azalan Yazılımlar
-                List<YazilimUrun> Ystok = db.YazilimUrun.ToList();
+                List<YazilimUrun> Ystok = UrunList.IzinliYazilimUrunler();//db.YazilimUrun.ToList();
                 List<YazilimUrun> YstokTemp = new List<YazilimUrun>();
                 List<YazilimUrun> YLisansTemp = new List<YazilimUrun>();
 

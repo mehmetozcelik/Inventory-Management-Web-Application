@@ -17,7 +17,7 @@ namespace Inventory_Management_Web_Application.Models
 
         public int? YazilimUrunStok { get; set; }
 
-        [StringLength(200)]
+        [StringLength(2000)]
         public string UserBilgiMail { get; set; }
     }
 }

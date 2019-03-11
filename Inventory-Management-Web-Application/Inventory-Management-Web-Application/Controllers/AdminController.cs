@@ -42,11 +42,23 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpGet]
         public ActionResult Ayarlar()
         {
+
+            var personelleri = db.Personel.Select(x => new
+            {
+                ID = x.ID,
+                adiSoyadi = x.Adi + " " + x.Soyadi
+            });
+
+            Ayarlar ayar = db.Ayarlar.FirstOrDefault();
+            string selectedPersones = ayar.UserBilgiMail;
+            int[] pers = selectedPersones.Split('-').Select(n => Convert.ToInt32(n)).ToArray();
+
+            ViewBag.kisiler = new MultiSelectList(personelleri, "ID", "adiSoyadi",pers);
             return View(db.Ayarlar.FirstOrDefault());
         }
 
         [HttpPost]
-        public ActionResult Ayarlar(Ayarlar ayarlar)
+        public ActionResult Ayarlar(Ayarlar ayarlar , int [] kisiler)
         {
             try
             {
@@ -54,8 +66,31 @@ namespace Inventory_Management_Web_Application.Controllers
                 a.UrunStok = ayarlar.UrunStok;
                 a.YazilimUrun = ayarlar.YazilimUrun;
                 a.YazilimUrunStok = ayarlar.YazilimUrunStok;
+                string ids = "";
+                //altsergiler
+                for (int i = 0; i < kisiler.Length; i++)
+                {
+                    if (i == kisiler.Length)
+                    {
+                        continue;
+                    }
+                    ids = kisiler[i].ToString() + "-" + ids;
+                }
+                ids = ids.Remove(ids.Length - 1, 1);
+                a.UserBilgiMail = ids;
                 db.SaveChanges();
                 TempData["GenelMesaj"] = "Ayarlar başarılı bir şekilde güncellenmiştir.";
+                var personelleri = db.Personel.Select(x => new
+                {
+                    ID = x.ID,
+                    adiSoyadi = x.Adi + " " + x.Soyadi
+                });
+
+                Ayarlar ayar = db.Ayarlar.FirstOrDefault();
+                string selectedPersones = ayar.UserBilgiMail;
+                int[] pers = selectedPersones.Split('-').Select(n => Convert.ToInt32(n)).ToArray();
+
+                ViewBag.kisiler = new MultiSelectList(personelleri, "ID", "adiSoyadi", pers);
                 return View(db.Ayarlar.FirstOrDefault());
             }
             catch (Exception)
