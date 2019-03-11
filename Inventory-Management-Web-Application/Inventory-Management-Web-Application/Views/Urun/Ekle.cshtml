@@ -48,9 +48,12 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Birim Seçiniz </label>&nbsp;<span style="color: red;">*</span>
-                                    @Html.DropDownList("UrunBirimID", (SelectList)ViewBag.urunbirimler, "Seçiniz...", new { @class = "form-control", required = "required" })
+                                    @Html.DropDownList("UrunBirimID", (SelectList)ViewBag.urunbirimler, "Seçiniz...", new { @class = "form-control", required = "required" ,id="tekil"})
                                 </div>
-
+                                <!--ürün stok-->
+                                <div class="form-group tekil">
+                              
+                                </div>
 
                                 @{
                                     if (p.Rol.RolAdi != "LDAP")
@@ -79,9 +82,9 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Ürün Açıklama </label>
-                                    <input type="text"  class="form-control" placeholder="Açıklama Giriniz..." name="Aciklama">
+                                    <input type="text" class="form-control" placeholder="Açıklama Giriniz..." name="Aciklama">
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group seristok">
                                     <a id="seri" class="btn btn-success"> <i class="glyphicon-plus"></i>Stok Ekle</a>
                                     <label for="exampleInputEmail1">Ürüne Stok eklemek için yandaki butona basarak istediğiniz kadar alan açabilirsiniz. </label>
                                 </div>
@@ -146,6 +149,29 @@
             }
             $('.seriler').val(tumSeriler);
         }
+
+
+
+        var id3;
+        $("#tekil").change(function () {
+            id3 = this.value;
+            alert(id3);
+            if (id3 === 5) {
+                $(".tekil").append(
+                    '<label for="exampleInputEmail1">Stok Giriniz</label> & nbsp; <span style="color: red;">*</span> ' + 
+                    '<input type="text" class="form-control" placeholder="Ürün Stok Miktarı Giriniz..." name="UrunTekilStok" required >'
+                );
+             //   $(".serinumaralar").removeData();
+            }
+            else {
+                //$('.serinumaralar').append('<div class="form-group">' +
+                //    '<label for="exampleInputEmail1">' + seriSayac + '. Stok Seri No </label>&nbsp;<span style="color: red;">*</span>' +
+                //    '<input type="text" class="form-control seridoldur" onblur="seridoldur()"  placeholder="' + seriSayac + '. Stok Seri No Giriniz..."  required>' +
+                //    '</div>');
+                //$(".tekil").removeData();
+            }
+        });
+
 
     </script>
 }
