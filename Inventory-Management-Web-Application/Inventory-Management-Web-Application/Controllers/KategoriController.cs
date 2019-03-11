@@ -50,6 +50,10 @@ namespace Inventory_Management_Web_Application.Controllers
             {
                 return Json(false);
             }
+            else if (b.KategoriAdi == "Yazılım")
+            {
+                return Json("YS");
+            }
             else
             {
                 try

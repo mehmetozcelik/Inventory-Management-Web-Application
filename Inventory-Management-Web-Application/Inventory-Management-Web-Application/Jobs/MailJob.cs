@@ -60,7 +60,7 @@ namespace Inventory_Management_Web_Application.Jobs
 
             catch (Exception)
             {
-                HttpContext.Current.Response.Redirect("/Admin/Hata");
+                //HttpContext.Current.Response.Redirect("/Admin/Hata");
             }
 
 

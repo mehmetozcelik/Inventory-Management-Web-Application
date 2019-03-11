@@ -80,7 +80,7 @@ namespace Inventory_Management_Web_Application.Controllers
         public ActionResult Ekle()
         {
             var anakategoriler = db.AnaKategori.ToList();
-            ViewBag.anakategoriler = new SelectList(anakategoriler, "ID", "KategoriAdi");
+            ViewBag.anakategoriler = new SelectList(anakategoriler.FindAll(x => x.KategoriAdi == "Yazılım"), "ID", "KategoriAdi");
 
 
             var tedarikciler = db.Tedarikci.Select(x => new

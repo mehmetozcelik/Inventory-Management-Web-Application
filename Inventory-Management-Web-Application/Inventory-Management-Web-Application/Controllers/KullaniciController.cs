@@ -7,11 +7,13 @@ using System.Linq;
 using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Inventory_Management_Web_Application.Controllers
 {
     public class KullaniciController : Controller
-    {
+    {    
         // GET: Kullanici
         InventoryContext db = new InventoryContext();
 
@@ -32,12 +34,25 @@ namespace Inventory_Management_Web_Application.Controllers
 
         [HttpPost]
         public ActionResult Ekle(Personel p)
-        {
+        {    
             try
             {
-                db.Personel.Add(p);
-                db.SaveChanges();
-                TempData["GenelMesaj"] = "Kullanıcı ekleme işlemi başarılı bir şekilde tamamlanmıştır.";
+                using (MD5 md5Hash = MD5.Create())
+                {
+                    string hash = Functions.Encrypt(p.Sifre);
+                        try
+                        {
+                            p.Sifre = hash;
+                            db.Personel.Add(p);
+                            db.SaveChanges();
+                            TempData["GenelMesaj"] = "Kullanıcı ekleme işlemi başarılı bir şekilde tamamlanmıştır.";
+                        }
+                        catch (Exception ex)
+                        {
+                            TempData["GenelMesaj"] = "Kullanıcı ekleme işlemi gerçekleştirilirken bir hata oluştu.";
+                        }
+                }
+                
                 return RedirectToAction("Listesi");
             }
             catch (Exception)
@@ -124,6 +139,9 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpPost]
         public ActionResult KisiselBilgiler(Personel personel)
         {
+            using (MD5 md5Hash = MD5.Create())
+            {
+            string hash = Functions.Encrypt(personel.Sifre);
 
             try
             {
@@ -133,6 +151,7 @@ namespace Inventory_Management_Web_Application.Controllers
                 current.Soyadi = personel.Soyadi;
                 current.Tel = personel.Tel;
                 current.Email = personel.Email;
+                current.Sifre = hash;
                 db.SaveChanges();
                 ViewBag.basarili = "Bilgileriniz başarılı bir şekilde güncellenmiştir.";
                 Session.Remove("Kullanici");
@@ -143,6 +162,7 @@ namespace Inventory_Management_Web_Application.Controllers
             catch (Exception)
             {
                 return Redirect("/Admin/Hata");
+            }
             }
 
         }
@@ -172,7 +192,14 @@ namespace Inventory_Management_Web_Application.Controllers
                 Random _rdm = new Random();
                 int sifre = _rdm.Next(_min, _max);
                 string ss = Convert.ToString(sifre);
-                k.Sifre = ss;
+                string hash;
+
+                using (MD5 md5Hash = MD5.Create())
+                {
+                    hash = Functions.Encrypt(ss); 
+                }
+
+                k.Sifre = hash;
                 db.SaveChanges();
 
                 //Personel mail ile bilgilendirme
@@ -216,7 +243,12 @@ namespace Inventory_Management_Web_Application.Controllers
                 #endregion
 
                 #region,Personel ile giriş kontrolu
-                Personel p = db.Personel.Where(x => x.Email == mail && x.Sifre == sifre).FirstOrDefault();
+                Personel p = new Personel();
+                using (MD5 md5Hash = MD5.Create())
+                {
+                    string hash = Functions.Encrypt(sifre);
+                    p = db.Personel.Where(x => x.Email == mail && x.Sifre == hash).FirstOrDefault();
+                }
 
                 if (p == null)
                 {

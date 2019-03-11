@@ -205,7 +205,7 @@ namespace Inventory_Management_Web_Application.Controllers
             {
                 try
                 {
-                    List<UrunStok> us = db.UrunStok.Where(x => x.UrunID == b.ID).ToList();
+                    List<UrunStok> us = db.UrunStok.Where(x => x.UrunID == b.ID && x.Aktif == true).ToList();
                     if (us.Count != 0)
                     {
                         return Json("stok");
