@@ -1,14 +1,32 @@
 ﻿@using Inventory_Management_Web_Application.Models
 
 @model List<UrunStok>
-<ul>
 
 
-    @foreach (UrunStok item in Model)
-    {
-    <li>
-        <i class=" icon-circle text-success"></i>   @item.UrunSeriNo
-    </li>
-    }
-</ul>
-<p>Toplam Stok : @Model.Count</p>
+    <div class="col-sm-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Seri No</th>
+                        <th style="text-align:right;">İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (UrunStok item in Model)
+                    {
+                        <tr>
+                            <td> @item.UrunSeriNo</td>
+                            <td>
+                                <a title="Sil" style="float:right;"  href="/Urun/SeriNoSil/@item.ID" class="btn btn-danger btn-xs btn-confirm" data-id="1029"><i class="icon-trash"></i> Sil</a>
+                                <a title="Düzünle" style="float:right;margin-right:5px;" href="/Urun/SeriNoGuncelle/@item.ID" class="btn btn-primary btn-xs"><i class="icon-pencil"></i> Düzenle</a>
+                            </td>
+                        </tr>
+
+
+                    }
+
+                </tbody>
+            </table>
+    </div>
+
+<p style="text-align:center;">Toplam Stok : <b> @Model.Count</b></p>

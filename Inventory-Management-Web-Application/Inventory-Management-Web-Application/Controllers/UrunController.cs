@@ -14,6 +14,8 @@ namespace Inventory_Management_Web_Application.Controllers
         InventoryContext db = new InventoryContext();
 
         //-------------------------- Ürün İşlemleri -------------------------------------
+
+        // Ürün Listesi 
         [HttpGet]
         public ActionResult Listesi()
         {
@@ -55,12 +57,58 @@ namespace Inventory_Management_Web_Application.Controllers
             return View(urunler);
         }
 
+        // action : ürün çıkışı yaparken partialview olarak ürün seri numaralarını dropdownlist olarak geri döndürür.
         [HttpGet]
         public PartialViewResult uruncikarSeriNoGetir(int id)
         {
             var UrunStoklar = db.UrunStok.Where(x => x.UrunID == id && x.Aktif == true).ToList();
             ViewBag.urunGirisler = new SelectList(UrunStoklar, "ID", "UrunSeriNo");
             return PartialView();
+        }
+
+        public ActionResult SeriNoSil(int id)
+        {
+            UrunStok stok = db.UrunStok.Where(x => x.ID == id).SingleOrDefault();
+            if (stok !=null)
+            {
+                List<UrunGiris> urunGirisList = db.UrunGiris.Where(x => x.UrunStok.UrunSeriNo == stok.UrunSeriNo).ToList();
+                db.UrunGiris.RemoveRange(urunGirisList);
+                db.UrunStok.Remove(stok);
+                db.SaveChanges();
+                TempData["GenelMesaj"] = "Stok ve stoğa bağlı giriş kaydı Silinmiştir.";
+                return RedirectToAction("Listesi");
+            }
+            return RedirectToAction("Hata", "Admin");
+        }
+
+        [HttpGet]
+        public ActionResult SeriNoGuncelle(int id)
+        {
+            UrunStok stok = db.UrunStok.Where(x => x.ID == id).SingleOrDefault();
+            if (stok == null)
+            {
+                return RedirectToAction("Hata", "Admin");
+            }
+            return View(stok);
+        }
+
+        [HttpPost]
+        public ActionResult SeriNoGuncelle(UrunStok stok)
+        {
+            UrunStok stok2 = db.UrunStok.Where(x => x.ID == stok.ID).SingleOrDefault();
+            if (stok == null)
+            {
+                return RedirectToAction("Hata", "Admin");
+            }
+            UrunStok stok3= db.UrunStok.Where(x => x.UrunSeriNo == stok.UrunSeriNo).SingleOrDefault();
+            if (stok3 != null)
+            {
+                Response.Write("<script>alert('Aynı seri numaralı stoğu tekrar kaydetmektesiniz veya bu seri numaralı stok zaten mevcut.');</script>");
+                return View(stok2);
+            }
+            stok2.UrunSeriNo = stok.UrunSeriNo;
+            db.SaveChanges();
+            return RedirectToAction("Listesi");
         }
 
         [HttpGet]

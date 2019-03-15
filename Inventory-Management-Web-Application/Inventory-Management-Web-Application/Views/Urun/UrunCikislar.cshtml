@@ -45,6 +45,7 @@
                             <thead>
                                 <tr>
                                     <th>Ürün Adı</th>
+                                    <th>Teslim Birim</th>
                                     <th>Teslim Alan</th>
                                     <th>Teslim Veren</th>
                                     <th>Teslim Tarihi</th>
@@ -55,26 +56,29 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr id="@item.ID">
-                                        <td>
-                                            @item.UrunStok.Urun.UrunAdi
-                                        </td>
-                                        <td>
-                                            @item.TeslimAlanPersonel.Adi @item.TeslimAlanPersonel.Soyadi
-                                        </td>
-                                        <td>
-                                            @item.Personel.Adi @item.Personel.Soyadi
-                                        </td>
-                                        <td>
-                                            @item.TeslimTarihi.Value.Day/@item.TeslimTarihi.Value.Month/@item.TeslimTarihi.Value.Year
-                                        </td>
-                                        <td>
-                                            @item.Aciklama
-                                        </td>
-                                        <td>
-                                          <a title="PDF Çıkar" target="_blank" href="/Print/UrunCikis/@item.CikisNumarasi" style="float:right;margin-right:5px;" class="btn btn-info btn-xs"><i class="icon-print"></i> Tutanağı Göster</a>
-                                        </td>
-                                    </tr>
+                                <tr id="@item.ID">
+                                    <td>
+                                        @item.UrunStok.Urun.UrunAdi
+                                    </td>
+                                    <td>
+                                        @item.TeslimAlanPersonel.Birim.Adi
+                                    </td>
+                                    <td>
+                                        @item.TeslimAlanPersonel.Adi @item.TeslimAlanPersonel.Soyadi
+                                    </td>
+                                    <td>
+                                        @item.Personel.Adi @item.Personel.Soyadi
+                                    </td>
+                                    <td>
+                                        @item.TeslimTarihi.Value.Day/@item.TeslimTarihi.Value.Month/@item.TeslimTarihi.Value.Year
+                                    </td>
+                                    <td>
+                                        @item.Aciklama
+                                    </td>
+                                    <td>
+                                        <a title="PDF Çıkar" target="_blank" href="/Print/UrunCikis/@item.CikisNumarasi" style="float:right;margin-right:5px;" class="btn btn-info btn-xs"><i class="icon-print"></i> Tutanağı Göster</a>
+                                    </td>
+                                </tr>
                                 }
 
                             </tbody>

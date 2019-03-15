@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "SeriNoGuncelle";
+}
+
+
+
+
+
+@using Inventory_Management_Web_Application.Models
+@model UrunStok
+
+<div class="row">
+    <div class="col-lg-12">
+        <section class="panel">
+            <header class="panel-heading">
+                <div class="col-lg-12">
+                    Şu Anda <b> @Model.UrunSeriNo</b> seri numaralı stoğu düzenliyorsunuz...
+                </div>
+            </header>
+            <div class="panel-body">
+                <form role="form" method="post" action="/Urun/SeriNoGuncelle">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="col-lg-12">
+
+                                <div class="form-group">
+                                    <label for="exampleInputEmail1">Seri No </label>&nbsp;<span style="color: red;">*</span>
+                                    <input type="text" class="form-control" value="@Model.UrunSeriNo" placeholder="Ürün Seri No Giriniz..." name="UrunSeriNo" required>
+                                </div>
+                                @Html.Hidden("ID",Model.ID)
+                                <button type="submit" id="button" class="btn btn-info">Kaydet</button>
+                                <a href="/Urun/Listesi" class="btn btn-danger">İptal</a>
+                                <button type="reset" class="btn btn-default">Temizle</button>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+
+

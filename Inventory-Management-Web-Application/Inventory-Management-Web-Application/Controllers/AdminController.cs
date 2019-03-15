@@ -52,8 +52,9 @@ namespace Inventory_Management_Web_Application.Controllers
             Ayarlar ayar = db.Ayarlar.FirstOrDefault();
             string selectedPersones = ayar.UserBilgiMail;
             int[] pers = selectedPersones.Split('-').Select(n => Convert.ToInt32(n)).ToArray();
+            Array.Reverse(pers);
 
-            ViewBag.kisiler = new MultiSelectList(personelleri, "ID", "adiSoyadi",pers);
+           ViewBag.kisiler = new MultiSelectList(personelleri, "ID", "adiSoyadi",new int[] {2,3});
             return View(db.Ayarlar.FirstOrDefault());
         }
 
@@ -90,7 +91,10 @@ namespace Inventory_Management_Web_Application.Controllers
                 string selectedPersones = ayar.UserBilgiMail;
                 int[] pers = selectedPersones.Split('-').Select(n => Convert.ToInt32(n)).ToArray();
 
-                ViewBag.kisiler = new MultiSelectList(personelleri, "ID", "adiSoyadi", pers);
+                
+
+
+                ViewBag.kisiler = new MultiSelectList(personelleri, "ID", "adiSoyadi", kisiler);
                 return View(db.Ayarlar.FirstOrDefault());
             }
             catch (Exception)
