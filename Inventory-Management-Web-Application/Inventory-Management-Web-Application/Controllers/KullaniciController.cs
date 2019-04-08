@@ -42,6 +42,10 @@ namespace Inventory_Management_Web_Application.Controllers
                     string hash = Functions.Encrypt(p.Sifre);
                         try
                         {
+                        if (p.StokBulten==null)
+                        {
+                            p.StokBulten = false;
+                        }
                             p.Sifre = hash;
                             db.Personel.Add(p);
                             db.SaveChanges();

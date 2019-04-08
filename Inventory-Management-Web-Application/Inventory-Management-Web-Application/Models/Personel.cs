@@ -39,6 +39,8 @@ namespace Inventory_Management_Web_Application.Models
 
         public int? RolID { get; set; }
 
+        public bool? StokBulten { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArizaDurum> ArizaDurum { get; set; }
 

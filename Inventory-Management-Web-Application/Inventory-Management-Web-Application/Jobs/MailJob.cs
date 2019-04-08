@@ -50,12 +50,11 @@ namespace Inventory_Management_Web_Application.Jobs
 
                 string stokBody = MailGonder.urunStokBildirim(temp, YstokTemp, YLisansTemp);
                 // Atılacak mailler
-                string mailler = ayar.UserBilgiMail.ToString();
-                string[] Menuparts = mailler.Split(';');
-                Array.Reverse(Menuparts);
-                foreach (string mail in Menuparts)
+
+                List <Personel> PersonelStokBulten = db.Personel.Where(x => x.StokBulten == true).ToList(); 
+                foreach (Personel mail in PersonelStokBulten)
                 {
-                    MailGonder m = new MailGonder(mail, "BISTOK - Ürün Stok Bilgilendirmesi", stokBody);
+                    MailGonder m = new MailGonder(mail.Email, "BISTOK - Ürün Stok Bilgilendirmesi", stokBody);
                 }
             }
 

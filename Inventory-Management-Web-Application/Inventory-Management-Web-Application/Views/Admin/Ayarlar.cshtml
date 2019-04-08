@@ -7,24 +7,43 @@
 @using Inventory_Management_Web_Application.Models
 @model Ayarlar
 
-<div class="row">
 
-    <div class="col-lg-12">
-        @if (TempData["GenelMesaj"] != null)
-        {
-            <div class="alert alert-success">
-                <p>@TempData["GenelMesaj"]</p>
-            </div>
-        }
 
-        <section class="panel">
-            <header class="panel-heading">
-                <div class="col-lg-12">
-                    <b> Sistem Ayarları</b>
+
+<form role="form" method="post" action="/Admin/Ayarlar">
+    <div class="row">
+        <div class="col-lg-12">
+            @if (TempData["GenelMesaj"] != null)
+            {
+                <div class="alert alert-success">
+                    <p>@TempData["GenelMesaj"]</p>
                 </div>
-            </header>
-            <div class="panel-body">
-                <form role="form" method="post" action="/Admin/Ayarlar">
+            }
+            <section class="panel">
+                <header class="panel-heading" style="padding-bottom: 10px;">
+                    <div class="col-lg-12" style="margin-bottom:10px;">
+                        <b> Sistem Ayarları</b>
+                        <button type="submit" class="btn btn-primary" style="float: right">Kaydet</button>
+                    </div>
+                </header>
+            </section>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    Stok Ayarları
+                    <span class="tools pull-right">
+                        <a class="icon-chevron-down" data-toggle="collapse" data-target="#demo"></a>
+                    </span>
+                </header>
+                <div class="hidden">
+                    <input name="RolID" value="@Model.ID" />
+                </div>
+                <div class="panel-body collapse" id="demo">
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="col-lg-12">
@@ -40,28 +59,96 @@
                                     <label for="exampleInputEmail1">Yazılım ürünlerinde lisans key adeti kaçın altına düşerse uyarı verilsin.</label>&nbsp;<span style="color: red;">*</span>
                                     <input type="text" class="form-control" placeholder="Adet Giriniz..." name="YazilimUrunStok" required value="@Model.YazilimUrunStok">
                                 </div>
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Stok Bildirim Mailleri (Noktalı virgül ile ayırınız.)</label>&nbsp;<span style="color: red;">*</span>
-                                    @Html.DropDownList("kisiler", (MultiSelectList)ViewBag.kisiler, new { @class = "selectpicker form-control", multiple = "multiple", size = 5, @data_live_search = "true" })
-                                </div>
                                 <button type="submit" id="button" class="btn btn-info">Kaydet</button>
                                 <button type="reset" class="btn btn-default">Temizle</button>
                             </div>
-
                         </div>
+
                     </div>
-
-                </form>
-            </div>
-        </section>
+                </div>
+            </section>
+        </div>
     </div>
-</div>
 
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    Mail Bildirim Ayarları
+                    <span class="tools pull-right">
+                        <a class="icon-chevron-down" data-toggle="collapse" data-target="#demo1"></a>
+                    </span>
+                </header>
+                <div class="panel-body collapse" id="demo1">
+                    <span style="color:red;">* </span> Seçili olan personellere izinleri dahilinde stok bildirim maili gidecektir.
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Personel Adı</th>
+                                        <th>Mail</th>
+                                        <th width="20%">Mail Bildirim</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @{
+                                        foreach (Personel personel in ViewBag.personel)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @personel.Adi @personel.Soyadi
+                                                </td>
+
+                                                <td>
+                                                    @personel.Email
+                                                </td>
+
+                                                <td>
+                                                    @{
+                                                        if (personel.StokBulten != true)
+                                                        {
+                                                            <input onclick="myFunction()" class="messageCheckbox" value="@personel.ID" type="checkbox">
+                                                        }
+                                                        else
+                                                        {
+                                                            <input onclick="myFunction()" class="messageCheckbox" value="@personel.ID" type="checkbox" checked>
+                                                        }
+                                                    }
+                                                </td>
+                                            </tr>
+                                        }
+
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <input class="hidden" onload="myFunction()" type="text" name="stok" id="katrol">
+</form>
 
 @section script{
+    <script>
+        function myFunction() {
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
-}
+            var checkedValue = "";
+            var cboxes = document.getElementsByClassName('messageCheckbox');
+            var len = cboxes.length;
+            for (var i = 0; i < len; i++) {
+                if (cboxes[i].checked) {
+                    checkedValue = cboxes[i].value + "^" + checkedValue;
+                }
+            }
+
+            document.getElementById("katrol").value = checkedValue;
+        }
+    </script>    
+    
+    }
 

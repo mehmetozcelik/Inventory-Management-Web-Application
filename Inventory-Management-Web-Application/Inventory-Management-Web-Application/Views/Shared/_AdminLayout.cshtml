@@ -101,9 +101,9 @@
                                         </li>
                                     </ul>
                                 </li>
-                                                }
+                            }
 
-                                            }
+                        }
                     }
                     @{
                         if (Session["Urun"] != null)
@@ -138,7 +138,7 @@
                                             <li>
                                                 <a href="#">
                                                     <span class="label label-info"><i class="icon-th-large"></i></span>
-                                                    <span> @item.Urun.UrunAdi</span>  
+                                                    <span> @item.Urun.UrunAdi</span>
                                                     <span class="small italic"><b>(@item.UrunSeriNo)</b></span>
                                                 </a>
                                             </li>
@@ -150,9 +150,9 @@
                                         </li>
                                     </ul>
                                 </li>
-                                                }
+                            }
 
-                                            }
+                        }
                     }
                     <a href="/Kullanici/KisiselBilgiler" title="Kişisel Bilgilerim" class="btn btn-default"><i class="icon-user"></i>  @aktifKullanici.Adi @aktifKullanici.Soyadi</a>
                     <a href="/Admin/CikisYap" title="Çıkış Yap" class="btn btn-danger">Çıkış Yap <i class="icon-arrow-right"></i></a>
@@ -165,7 +165,7 @@
         @{
             Html.RenderAction("MenuGetir", "Admin");
         }
-      
+
         <!--sidebar end-->
         <!--main content start-->
         <section id="main-content">
@@ -188,7 +188,7 @@
         </footer>
         <!--footer end-->
     </section>
-
+    <script src="/Content/js/bootstrap-switch.js"></script>
     <!-- js placed at the end of the document so the pages load faster -->
     <script src="/Content/js/jquery.js"></script>
     <script src="/Content/js/jquery-1.8.3.min.js"></script>

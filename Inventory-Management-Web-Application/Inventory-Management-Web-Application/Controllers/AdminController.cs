@@ -43,58 +43,51 @@ namespace Inventory_Management_Web_Application.Controllers
         public ActionResult Ayarlar()
         {
 
-            var personelleri = db.Personel.Select(x => new
-            {
-                ID = x.ID,
-                adiSoyadi = x.Adi + " " + x.Soyadi
-            });
-
             Ayarlar ayar = db.Ayarlar.FirstOrDefault();
-            string selectedPersones = ayar.UserBilgiMail;
-            int[] pers = selectedPersones.Split('-').Select(n => Convert.ToInt32(n)).ToArray();
-            Array.Reverse(pers);
-
-           ViewBag.kisiler = new MultiSelectList(personelleri, "ID", "adiSoyadi",new int[] {2,3});
+            List<Personel> personel = db.Personel.ToList();
+            ViewBag.personel = personel;
+          
             return View(db.Ayarlar.FirstOrDefault());
         }
 
         [HttpPost]
-        public ActionResult Ayarlar(Ayarlar ayarlar , int [] kisiler)
+        public ActionResult Ayarlar(Ayarlar ayarlar , string stok)
         {
             try
             {
                 Ayarlar a = db.Ayarlar.FirstOrDefault();
+                List<Personel> personel = db.Personel.ToList();
+                ViewBag.personel = personel;
+
+                // ayar 
                 a.UrunStok = ayarlar.UrunStok;
                 a.YazilimUrun = ayarlar.YazilimUrun;
                 a.YazilimUrunStok = ayarlar.YazilimUrunStok;
-                string ids = "";
-                //altsergiler
-                for (int i = 0; i < kisiler.Length; i++)
-                {
-                    if (i == kisiler.Length)
-                    {
-                        continue;
-                    }
-                    ids = kisiler[i].ToString() + "-" + ids;
-                }
-                ids = ids.Remove(ids.Length - 1, 1);
-                a.UserBilgiMail = ids;
                 db.SaveChanges();
-                TempData["GenelMesaj"] = "Ayarlar başarılı bir şekilde güncellenmiştir.";
-                var personelleri = db.Personel.Select(x => new
+                //Stok Bulten
+                string[] stokparts = stok.Split('^');
+                Array.Reverse(stokparts);
+               
+                foreach (var item in personel)
                 {
-                    ID = x.ID,
-                    adiSoyadi = x.Adi + " " + x.Soyadi
-                });
+                    Personel p = db.Personel.Where(x => x.ID == item.ID).SingleOrDefault();
+                    if(p !=null)
+                    {
+                        String id = p.ID.ToString();
+                        if (stokparts.Contains(id))
+                        {
+                            p.StokBulten = true;
+                        }
+                        else
+                        {
+                            p.StokBulten = false;
+                        }
+              
+                        db.SaveChanges();
+                    }                    
+                }
+                TempData["GenelMesaj"] = "Ayarlar başarılı bir şekilde güncellenmiştir.";
 
-                Ayarlar ayar = db.Ayarlar.FirstOrDefault();
-                string selectedPersones = ayar.UserBilgiMail;
-                int[] pers = selectedPersones.Split('-').Select(n => Convert.ToInt32(n)).ToArray();
-
-                
-
-
-                ViewBag.kisiler = new MultiSelectList(personelleri, "ID", "adiSoyadi", kisiler);
                 return View(db.Ayarlar.FirstOrDefault());
             }
             catch (Exception)
