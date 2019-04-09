@@ -12,6 +12,13 @@
     Personel p = (Personel)Session["Kullanici"];
 }
 
+@section head{
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+}
+
 <div class="row">
     <div class="col-lg-12">
         <section class="panel">
@@ -40,13 +47,13 @@
                         else
                         { <div class="form-group">
                                 <label for="exampleInputEmail1">Ürünü Alan Kişiyi Seçiniz </label>
-                                @Html.DropDownList("AlanPerID", (SelectList)ViewBag.personeller, "Seçiniz...", new { @class = "form-control", required = "required" })
+                                @Html.DropDownList("AlanPerID", (SelectList)ViewBag.personeller, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", required = "true" })
                             </div>
                         }
                     }
                           <div class="form-group">
                               <label for="exampleInputEmail1">Tedarikçiyi Seçiniz </label> &nbsp;<span style="color: red;">*</span>
-                              @Html.DropDownList("TedarikciID", (SelectList)ViewBag.tedarikciler, "Seçiniz...", new { @class = "form-control", required = "required" })
+                              @Html.DropDownList("TedarikciID", (SelectList)ViewBag.tedarikciler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", required = "true" })
                           </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Açıklama Giriniz. </label>

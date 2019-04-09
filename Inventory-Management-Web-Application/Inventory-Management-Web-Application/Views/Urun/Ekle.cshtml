@@ -6,7 +6,12 @@
 }
 
 
+@section head{
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+}
 
 @using Inventory_Management_Web_Application.Models
 
@@ -30,7 +35,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Kategori Seçiniz </label>&nbsp;<span style="color: red;">*</span>
-                                    @Html.DropDownList("KategoriID", (SelectList)ViewBag.anakategoriler, "Seçiniz...", new { @class = "form-control", required = "required", id = "ana" })
+                                    @Html.DropDownList("KategoriID", (SelectList)ViewBag.anakategoriler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", required = "true", id = "ana" })
                                     @*@Html.DropDownList("KategoriID", (MultiSelectList)ViewBag.anakategoriler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", id = "ana" })*@
 
                                 </div>
@@ -44,11 +49,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Ürün Tipi Seçiniz </label>
-                                    @Html.DropDownList("UrunTipID", (SelectList)ViewBag.uruntipler, "Seçiniz...", new { @class = "form-control" })
+                                    @Html.DropDownList("UrunTipID", (SelectList)ViewBag.uruntipler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true"})
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Birim Seçiniz </label>&nbsp;<span style="color: red;">*</span>
-                                    @Html.DropDownList("UrunBirimID", (SelectList)ViewBag.urunbirimler, "Seçiniz...", new { @class = "form-control", required = "required" ,id="tekil"})
+                                    @Html.DropDownList("UrunBirimID", (SelectList)ViewBag.urunbirimler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", required = "true", id="tekil"})
                                 </div>
                                 <!--ürün stok-->
                                 <div class="form-group tekil">
@@ -71,14 +76,14 @@
                                     {
                                         <div class="form-group">
                                             <label for="exampleInputEmail1">Ekleyen Kişiyi Seçiniz </label>&nbsp;<span style="color: red;">*</span>
-                                            @Html.DropDownList("PersonelID", (SelectList)ViewBag.personelleri, "Seçiniz...", new { @class = "form-control", required = "required" })
+                                            @Html.DropDownList("PersonelID", (SelectList)ViewBag.personelleri, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", required = "true" })
                                         </div>
                                     }
                                 }
 
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Tedarikçi Seçiniz </label>&nbsp;<span style="color: red;">*</span>
-                                    @Html.DropDownList("TedarikciID", (SelectList)ViewBag.tedarikciler, "Seçiniz...", new { @class = "form-control", required = "required" })
+                                    @Html.DropDownList("TedarikciID", (SelectList)ViewBag.tedarikciler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", required = "true", style="background: white"})
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Ürün Açıklama </label>
@@ -172,6 +177,6 @@
             }
         });
 
-
+        
     </script>
 }

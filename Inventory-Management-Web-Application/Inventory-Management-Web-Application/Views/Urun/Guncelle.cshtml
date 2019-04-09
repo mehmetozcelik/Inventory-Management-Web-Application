@@ -6,6 +6,13 @@
 
 @using Inventory_Management_Web_Application.Models
 
+@section head{
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+}
+
 @model Urun
 
 <div class="row">
@@ -19,7 +26,7 @@
                     @Html.Hidden("ID", Model.ID)
                     <div class="form-group">
                         <label for="exampleInputEmail1">Alt Kategori Seçiniz </label>&nbsp;<span style="color: red;">*</span>
-                        @Html.DropDownList("altKategoriID", (SelectList)ViewBag.anakategoriler, "Seçiniz...", new { @class = "form-control", required = "required" })
+                        @Html.DropDownList("altKategoriID", (SelectList)ViewBag.anakategoriler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", required = "true" })
                     </div>
 
                     <div class="form-group alt">
@@ -27,7 +34,7 @@
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">Ürün Tipi Seçiniz </label>
-                        @Html.DropDownList("UrunTipID", (SelectList)ViewBag.uruntipler, "Seçiniz...", new { @class = "form-control" })
+                        @Html.DropDownList("UrunTipID", (SelectList)ViewBag.uruntipler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", required = "true" })
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Ürün Adı </label>
@@ -39,7 +46,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Birim Seçiniz </label> &nbsp;<span style="color: red;">*</span>
-                        @Html.DropDownList("UrunBirimID", (SelectList)ViewBag.urunbirimler, "Seçiniz...", new { @class = "form-control", required = "required" })
+                        @Html.DropDownList("UrunBirimID", (SelectList)ViewBag.urunbirimler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", required = "true" })
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Ürün Açıklama </label>

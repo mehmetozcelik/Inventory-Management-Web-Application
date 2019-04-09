@@ -37,6 +37,12 @@
                 <p>@TempData["GenelMesaj"]</p>
             </div>
         }
+        @if (TempData["Hata"] != null)
+        {
+            <div class="alert alert-danger">
+                <p>@TempData["Hata"]</p>
+            </div>
+        }
         <section class="panel">
             <header class="panel-heading" style="padding-bottom: 10px;">
                 <div class="col-lg-12" style="margin-bottom:10px;">

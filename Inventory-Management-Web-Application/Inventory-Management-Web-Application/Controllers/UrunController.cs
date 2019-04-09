@@ -171,6 +171,14 @@ namespace Inventory_Management_Web_Application.Controllers
             return View();
         }
 
+        [HttpGet]
+        public PartialViewResult urunDetayModal(int id)
+        {
+            Urun urunDetay = db.Urun.FirstOrDefault(x => x.ID == id && x.Aktif == true);
+
+            return PartialView(urunDetay);
+        }
+
         [HttpPost]
         public ActionResult Ekle(Urun u, string UrunSeriNo)
         {

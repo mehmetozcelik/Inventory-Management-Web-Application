@@ -1,4 +1,11 @@
-﻿<div class="row">
+﻿@section head{
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+}
+
+<div class="row">
     <div class="col-lg-12">
         <section class="panel">
             <header class="panel-heading">
@@ -9,7 +16,7 @@
                 <form role="form" method="post" action="/Rapor/YazilimUrun" target="_blank">
                     <div class="form-group">
                         <label for="exampleInputEmail1">Kategori Seçiniz </label>
-                        @Html.DropDownList("KategoriID", (SelectList)ViewBag.anakategoriler, "Seçiniz...", new { @class = "form-control", id = "ana" })
+                        @Html.DropDownList("KategoriID", (SelectList)ViewBag.anakategoriler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", id = "ana" })
                     </div>
 
                     <div class="form-group alt">
@@ -32,11 +39,11 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Ekleyen Kişiyi Seçiniz </label>
-                        @Html.DropDownList("PersonelID", (SelectList)ViewBag.personeller, "Seçiniz...", new { @class = "form-control" })
+                        @Html.DropDownList("PersonelID", (SelectList)ViewBag.personeller, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true"})
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Tedarikçi Seçiniz </label>
-                        @Html.DropDownList("TedarikciID", (SelectList)ViewBag.tedarikciler, "Seçiniz...", new { @class = "form-control" })
+                        @Html.DropDownList("TedarikciID", (SelectList)ViewBag.tedarikciler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true"})
                     </div>
                     <button style="float:right;" type="submit" class="btn btn-info">Rapor Çıkar</button>
                 </form>

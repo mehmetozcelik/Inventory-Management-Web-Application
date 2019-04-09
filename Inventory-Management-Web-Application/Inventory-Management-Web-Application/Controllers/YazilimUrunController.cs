@@ -69,6 +69,14 @@ namespace Inventory_Management_Web_Application.Controllers
 
         }
 
+        [HttpGet]
+        public PartialViewResult urunDetayModal(int id)
+        {
+            YazilimUrun urunDetay = db.YazilimUrun.FirstOrDefault(x => x.ID == id && x.Aktif == true);
+
+            return PartialView(urunDetay);
+        }
+
         public PartialViewResult altKategoriDropdown(int id)
         {
             var altkategoriler = db.AltKategori.Where(x => x.AnaKategorID == id).ToList();

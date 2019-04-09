@@ -1,0 +1,55 @@
+﻿@using Inventory_Management_Web_Application.Models
+
+@model YazilimUrun
+
+<style type="text/css">
+    .urunDetayları table tbody tr td {
+        text-align: center;
+    }
+</style>
+
+<div class="col-sm-12 urunDetayları">
+    <table class="table">
+        <thead>
+            <tr>
+                <th colspan="2" style="text-align: center; font-size: medium"><b>Ürün Adı: @Model.UrunAdi</b></th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <b>Alt Kategori</b>
+                </td>
+                <td>
+                    @Model.AltKategori.KategoriAdi
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Ekleyen Personel</b>
+                </td>
+                <td>
+                    @using (InventoryContext db = new InventoryContext())
+                    {
+                        Personel personel = db.Personel.SingleOrDefault(x => x.ID == Model.PersonelID);
+                        <span>@personel.Adi</span><span> @personel.Soyadi</span>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Tedarikçi</b>
+                </td>
+                <td>
+                    @using (InventoryContext db = new InventoryContext())
+                    {
+                        Tedarikci tedarikci = db.Tedarikci.SingleOrDefault(x => x.ID == Model.TedarikciID);
+                        <span>@tedarikci.FirmaAdi</span>
+                    }
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
