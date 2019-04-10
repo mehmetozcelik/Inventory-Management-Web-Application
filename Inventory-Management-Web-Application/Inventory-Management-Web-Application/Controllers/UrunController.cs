@@ -4,7 +4,6 @@ using Inventory_Management_Web_Application.ReportFilters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Inventory_Management_Web_Application.Controllers
@@ -51,7 +50,6 @@ namespace Inventory_Management_Web_Application.Controllers
                 adiSoyadi = x.Adi + " " + x.Soyadi
             });
 
-
             ViewBag.tedarikciler = new SelectList(tedarikciler, "ID", "TedarikciAdi");
             ViewBag.personeller = new SelectList(personeller, "ID", "adiSoyadi");
             return View(urunler);
@@ -66,6 +64,7 @@ namespace Inventory_Management_Web_Application.Controllers
             return PartialView();
         }
 
+        [HttpPost]
         public ActionResult SeriNoSil(int id)
         {
             UrunStok stok = db.UrunStok.Where(x => x.ID == id).SingleOrDefault();
@@ -172,10 +171,8 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult Ekle(Urun u, string UrunSeriNo)
+        public ActionResult Ekle(Urun u, string UrunSeriNo , int? UrunTekilStok)
         {
-
-
             try
             {
                 //--------------- Ürün Ekle
@@ -193,7 +190,7 @@ namespace Inventory_Management_Web_Application.Controllers
 
                 // ------------ Ürün Stok Ekle
                 Urun ku = db.Urun.Where(x => x.UrunKodu == urunKodu).SingleOrDefault();
-                if (UrunSeriNo != null)
+                if (UrunSeriNo !="")
                 {
                     string[] Seriparts = UrunSeriNo.Split('^');
                     for (int i = 0; i < Seriparts.Length; i++)
@@ -228,6 +225,44 @@ namespace Inventory_Management_Web_Application.Controllers
                         db.SaveChanges();
                     }
                 }
+                else if(UrunTekilStok !=null)
+                {
+                    UrunStok st = new UrunStok
+                    {
+                        Aktif = true,
+                        UrunID = ku.ID,
+                        UrunSeriNo = Convert.ToString(UrunTekilStok),
+                        UrunTekilStok = UrunTekilStok                       
+                    };
+                    db.UrunStok.Add(st); // stok Girildi;
+                    db.SaveChanges();
+
+                    int Last = 0;
+                    if (db.UrunStok.ToList().Count != 0)
+                    {
+                        Last = db.UrunStok.Max(x => x.ID);
+                    }
+
+                    UrunStok girilenStok = db.UrunStok.Where(x => x.ID == Last).SingleOrDefault();
+
+                    UrunGiris ug = new UrunGiris
+                    {
+                        StokID = girilenStok.ID,
+                        AlanPerID = u.PersonelID,
+                        TedarikciID = u.TedarikciID,
+                        Aciklama = u.Aciklama,
+                        GirisTarihi = DateTime.Now
+                    };
+
+                    db.UrunGiris.Add(ug);
+                    db.SaveChanges();
+
+                }
+                else
+                {
+                    return Redirect("/Admin/Hata");
+                }
+
                 TempData["GenelMesaj"] = "Ürün ekleme işlemi başarılı bir şekilde tamamlanmıştır.";
                 return RedirectToAction("Listesi");
             }
@@ -472,7 +507,7 @@ namespace Inventory_Management_Web_Application.Controllers
             return View(db.ArizaEskiKayitlar.ToList());
         }
 
-        //------------------------ Ürün Çıkarma İşlemler --------------------------------------------------
+        //------------------------ Ürün Çıkarma İşlemleri --------------------------------------------------
 
         public ActionResult stokCikar(int urunStokID)
         {
@@ -588,7 +623,6 @@ namespace Inventory_Management_Web_Application.Controllers
             return View(db.UrunCikis.Where(x => x.UrunStok.UrunID != null).ToList());
         }
 
-
         public void urunSepetAl()
         {
             var urunler = (App_Classes.UrunCikisSepet)Session["Urun"];
@@ -597,7 +631,6 @@ namespace Inventory_Management_Web_Application.Controllers
                 var liste = urunler.HepsiniGetir();
             }
         }
-
 
         [HttpGet]
         public ActionResult SepetSil(int id)

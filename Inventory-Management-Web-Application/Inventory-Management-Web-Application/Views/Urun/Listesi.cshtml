@@ -92,12 +92,6 @@
                 <p>@ViewBag.hata</p>
             </div>
         }
-        @if (TempData["GenelMesaj"] != null)
-        {
-            <div class="alert alert-success">
-                <p>@TempData["GenelMesaj"]</p>
-            </div>
-        }
 
         <section class="panel">
             <header class="panel-heading" style="padding-bottom: 10px;">
@@ -147,14 +141,34 @@
                                             @item.Aciklama
                                         </td>
                                         <td>
-                                            @if (@item.UrunStok.Where(x => x.UrunID == item.ID).ToList().Count <= ViewBag.ayarlar.UrunStok)
-                                            {
-                                                <span data-toggle="modal" data-target="#myModal" data-id="@item.ID" class="label label-danger label-mini sericlass">@item.UrunStok.Where(x => x.UrunID == item.ID && x.Aktif == true).ToList().Count @item.UrunBirim.Adi</span>
+
+                                            @{
+                                                if (item.UrunStok.Where(x => x.UrunID == item.ID && x.UrunTekilStok != null).ToList().Count > 0)
+                                                {
+                                                    if (item.UrunStok.Where(x => x.UrunID == item.ID && x.UrunTekilStok != null).SingleOrDefault().UrunTekilStok <= ViewBag.ayarlar.UrunStok)
+                                                    {
+                                                        <span data-toggle="modal" data-target="#myModal" data-id="@item.ID" class="label label-danger label-mini sericlass">@item.UrunStok.Where(x => x.UrunID == item.ID && x.UrunTekilStok != null).SingleOrDefault().UrunTekilStok  @item.UrunBirim.Adi</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span data-toggle="modal" data-target="#myModal" data-id="@item.ID" class="label label-success label-mini sericlass">@item.UrunStok.Where(x => x.UrunID == item.ID && x.UrunTekilStok != null).SingleOrDefault().UrunTekilStok  @item.UrunBirim.Adi</span>
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    if (@item.UrunStok.Where(x => x.UrunID == item.ID).ToList().Count <= ViewBag.ayarlar.UrunStok)
+                                                    {
+                                                        <span data-toggle="modal" data-target="#myModal" data-id="@item.ID" class="label label-danger label-mini sericlass">@item.UrunStok.Where(x => x.UrunID == item.ID && x.Aktif == true).ToList().Count @item.UrunBirim.Adi</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span data-toggle="modal" data-target="#myModal" data-id="@item.ID" class="label label-success label-mini sericlass">@item.UrunStok.Where(x => x.UrunID == item.ID && x.Aktif == true).ToList().Count @item.UrunBirim.Adi</span>
+                                                    }
+                                                }
                                             }
-                                            else
-                                            {
-                                                <span data-toggle="modal" data-target="#myModal" data-id="@item.ID" class="label label-success label-mini sericlass">@item.UrunStok.Where(x => x.UrunID == item.ID && x.Aktif == true).ToList().Count @item.UrunBirim.Adi</span>
-                                            }
+
+
 
                                         </td>
                                         <td align="center" style="width:360px;">

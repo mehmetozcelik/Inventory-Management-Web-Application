@@ -26,6 +26,8 @@ namespace Inventory_Management_Web_Application.Models
 
         public bool? Aktif { get; set; }
 
+        public int? UrunTekilStok { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ArizaDurum> ArizaDurum { get; set; }
 
