@@ -19,7 +19,8 @@
 </head>
 <body>
     <div style="align-items:center;text-align:center;">
-        <h3>Düzce Üniversitesi Bilgi İşlem Daire Başkanlığı <br /> BISTOK Ürün Çıkışları Raporu</h3> <p>@DateTime.Now</p><br />
+        <h2>   BI<span style="color:#FF6C60;">STOK</span></h2>
+        <h3>Düzce Üniversitesi Bilgi İşlem Daire Başkanlığı <br /> Ürün Çıkışları Raporu</h3> <p>@DateTime.Now</p><br />
         @if (Model.Count == 0)
         {
             <p>Girilen Özelliklerde herhangi bir kayıt bulunamadı.</p>
@@ -41,27 +42,27 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                    <tr>
-                        <td align="left">
-                            @item.UrunStok.Urun.UrunKodu
-                        </td>
-                        <td align="left">
-                            @item.UrunStok.Urun.UrunAdi
-                        </td>
-                        <td align="left">
-                            @item.UrunStok.UrunSeriNo
-                        </td>
-                        <td align="left">
-                            @item.Personel.Adi @item.Personel.Soyadi
-                        </td>
-                        <td align="left">
-                            @item.TeslimAlanPersonel.Adi @item.TeslimAlanPersonel.Soyadi
-                        </td>
+                        <tr>
+                            <td align="left">
+                                @item.UrunStok.Urun.UrunKodu
+                            </td>
+                            <td align="left">
+                                @item.UrunStok.Urun.UrunAdi
+                            </td>
+                            <td align="left">
+                                @item.UrunStok.UrunSeriNo
+                            </td>
+                            <td align="left">
+                                @item.Personel.Adi @item.Personel.Soyadi
+                            </td>
+                            <td align="left">
+                                @item.TeslimAlanPersonel.Adi @item.TeslimAlanPersonel.Soyadi
+                            </td>
 
-                        <td align="left">
-                            @item.TeslimTarihi.Value.ToShortDateString()
-                        </td>
-                    </tr>
+                            <td align="left">
+                                @item.TeslimTarihi.Value.ToShortDateString()
+                            </td>
+                        </tr>
                     }
 
                 </tbody>

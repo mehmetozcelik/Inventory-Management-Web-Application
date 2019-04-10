@@ -48,7 +48,16 @@
                                     }
                                     <tr id="@item.ID">
                                         <td>
-                                            @item.Urun.UrunAdi <b>(Seri No: @item.UrunSeriNo)</b>
+                                            @if (item.UrunTekilStok != null)
+                                            {
+                                                @item.Urun.UrunAdi <b>(@item.UrunTekilStok @item.Urun.UrunBirim.Adi)</b>
+                                            }
+                                            else
+                                            {
+                                                @item.Urun.UrunAdi <b>(Seri No: @item.UrunSeriNo)</b>
+                                            }
+
+
                                         </td>
                                         <td>
                                             <a title="Sil" href="/Urun/SepetSil/@item.ID" style="float:right;margin-left:5px;" class="btn btn-danger btn-xs"><i class="icon-trash"></i> Sil</a>
@@ -173,40 +182,40 @@
         @section script{
 
             <script>
-        var id;
-        var modalConfirm = function () {
+                var id;
+                var modalConfirm = function () {
 
-            $(".btn-confirm").on("click", function () {
-                $("#mi-modal").modal('show');
-            });
+                    $(".btn-confirm").on("click", function () {
+                        $("#mi-modal").modal('show');
+                    });
 
-            $("#modal-btn-si").on("click", function () {
-                $("#mi-modal").modal('hide');
-            });
+                    $("#modal-btn-si").on("click", function () {
+                        $("#mi-modal").modal('hide');
+                    });
 
-            $("#modal-btn-no").on("click", function () {
-                $("#mi-modal").modal('hide');
-            });
-        };
+                    $("#modal-btn-no").on("click", function () {
+                        $("#mi-modal").modal('hide');
+                    });
+                };
 
 
-        modalConfirm(function (confirm) {
-            if (confirm) {
-                console.log("basarili");
-            } else {
-                console.log("basarisiz");
-            }
-        });
+                modalConfirm(function (confirm) {
+                    if (confirm) {
+                        console.log("basarili");
+                    } else {
+                        console.log("basarisiz");
+                    }
+                });
 
             </script>
 
         }
-                                }
-                                else
-                                {
+    }
+    else
+    {
 
 
-                                }
+    }
 }
 
 

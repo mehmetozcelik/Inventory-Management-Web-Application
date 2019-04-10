@@ -29,34 +29,48 @@
                 Şu anda <b> @Model.UrunAdi </b>ürünü için garanti / arıza kaydı oluşturuyorsunuz...
             </header>
             <div class="panel-body">
-      
-                <form role="form" method="post" action="/Urun/Garanti">
-                    <input type="text" class="hidden" name="UrunID" value="@Model.ID" required>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Ürün Seri No Seçiniz </label> &nbsp;<span style="color: red;">*</span>
-                        @Html.DropDownList("stkID", (SelectList)ViewBag.urunler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", required = "true" })
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Çıkış Tarihi </label> &nbsp;<span style="color: red;">*</span>
-                        <input type="date" class="form-control" placeholder="Çıkış Tarihi Giriniz..." name="VerilisTarihi" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Tahmini Geliş Tarihi </label>
-                        <input type="date" class="form-control" placeholder="Tahmini Geliş Giriniz..." name="TahminiGelisTarihi" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Garanti Firma</label> &nbsp;<span style="color: red;">*</span>
-                        <input type="text" class="form-control" placeholder="Garanti Firma Giriniz..." name="GarantiFirma" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Kargo No</label>
-                        <input type="text" class="form-control" placeholder="Kargo No Giriniz..." name="KargoNo">
-                    </div>
 
-                    <button style="float:right;" type="submit" class="btn btn-info">Kaydet</button>
-                </form>
+                @{
+                    if (Model.UrunStok.Where(x => x.UrunTekilStok != null).ToList() != null)
+                    {
+                        <div class="alert alert-danger">
+                            <p>Tekil Stoklu ürünleri garantiye çıkaramazsınız.</p>
+                        </div>
+                        <br />
+                        <a href="/Urun/Listesi" class="btn btn-success"> Geri Dön</a>
+                    }
+                    else
+                    {
+                        <form role="form" method="post" action="/Urun/Garanti">
+                            <input type="text" class="hidden" name="UrunID" value="@Model.ID" required>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Ürün Seri No Seçiniz </label> &nbsp;<span style="color: red;">*</span>
+                                @Html.DropDownList("stkID", (SelectList)ViewBag.urunler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", required = "true" })
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Çıkış Tarihi </label> &nbsp;<span style="color: red;">*</span>
+                                <input type="date" class="form-control" placeholder="Çıkış Tarihi Giriniz..." name="VerilisTarihi" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Tahmini Geliş Tarihi </label>
+                                <input type="date" class="form-control" placeholder="Tahmini Geliş Giriniz..." name="TahminiGelisTarihi" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Garanti Firma</label> &nbsp;<span style="color: red;">*</span>
+                                <input type="text" class="form-control" placeholder="Garanti Firma Giriniz..." name="GarantiFirma" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Kargo No</label>
+                                <input type="text" class="form-control" placeholder="Kargo No Giriniz..." name="KargoNo">
+                            </div>
 
-            </div>
-        </section>
+                            <button style="float:right;" type="submit" class="btn btn-info">Kaydet</button>
+                        </form>
+                        }
+
+                    }
+
+                </div>
+            </section>
+        </div>
     </div>
-</div>
