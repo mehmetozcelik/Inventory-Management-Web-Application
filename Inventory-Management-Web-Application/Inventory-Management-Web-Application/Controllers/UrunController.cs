@@ -60,8 +60,9 @@ namespace Inventory_Management_Web_Application.Controllers
         public PartialViewResult uruncikarSeriNoGetir(int id)
         {
             var UrunStoklar = db.UrunStok.Where(x => x.UrunID == id && x.Aktif == true).ToList();
+            List<UrunStok> stok = UrunStoklar;
             ViewBag.urunGirisler = new SelectList(UrunStoklar, "ID", "UrunSeriNo");
-            return PartialView();
+            return PartialView(stok);
         }
 
         [HttpPost]
@@ -105,7 +106,16 @@ namespace Inventory_Management_Web_Application.Controllers
                 Response.Write("<script>alert('Aynı seri numaralı stoğu tekrar kaydetmektesiniz veya bu seri numaralı stok zaten mevcut.');</script>");
                 return View(stok2);
             }
-            stok2.UrunSeriNo = stok.UrunSeriNo;
+            else if(stok2.UrunTekilStok !=null)
+            {
+                stok2.UrunSeriNo = stok.UrunSeriNo;
+                stok2.UrunTekilStok =Convert.ToInt32(stok.UrunSeriNo);
+            }
+            else
+            {
+                stok2.UrunSeriNo = stok.UrunSeriNo;
+            }
+            
             db.SaveChanges();
             return RedirectToAction("Listesi");
         }
@@ -517,7 +527,7 @@ namespace Inventory_Management_Web_Application.Controllers
 
         //------------------------ Ürün Çıkarma İşlemleri --------------------------------------------------
 
-        public ActionResult stokCikar(int urunStokID)
+        public ActionResult stokCikar(int urunStokID , int? StokMiktari)
         {
 
             try
@@ -533,15 +543,28 @@ namespace Inventory_Management_Web_Application.Controllers
                 {
                     return RedirectToAction("Hata", "Admin");
                 }
-
                 var urunSepet = (App_Classes.UrunCikisSepet)Session["Urun"];
                 if (urunSepet == null)
                 {
                     urunSepet = new App_Classes.UrunCikisSepet();
                     Session["Urun"] = urunSepet;
+
+                   
                 }
-                urunSepet.ListeyeEkle(us);
+                if (StokMiktari != null)
+                {
+                    UrunStok yeniUs = new UrunStok();
+                    yeniUs = us;
+                    yeniUs.UrunTekilStok = StokMiktari;
+                    urunSepet.ListeyeEkle(yeniUs);
+                }
+                else
+                {
+                    urunSepet.ListeyeEkle(us);
+                }
                 TempData["GenelMesaj"] = "Ürün sepete eklenmiştir.";
+
+
                 return RedirectToAction("Listesi");
             }
             catch (Exception)
@@ -601,13 +624,45 @@ namespace Inventory_Management_Web_Application.Controllers
                         ViewBag.hatali = "Çıkarılacak ürünler arasında stok miktarı 0 olan ürünler bulanmaktadır.";
                         return View();
                     }
-                    stokDus.Aktif = false;
-                    db.SaveChanges();
-                    uc.StokID = item.ID;
-                    uc.CikisNumarasi = CikisNumarasi;
-                    db.UrunCikis.Add(uc);
-                    db.SaveChanges();
-                    temp.Add(item);
+
+                    if (item.UrunTekilStok !=null)
+                    {
+                        if (item.UrunTekilStok==0)
+                        {
+                            ViewBag.hatali = "Çıkarılacak ürünler arasında stok miktarı 0 olan ürünler bulanmaktadır.";
+                            return View();
+                        }
+                        if (stokDus.UrunTekilStok < -item.UrunTekilStok)
+                        {
+                            ViewBag.hatali = "Çıkarılacak ürünler arasında stok miktarı yetmeyen ürünler bulanmaktadır.";
+                            return View();
+                        }
+                        stokDus.UrunTekilStok = stokDus.UrunTekilStok-item.UrunTekilStok;
+                        stokDus.UrunSeriNo = Convert.ToString((stokDus.UrunTekilStok - item.UrunTekilStok));
+                        if (stokDus.UrunTekilStok==0)
+                        {
+                            stokDus.Aktif = false;
+                        }
+                        db.SaveChanges();
+                        uc.StokID = item.ID;
+                        uc.CikisNumarasi = CikisNumarasi;
+                        uc.CikanMictar = item.UrunTekilStok;
+                        db.UrunCikis.Add(uc);
+                        db.SaveChanges();
+                        temp.Add(item);
+                    }
+                    else
+                    {
+                        stokDus.Aktif = false;
+                        db.SaveChanges();
+                        uc.StokID = item.ID;
+                        uc.CikisNumarasi = CikisNumarasi;
+                        db.UrunCikis.Add(uc);
+                        db.SaveChanges();
+                        temp.Add(item);
+                    }
+
+
                 }
                 urunler.ListeTemizle();
                 Session.Remove("Urun");

@@ -17,61 +17,76 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>
-                <b>Alt Kategori</b>
-            </td>
-            <td>
-                @Model.AltKategori.KategoriAdi
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <b>Ürün Birim</b>
-            </td>
-            <td>
-                @Model.UrunBirim.Adi
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <b>Ekleyen Personel</b>
-            </td>
-            <td>
-                @using (InventoryContext db = new InventoryContext())
-                {
-                    Personel personel = db.Personel.SingleOrDefault(x => x.ID == Model.PersonelID);
-                    <span>@personel.Adi</span><span> @personel.Soyadi</span>
-                }
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <b>Tedarikçi</b>
-            </td>
-            <td>
-                @using (InventoryContext db = new InventoryContext())
-                {
-                    Tedarikci tedarikci = db.Tedarikci.SingleOrDefault(x => x.ID == Model.TedarikciID);
-                    <span>@tedarikci.FirmaAdi</span>
-                }
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <b>Ürün Tipi</b>
-            </td>
-            <td>
-                @if (Model.UrunTipID != null)
-                {
-                    @Model.UrunTip.Adi
-                }
-                else
-                {
-                    <span>Seçilmemiş</span>
-                }
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    <b>Alt Kategori</b>
+                </td>
+                <td>
+                    @Model.AltKategori.KategoriAdi
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Ürün Birim</b>
+                </td>
+                <td>
+                    @Model.UrunBirim.Adi
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Ekleyen Personel</b>
+                </td>
+                <td>
+                    @using (InventoryContext db = new InventoryContext())
+                    {
+                        Personel personel = db.Personel.SingleOrDefault(x => x.ID == Model.PersonelID);
+                        <span>@personel.Adi</span><span> @personel.Soyadi</span>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Tedarikçi</b>
+                </td>
+                <td>
+                    @using (InventoryContext db = new InventoryContext())
+                    {
+                        Tedarikci tedarikci = db.Tedarikci.SingleOrDefault(x => x.ID == Model.TedarikciID);
+                        <span>@tedarikci.FirmaAdi</span>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Ürün Tipi</b>
+                </td>
+                <td>
+                    @if (Model.UrunTipID != null)
+                    {
+                        @Model.UrunTip.Adi
+                    }
+                    else
+                    {
+                        <span>Seçilmemiş</span>
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Ürün Açıklaması</b>
+                </td>
+                <td>
+                    @if (Model.Aciklama != null)
+                    {
+                        @Model.Aciklama
+                    }
+                    else
+                    {
+                        <span>Girilmemiş</span>
+                    }
+                </td>
+            </tr>
 
         </tbody>
     </table>

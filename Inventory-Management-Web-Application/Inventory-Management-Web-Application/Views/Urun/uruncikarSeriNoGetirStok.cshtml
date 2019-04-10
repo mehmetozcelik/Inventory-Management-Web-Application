@@ -3,7 +3,38 @@
 @model List<UrunStok>
 
 
-    <div class="col-sm-12">
+@{
+    if (Model.Where(x => x.UrunTekilStok != null).ToList().Count > 0)
+    {
+        <div class="col-sm-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Stok Miktarı</th>
+                        <th style="text-align:right;">İşlem</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (UrunStok item in Model)
+                    {
+                        <tr>
+                            <td> @item.UrunTekilStok @item.Urun.UrunBirim.Adi</td>
+                            <td>
+                                <a title="Sil" style="float:right;" href="/Urun/SeriNoSil/@item.ID" class="btn btn-danger btn-xs btn-confirm" data-id="1029"><i class="icon-trash"></i> Sil</a>
+                                <a title="Düzünle" style="float:right;margin-right:5px;" href="/Urun/SeriNoGuncelle/@item.ID" class="btn btn-primary btn-xs"><i class="icon-pencil"></i> Düzenle</a>
+                            </td>
+                        </tr>
+
+
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="col-sm-12">
             <table class="table">
                 <thead>
                     <tr>
@@ -17,7 +48,7 @@
                         <tr>
                             <td> @item.UrunSeriNo</td>
                             <td>
-                                <a title="Sil" style="float:right;"  href="/Urun/SeriNoSil/@item.ID" class="btn btn-danger btn-xs btn-confirm" data-id="1029"><i class="icon-trash"></i> Sil</a>
+                                <a title="Sil" style="float:right;" href="/Urun/SeriNoSil/@item.ID" class="btn btn-danger btn-xs btn-confirm" data-id="1029"><i class="icon-trash"></i> Sil</a>
                                 <a title="Düzünle" style="float:right;margin-right:5px;" href="/Urun/SeriNoGuncelle/@item.ID" class="btn btn-primary btn-xs"><i class="icon-pencil"></i> Düzenle</a>
                             </td>
                         </tr>
@@ -27,6 +58,11 @@
 
                 </tbody>
             </table>
-    </div>
+        </div>
 
-<p style="text-align:center;">Toplam Stok : <b> @Model.Count</b></p>
+        <p style="text-align:center;">Toplam Stok : <b> @Model.Count</b></p>
+    }
+
+}
+
+

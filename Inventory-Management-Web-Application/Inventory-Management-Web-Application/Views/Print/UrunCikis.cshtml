@@ -21,8 +21,15 @@
 
             foreach (var item in Model)
             {
-                
-                <li>@item.UrunStok.Urun.UrunAdi <b>(Seri No: @item.UrunStok.UrunSeriNo)</b></li>
+                if (item.UrunStok.UrunTekilStok != null)
+                {
+                    <li>@item.UrunStok.Urun.UrunAdi <b>(@item.CikanMictar  @item.UrunStok.Urun.UrunBirim.Adi)</b></li>
+                }
+                else
+                {
+                    <li>@item.UrunStok.Urun.UrunAdi <b>(Seri No: @item.UrunStok.UrunSeriNo)</b></li>
+                }
+
             }}
     </ol>
 </div>

@@ -2,7 +2,7 @@
 @using Inventory_Management_Web_Application.App_Classes
 @using Inventory_Management_Web_Application.Models
 
-@{ 
+@{
     Personel aktifKullanici = (Personel)Session["Kullanici"];
 }
 
@@ -139,7 +139,16 @@
                                                 <a href="#">
                                                     <span class="label label-info"><i class="icon-th-large"></i></span>
                                                     <span> @item.Urun.UrunAdi</span>
-                                                    <span class="small italic"><b>(@item.UrunSeriNo)</b></span>
+                                                    @if (item.UrunTekilStok != null)
+                                                    {
+                                                        <span class="small italic"><b>(@item.UrunTekilStok @item.Urun.UrunBirim.Adi)</b></span>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="small italic"><b>(Seri no : @item.UrunSeriNo)</b></span>
+
+                                                    }
                                                 </a>
                                             </li>
                                             temp.Add(item);
