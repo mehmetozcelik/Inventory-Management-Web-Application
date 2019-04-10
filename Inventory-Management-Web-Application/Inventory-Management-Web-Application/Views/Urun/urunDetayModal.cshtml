@@ -87,7 +87,21 @@
                     }
                 </td>
             </tr>
-
+        <tr>
+            <td>
+                <b>Ürün Açıklaması</b>
+            </td>
+            <td>
+                @if (Model.Aciklama != null)
+                {
+                    @Model.Aciklama
+                }
+                else
+                {
+                    <span>Girilmemeiş</span>
+                }
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>

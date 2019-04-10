@@ -50,11 +50,6 @@
                                 <div class="form-group secenek">  
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="exampleInputEmail1">Birim Seçiniz </label>&nbsp;<span style="color: red;">*</span>
-                                    @Html.DropDownList("UrunBirimID", (SelectList)ViewBag.urunbirimler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", required = "true", id="tekil"})
-                                </div>
-
 
                                 @{
                                     if (p.Rol.RolAdi != "LDAP")
