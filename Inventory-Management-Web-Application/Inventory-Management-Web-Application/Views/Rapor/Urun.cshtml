@@ -23,14 +23,6 @@
                     <div class="form-group alt">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Stok Miktarı (Küçük olanları Getirir.)</label>
-                        <input type="number" class="form-control" placeholder="Stok Giriniz..." name="StokMiktari">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Ürün Tipi Seçiniz </label>
-                        @Html.DropDownList("UrunTipID", (SelectList)ViewBag.uruntipler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true"})
-                    </div>
-                    <div class="form-group">
                         <label for="exampleInputEmail1">Eklenme Tarihi (Seçilen tarihten sonra eklenen ürünleri getirir.) </label>
                         <input type="date" class="form-control" placeholder="Eklenme Tarihi Giriniz..." name="EklenmeTarihi">
                     </div>

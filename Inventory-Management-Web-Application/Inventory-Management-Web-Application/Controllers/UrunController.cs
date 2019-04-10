@@ -412,8 +412,16 @@ namespace Inventory_Management_Web_Application.Controllers
                     return RedirectToAction("Hata", "Admin");
                 }
                 UrunStok us =db.UrunStok.Where(x => x.UrunID == gu.ID && x.Aktif==true).FirstOrDefault();
+                UrunStok us2 = db.UrunStok.Where(x => x.UrunID == gu.ID && (x.UrunTekilStok == 0 || x.UrunTekilStok != null)).FirstOrDefault();
+
                 if (us!=null)
                 {                   
+                    TempData["GenelMesaj"] = "Ürüne stok tanımlı iken ürün birimini değiştiremezsiniz.";
+                    return View(gu);
+                }
+
+                if (us2 != null)
+                {
                     TempData["GenelMesaj"] = "Ürüne stok tanımlı iken ürün birimini değiştiremezsiniz.";
                     return View(gu);
                 }

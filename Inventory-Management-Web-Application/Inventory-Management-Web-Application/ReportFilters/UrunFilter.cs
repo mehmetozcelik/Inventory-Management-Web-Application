@@ -43,11 +43,7 @@ namespace Inventory_Management_Web_Application.ReportFilters
                 }
                 else if ((int)deger != 0)
                 {
-                    if (isim == "StokMiktari")
-                    {
-                        Sorgu.Append(isim + " <= " + deger.ToString() + " and ");
-                    }
-                    else
+                    if (isim != "StokMiktari")
                     {
                         Sorgu.Append(isim + " = " + deger.ToString() + " and ");
                     }

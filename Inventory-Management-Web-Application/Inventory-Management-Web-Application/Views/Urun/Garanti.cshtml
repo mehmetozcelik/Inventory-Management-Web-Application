@@ -31,7 +31,7 @@
             <div class="panel-body">
 
                 @{
-                    if (Model.UrunStok.Where(x => x.UrunTekilStok != null).ToList().Count > 0)
+                    if (Model.UrunStok.Where(x => x.UrunTekilStok != null).ToList() != null)
                     {
                         <div class="alert alert-danger">
                             <p>Tekil Stoklu ürünleri garantiye çıkaramazsınız.</p>
