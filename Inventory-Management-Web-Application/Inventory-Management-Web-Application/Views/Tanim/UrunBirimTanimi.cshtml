@@ -123,6 +123,10 @@
                     else if (rs === "FK") {
                         alert("Bu Birime ait ürün Kaydı Bulunduğundan dolayı bu birimi Silemezsiniz. ");
                     }
+                    else if (rs === false)
+                    {
+                        alert('Bu birim silenemez');
+                    }
                     else {
                         alert('Silme işlemi gerçekleşirken bir hata oluştu.');
                     }

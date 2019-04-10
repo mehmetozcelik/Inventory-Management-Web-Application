@@ -47,6 +47,10 @@ namespace Inventory_Management_Web_Application.ReportFilters
                     {
                         Sorgu.Append(isim + " = " + deger.ToString() + " and ");
                     }
+                    if( isim == "UrunSecenekID")
+                    {
+                        Sorgu.Append(isim + " = " + deger.ToString() + " and ");
+                    }
                 }
                 counter++;
             }

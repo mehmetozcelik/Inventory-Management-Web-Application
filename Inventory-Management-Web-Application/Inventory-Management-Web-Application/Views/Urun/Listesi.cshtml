@@ -49,32 +49,34 @@
             <div class="panel-body collapse" id="demo">
                 <form role="form" method="post" action="/Urun/UrunFiltrele">
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Kategori Seçiniz </label>&nbsp;<span style="color: red;">*</span>
-                        @Html.DropDownList("KategoriID", (SelectList)ViewBag.anakategoriler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", required = "true", id = "ana"})
+                        <label for="exampleInputEmail1">Kategori Seçiniz </label>
+                        @Html.DropDownList("KategoriID", (SelectList)ViewBag.anakategoriler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", id = "ana" })
                     </div>
 
                     <div class="form-group alt">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Ürün Tipi Seçiniz </label>
-                        @Html.DropDownList("UrunTipID", (SelectList)ViewBag.uruntipler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", id = "tip"})
+                        @Html.DropDownList("UrunTipID", (SelectList)ViewBag.uruntipler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", id = "tip" })
                     </div>
                     <div class="form-group secenek">
-                        
+
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Ekleyen Kişiyi Seçiniz </label>
+                        @Html.DropDownList("PersonelID", (SelectList)ViewBag.personeller, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true" })
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Tedarikçi Seçiniz </label>
+                        @Html.DropDownList("TedarikciID", (SelectList)ViewBag.tedarikciler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true" })
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Eklenme Tarihi (Seçilen tarihten sonra eklenen ürünleri getirir.) </label>
                         <input type="date" class="form-control" placeholder="Eklenme Tarihi Giriniz..." name="EklenmeTarihi">
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Ekleyen Kişiyi Seçiniz </label>&nbsp;<span style="color: red;">*</span>
-                        @Html.DropDownList("PersonelID", (SelectList)ViewBag.personeller, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true"})
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Tedarikçi Seçiniz </label>&nbsp;<span style="color: red;">*</span>
-                        @Html.DropDownList("TedarikciID", (SelectList)ViewBag.tedarikciler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true"})
-                    </div>
                     <button style="float:right;" type="submit" class="btn btn-info">Filtrele</button>
+                    <button style="float:right;margin-right:5px;" type="reset" class="btn btn-default">Temizle</button>
+
                 </form>
 
             </div>

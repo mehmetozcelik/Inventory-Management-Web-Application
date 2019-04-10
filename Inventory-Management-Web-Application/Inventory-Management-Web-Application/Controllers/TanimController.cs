@@ -129,6 +129,12 @@ namespace Inventory_Management_Web_Application.Controllers
             {
                 try
                 {
+                    UrunBirim birim = db.UrunBirim.Where(x => x.ID == id).SingleOrDefault();
+                    if (birim.Adi== "Adet" || birim.Adi == "Kg" || birim.Adi == "Metre")
+                    {
+                        return Json(false);
+                    }
+
                     db.UrunBirim.Remove(b);
                     db.SaveChanges();
                     return Json(true);
@@ -259,6 +265,7 @@ namespace Inventory_Management_Web_Application.Controllers
 
         // ---------------------------------------------------------- Ürün Seçenek Tanımı ---------------------------------------------------------
 
+            [HttpGet]
         public ActionResult UrunSecenekTanimi()
         {
             var urunTipleri = db.UrunTip.ToList();
