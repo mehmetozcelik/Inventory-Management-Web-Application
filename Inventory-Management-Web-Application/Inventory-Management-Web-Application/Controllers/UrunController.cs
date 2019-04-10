@@ -65,11 +65,11 @@ namespace Inventory_Management_Web_Application.Controllers
             return PartialView(stok);
         }
 
-        [HttpPost]
+
         public ActionResult SeriNoSil(int id)
         {
             UrunStok stok = db.UrunStok.Where(x => x.ID == id).SingleOrDefault();
-            if (stok !=null)
+            if (stok != null)
             {
                 List<UrunGiris> urunGirisList = db.UrunGiris.Where(x => x.UrunStok.UrunSeriNo == stok.UrunSeriNo).ToList();
                 db.UrunGiris.RemoveRange(urunGirisList);
@@ -100,22 +100,22 @@ namespace Inventory_Management_Web_Application.Controllers
             {
                 return RedirectToAction("Hata", "Admin");
             }
-            UrunStok stok3= db.UrunStok.Where(x => x.UrunSeriNo == stok.UrunSeriNo).SingleOrDefault();
+            UrunStok stok3 = db.UrunStok.Where(x => x.UrunSeriNo == stok.UrunSeriNo).SingleOrDefault();
             if (stok3 != null)
             {
                 Response.Write("<script>alert('Aynı seri numaralı stoğu tekrar kaydetmektesiniz veya bu seri numaralı stok zaten mevcut.');</script>");
                 return View(stok2);
             }
-            else if(stok2.UrunTekilStok !=null)
+            else if (stok2.UrunTekilStok != null)
             {
                 stok2.UrunSeriNo = stok.UrunSeriNo;
-                stok2.UrunTekilStok =Convert.ToInt32(stok.UrunSeriNo);
+                stok2.UrunTekilStok = Convert.ToInt32(stok.UrunSeriNo);
             }
             else
             {
                 stok2.UrunSeriNo = stok.UrunSeriNo;
             }
-            
+
             db.SaveChanges();
             return RedirectToAction("Listesi");
         }
@@ -189,7 +189,7 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult Ekle(Urun u, string UrunSeriNo , int? UrunTekilStok)
+        public ActionResult Ekle(Urun u, string UrunSeriNo, int? UrunTekilStok)
         {
             try
             {
@@ -208,7 +208,7 @@ namespace Inventory_Management_Web_Application.Controllers
 
                 // ------------ Ürün Stok Ekle
                 Urun ku = db.Urun.Where(x => x.UrunKodu == urunKodu).SingleOrDefault();
-                if (UrunSeriNo !="")
+                if (UrunSeriNo != "")
                 {
                     string[] Seriparts = UrunSeriNo.Split('^');
                     for (int i = 0; i < Seriparts.Length; i++)
@@ -243,14 +243,14 @@ namespace Inventory_Management_Web_Application.Controllers
                         db.SaveChanges();
                     }
                 }
-                else if(UrunTekilStok !=null)
+                else if (UrunTekilStok != null)
                 {
                     UrunStok st = new UrunStok
                     {
                         Aktif = true,
                         UrunID = ku.ID,
                         UrunSeriNo = Convert.ToString(UrunTekilStok),
-                        UrunTekilStok = UrunTekilStok                       
+                        UrunTekilStok = UrunTekilStok
                     };
                     db.UrunStok.Add(st); // stok Girildi;
                     db.SaveChanges();
@@ -394,6 +394,14 @@ namespace Inventory_Management_Web_Application.Controllers
         {
             try
             {
+                var uruntipler = db.UrunTip.ToList();
+                ViewBag.uruntipler = new SelectList(uruntipler, "ID", "Adi");
+
+                var anakategoriler = db.AltKategori.ToList();
+                var urunbirimler = db.UrunBirim.ToList();
+                ViewBag.anakategoriler = new SelectList(anakategoriler, "ID", "KategoriAdi");
+                ViewBag.urunbirimler = new SelectList(urunbirimler, "ID", "Adi");
+
                 Urun gu = db.Urun.Where(x => x.ID == u.ID).FirstOrDefault();
                 if (gu == null)
                 {
@@ -402,6 +410,12 @@ namespace Inventory_Management_Web_Application.Controllers
                 if (gu.UrunKodu != u.UrunKodu)
                 {
                     return RedirectToAction("Hata", "Admin");
+                }
+                UrunStok us =db.UrunStok.Where(x => x.UrunID == gu.ID && x.Aktif==true).FirstOrDefault();
+                if (us!=null)
+                {                   
+                    TempData["GenelMesaj"] = "Ürüne stok tanımlı iken ürün birimini değiştiremezsiniz.";
+                    return View(gu);
                 }
                 gu.altKategoriID = u.altKategoriID;
                 gu.UrunAdi = u.UrunAdi;
@@ -517,7 +531,7 @@ namespace Inventory_Management_Web_Application.Controllers
             {
                 return Redirect("/Admin/Hata");
             }
-          
+
         }
 
         public ActionResult EskiGarantiListesi()
@@ -527,7 +541,7 @@ namespace Inventory_Management_Web_Application.Controllers
 
         //------------------------ Ürün Çıkarma İşlemleri --------------------------------------------------
 
-        public ActionResult stokCikar(int urunStokID , int? StokMiktari)
+        public ActionResult stokCikar(int urunStokID, int? StokMiktari)
         {
 
             try
@@ -549,7 +563,7 @@ namespace Inventory_Management_Web_Application.Controllers
                     urunSepet = new App_Classes.UrunCikisSepet();
                     Session["Urun"] = urunSepet;
 
-                   
+
                 }
                 if (StokMiktari != null)
                 {
@@ -571,7 +585,7 @@ namespace Inventory_Management_Web_Application.Controllers
             {
                 return Redirect("/Admin/Hata");
             }
-          
+
         }
 
         [HttpGet]
@@ -625,9 +639,9 @@ namespace Inventory_Management_Web_Application.Controllers
                         return View();
                     }
 
-                    if (item.UrunTekilStok !=null)
+                    if (item.UrunTekilStok != null)
                     {
-                        if (item.UrunTekilStok==0)
+                        if (item.UrunTekilStok == 0)
                         {
                             ViewBag.hatali = "Çıkarılacak ürünler arasında stok miktarı 0 olan ürünler bulanmaktadır.";
                             return View();
@@ -637,9 +651,9 @@ namespace Inventory_Management_Web_Application.Controllers
                             ViewBag.hatali = "Çıkarılacak ürünler arasında stok miktarı yetmeyen ürünler bulanmaktadır.";
                             return View();
                         }
-                        stokDus.UrunTekilStok = stokDus.UrunTekilStok-item.UrunTekilStok;
+                        stokDus.UrunTekilStok = stokDus.UrunTekilStok - item.UrunTekilStok;
                         stokDus.UrunSeriNo = Convert.ToString((stokDus.UrunTekilStok - item.UrunTekilStok));
-                        if (stokDus.UrunTekilStok==0)
+                        if (stokDus.UrunTekilStok == 0)
                         {
                             stokDus.Aktif = false;
                         }
@@ -739,12 +753,37 @@ namespace Inventory_Management_Web_Application.Controllers
         }
 
         [HttpPost]
-        public ActionResult stokEkle(UrunGiris veri, string UrunSeriNo, int UrunID)
+        public ActionResult stokEkle(UrunGiris veri, string UrunSeriNo, int? tekilstok, int UrunID)
         {
             try
             {
                 Urun urun = db.Urun.FirstOrDefault(x => x.ID == UrunID);
-                if (UrunSeriNo != null)
+
+                if (tekilstok != null)
+                {
+                    UrunStok st = db.UrunStok.Where(x => x.UrunID == UrunID).SingleOrDefault();
+                    if (st != null)
+                    {
+                        st.UrunSeriNo = Convert.ToString(st.UrunTekilStok + tekilstok);
+                        st.UrunTekilStok = st.UrunTekilStok + tekilstok;
+                        db.SaveChanges();
+
+                        UrunGiris ug = new UrunGiris
+                        {
+                            StokID = st.ID,
+                            AlanPerID = urun.PersonelID,
+                            TedarikciID = urun.TedarikciID,
+                            Aciklama = urun.Aciklama,
+                            GirisTarihi = DateTime.Now
+                        };
+
+                        db.UrunGiris.Add(ug);
+                        db.SaveChanges();
+                    }
+
+
+                }
+                else if (UrunSeriNo != "" || UrunSeriNo != null)
                 {
                     string[] Seriparts = UrunSeriNo.Split('^');
                     for (int i = 0; i < Seriparts.Length; i++)
@@ -753,6 +792,12 @@ namespace Inventory_Management_Web_Application.Controllers
                         if (s == "")
                         {
                             continue;
+                        }
+
+                        if (db.UrunStok.Where(x=>x.UrunSeriNo==s).SingleOrDefault() !=null)
+                        {
+                            TempData["GenelMesaj"] = "Eklediğiniz stoklar arasında aynı seri numaralı stok bulunmaktadır.";
+                            return RedirectToAction("stokEkleView");
                         }
                         UrunStok st = new UrunStok
                         {
@@ -787,7 +832,7 @@ namespace Inventory_Management_Web_Application.Controllers
                 return Redirect("/Admin/Hata");
             }
 
-            
+
         }
 
         [HttpGet]

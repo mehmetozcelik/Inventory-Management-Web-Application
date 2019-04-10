@@ -106,6 +106,7 @@
                         <table class="table table-striped table-hover table-bordered" id="editable-sample">
                             <thead>
                             <tr>
+                                <th>Detay</th>
                                 <th>Eklenme Tarihi</th>
                                 <th>Ürün Kodu</th>
                                 <th>Kategori</th>
@@ -118,6 +119,10 @@
                             @foreach (var item in Model)
                             {
                                 <tr id="@item.ID">
+                                    <td>
+                                        <a title="Detay" class="btn btn-info btn-xs detay" data-id="@item.ID"><i class="icon-circle-arrow-right"></i> Detay</a>
+
+                                    </td>
                                     <td>
                                         @item.EklenmeTarihi.Value.Day/@item.EklenmeTarihi.Value.Month/@item.EklenmeTarihi.Value.Year
                                     </td>
@@ -166,8 +171,7 @@
 
 
                                         </td>
-                                        <td align="center" style="width:420px;">
-                                            <a title="Detay" style="float:right;margin-left:5px;" class="btn btn-info btn-xs detay" data-id="@item.ID"><i class="icon-circle-arrow-right"></i> Detay</a>
+                                        <td align="center">
                                             <a title="Sil" style="float:right;" class="btn btn-danger btn-xs btn-confirm" data-id="@item.ID"><i class="icon-trash"></i> Sil</a>
                                             <a title="Düzünle" style="float:right;margin-right:5px;" href="/Urun/Guncelle/@item.ID" class="btn btn-primary btn-xs"><i class="icon-pencil"></i> Düzenle</a>
                                             <a title="Garantiye Gönder" style="float:right;margin-right:5px;" href="/Urun/Garanti/@item.ID" class="btn btn-default btn-xs"><i class="icon-refresh"></i> Garanti</a>
