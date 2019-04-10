@@ -4,6 +4,12 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+@section head{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+}
+
 <div class="col-lg-12">
     <section class="panel">
         <header class="panel-heading">
@@ -12,14 +18,14 @@
             </div>
         </header>
         <div class="panel-body">
-            <form action="../Personel/TaEkle" method="post">
+            <form role="form" action="../Personel/TaEkle" method="post">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="col-lg-12">
 
                             <div class="form-group">
                                 <label>Adı</label>&nbsp;<span style="color: red;">*</span>
-                                <input name="Adi" class="form-control" placeholder="Personel Adı Giriniz...">
+                                <input name="Adi" class="form-control" placeholder="Personel Adı Giriniz..." required="true">
                             </div>
 
                             <div class="form-group">
@@ -28,13 +34,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Birimi</label>&nbsp;<span style="color: red;">*</span>
-                                <select onchange="show_selected()" id="gkk" class="form-control m-bot15" name="TeslimBirimID">
-                                    <option value="default">Birim Seçiniz</option>
-                                    @foreach (var item in ViewBag.Birimler)
-                                    {
-                                        <option value="@item.ID">@item.Adi</option>
-                                    }
-                                </select>
+                                @Html.DropDownList("TeslimBirimID", (SelectList)ViewBag.Birimler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", required = "true"})
                             </div>
                             <div class="form-group">
                                 <label>Telefon</label>&nbsp;<span style="color: red;">*</span>
@@ -59,23 +59,5 @@
 </div>
 
 @section script{
-    <script type="text/javascript">
-        function show_selected(){
-            "use strict";
-            var selector = document.getElementById('gkk');
-            var valuea = selector[selector.selectedIndex].value;
 
-            if (valuea === 'default') {
-                $('#button').removeClass('btn btn-info');
-                $('#button').addClass('btn btn-info disabled');
-                document.getElementById('button').disabled = true;
-            }
-            else {
-                $('#button').removeClass('btn btn-info disabled');
-                $('#button').addClass('btn btn-info');
-                document.getElementById('button').disabled = false;
-            }
-        };
-        window.onload = show_selected();
-    </script>
 }

@@ -360,6 +360,8 @@
     <Content Include="Views\Urun\uruncikarSeriNoGetirStok.cshtml" />
     <Content Include="Views\Error\PageError.cshtml" />
     <Content Include="Views\Urun\SeriNoGuncelle.cshtml" />
+    <Content Include="Views\Urun\urunDetayModal.cshtml" />
+    <Content Include="Views\YazilimUrun\urunDetayModal.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

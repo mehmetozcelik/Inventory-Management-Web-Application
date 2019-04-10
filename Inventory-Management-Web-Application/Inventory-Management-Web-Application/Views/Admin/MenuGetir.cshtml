@@ -34,7 +34,7 @@
                                         {
                                             if (altmenu.ParentMenuID == menu.ID && rol2.MenuID == altmenu.ID)
                                             {
-                                                <li><a href="/@altmenu.Controller/@altmenu.Action">@altmenu.Adi</a></li>
+                                                <li><a id="@altmenu.Adi" href="/@altmenu.Controller/@altmenu.Action">@altmenu.Adi</a></li>
                                             }
                                         }
                                     }
@@ -45,7 +45,7 @@
                         else if (menu.ParentMenuID == null && menu.Icon != null)
                         {
                             <li>
-                                <a href="/@menu.Controller/@menu.Action">
+                                <a id="@menu.Adi" href="/@menu.Controller/@menu.Action">
                                     <i class="@menu.Icon"></i>
                                     <span>@menu.Adi </span>
                                 </a>
@@ -62,3 +62,8 @@
     </div>
 </aside>
 
+@*<script>
+    document.ready(function() {
+        $(".sub-menu sub li a").addClass("active");
+    });
+</script>*@

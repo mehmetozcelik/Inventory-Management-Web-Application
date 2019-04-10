@@ -34,18 +34,21 @@ namespace Inventory_Management_Web_Application.Controllers
 
         [HttpPost]
         public ActionResult Ekle(Personel p)
-        {    
+        {
+            
             try
             {
-                using (MD5 md5Hash = MD5.Create())
+                if (db.Personel.FirstOrDefault(x => x.Email == p.Email) == null)
                 {
-                    string hash = Functions.Encrypt(p.Sifre);
+                    using (MD5 md5Hash = MD5.Create())
+                    {
+                        string hash = Functions.Encrypt(p.Sifre);
                         try
                         {
-                        if (p.StokBulten==null)
-                        {
-                            p.StokBulten = false;
-                        }
+                            if (p.StokBulten == null)
+                            {
+                                p.StokBulten = false;
+                            }
                             p.Sifre = hash;
                             db.Personel.Add(p);
                             db.SaveChanges();
@@ -55,8 +58,12 @@ namespace Inventory_Management_Web_Application.Controllers
                         {
                             TempData["GenelMesaj"] = "Kullanıcı ekleme işlemi gerçekleştirilirken bir hata oluştu.";
                         }
+                    }
                 }
-                
+                else
+                {
+                    TempData["Hata"] = "Girmiş Olduğunuz E-posta Adresi Kullanılmaktadır.";
+                }
                 return RedirectToAction("Listesi");
             }
             catch (Exception)
@@ -108,20 +115,26 @@ namespace Inventory_Management_Web_Application.Controllers
         {
             try
             {
-
-                Personel gu = db.Personel.Where(x => x.ID == u.ID).FirstOrDefault();
-                if (gu == null)
+                if (db.Personel.FirstOrDefault(x => x.Email == u.Email && x.ID != u.ID) == null)
                 {
-                    return RedirectToAction("Hata", "Admin");
+                    Personel gu = db.Personel.Where(x => x.ID == u.ID).FirstOrDefault();
+                    if (gu == null)
+                    {
+                        return RedirectToAction("Hata", "Admin");
+                    }
+                    gu.Adi = u.Adi;
+                    gu.Soyadi = u.Soyadi;
+                    gu.Email = u.Email;
+                    gu.Sifre = u.Sifre;
+                    gu.Tel = u.Tel;
+                    gu.RolID = u.RolID;
+                    db.SaveChanges();
+                    TempData["GenelMesaj"] = "Kullanıcı güncelleme işlemi başarılı bir şekilde tamamlanmıştır.";
                 }
-                gu.Adi = u.Adi;
-                gu.Soyadi = u.Soyadi;
-                gu.Email = u.Email;
-                gu.Sifre = u.Sifre;
-                gu.Tel = u.Tel;
-                gu.RolID = u.RolID;
-                db.SaveChanges();
-                TempData["GenelMesaj"] = "Kullanıcı güncelleme işlemi başarılı bir şekilde tamamlanmıştır.";
+                else
+                {
+                    TempData["Hata"] = "Girmiş Olduğunuz E-posta Adresi Kullanılmaktadır.";
+                }            
                 return RedirectToAction("Listesi");
             }
             catch (Exception)

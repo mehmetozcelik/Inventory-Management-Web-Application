@@ -21,7 +21,8 @@ namespace Inventory_Management_Web_Application.Controllers
 
         public ActionResult TaEkle()
         {
-            ViewBag.Birimler = db.Birim.ToList();
+            //ViewBag.Birimler = db.Birim.ToList();
+            ViewBag.Birimler = new SelectList(db.Birim.ToList(), "ID", "Adi");
             return View();
         }
 
@@ -31,19 +32,25 @@ namespace Inventory_Management_Web_Application.Controllers
 
             try
             {
-
-
-                db.TeslimAlanPersonel.Add(veri);
-                db.SaveChanges();
-                if (control == 1)
+                if (db.TeslimAlanPersonel.FirstOrDefault(x => x.Email == veri.Email) == null)
                 {
-                    return RedirectToAction("stokCikarView", "Urun");
+                    db.TeslimAlanPersonel.Add(veri);
+                    db.SaveChanges();
+                    if (control == 1)
+                    {
+                        return RedirectToAction("stokCikarView", "Urun");
+                    }
+                    else if (control == 0)
+                    {
+                        return RedirectToAction("stokCikarView", "YazilimUrun");
+                    }
+                    TempData["GenelMesaj"] = " işlemi başarılı bir şekilde tamamlanmıştır.";
                 }
-                else if (control == 0)
+                else
                 {
-                    return RedirectToAction("stokCikarView", "YazilimUrun");
+                    TempData["Hata"] = "Girmiş Olduğunuz E-posta Adresi Kullanılmaktadır.";
                 }
-                TempData["GenelMesaj"] = " işlemi başarılı bir şekilde tamamlanmıştır.";
+                
                 return RedirectToAction("TaListesi");
             }
             catch (Exception)
@@ -55,9 +62,9 @@ namespace Inventory_Management_Web_Application.Controllers
 
         public ActionResult TaDuzenle(int ID)
         {
-            ViewBag.TeslimAlanPersonel = db.TeslimAlanPersonel.SingleOrDefault(x => x.ID == ID);
-            ViewBag.Birimler = db.Birim.ToList();
-            return View();
+            TeslimAlanPersonel teslimAlanPersonel = db.TeslimAlanPersonel.SingleOrDefault(x => x.ID == ID);
+            ViewBag.Birimler = new SelectList(db.Birim.ToList(), "ID", "Adi");
+            return View(teslimAlanPersonel);
         }
 
         [HttpPost]
@@ -65,9 +72,16 @@ namespace Inventory_Management_Web_Application.Controllers
         {
             try
             {
-                db.Entry(veri).State = EntityState.Modified;
-                db.SaveChanges();
-                TempData["GenelMesaj"] = " işlemi başarılı bir şekilde tamamlanmıştır.";
+                if (db.TeslimAlanPersonel.FirstOrDefault(x => x.Email == veri.Email && x.ID != veri.ID) == null)
+                {
+                    db.Entry(veri).State = EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["GenelMesaj"] = " işlemi başarılı bir şekilde tamamlanmıştır.";
+                }
+                else
+                {
+                    TempData["Hata"] = "Girmiş Olduğunuz E-posta Adresi Kullanılmaktadır.";
+                }              
                 return RedirectToAction("TaListesi");
 
             }

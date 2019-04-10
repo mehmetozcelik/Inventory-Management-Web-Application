@@ -3,6 +3,15 @@
     ViewBag.Title = "TaDuzenle";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+@using Inventory_Management_Web_Application.Models
+@model TeslimAlanPersonel
+
+@section head{
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+}
 
 <div class="col-lg-12">
     <section class="panel">
@@ -16,39 +25,26 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="col-lg-12">
-                            <input type="hidden" name="ID" value="@ViewBag.TeslimAlanPersonel.ID"/>
+                            @Html.Hidden("ID", Model.ID)
                             <div class="form-group">
                                 <label>Adı</label>&nbsp;<span style="color: red;">*</span>
-                                <input value="@ViewBag.TeslimAlanPersonel.Adi" name="Adi" class="form-control">
+                                <input value="@Model.Adi" name="Adi" class="form-control">
                             </div>
                             <div class="form-group">
                                 <label>Soyadı</label>&nbsp;<span style="color: red;">*</span>
-                                <input value="@ViewBag.TeslimAlanPersonel.Soyadi" name="Soyadi" class="form-control" required>
+                                <input value="@Model.Soyadi" name="Soyadi" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>Birimi</label>&nbsp;<span style="color: red;">*</span>
-                                <select  onchange="show_selected()" id="gkk" class="form-control m-bot15" name="TeslimBirimID">
-                                    <option value="default">Birim Seçiniz</option>
-                                    @foreach (var item in ViewBag.Birimler)
-                                    {
-                                        if (ViewBag.TeslimAlanPersonel.TeslimBirimID == item.ID)
-                                        {
-                                            <option value="@item.ID" selected>@item.Adi</option>
-                                        }
-                                        else
-                                        {
-                                            <option value="@item.ID">@item.Adi</option>
-                                        }
-                                    }
-                                </select>
+                                @Html.DropDownList("TeslimBirimID", (SelectList)ViewBag.Birimler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", required = "true"})
                             </div>
                             <div class="form-group">
                                 <label>Telefon</label>&nbsp;<span style="color: red;">*</span>
-                                <input value="@ViewBag.TeslimAlanPersonel.Tel" name="Tel" class="form-control" required>
+                                <input value="@Model.Tel" name="Tel" class="form-control" required>
                             </div>
                             <div class="form-group">
                                 <label>E-Posta</label>&nbsp;<span style="color: red;">*</span>
-                                <input value="@ViewBag.TeslimAlanPersonel.Email" name="Email" class="form-control" required>
+                                <input value="@Model.Email" name="Email" class="form-control" required>
                             </div>
 
                             <button type="submit" id="button" class="btn btn-info">Kaydet</button>
@@ -65,24 +61,6 @@
 </div>
 
 @section script{
-    <script type="text/javascript">
-        function show_selected(){
-            "use strict";
-            var selector = document.getElementById('gkk');
-            var valuea = selector[selector.selectedIndex].value;
 
-            if (valuea == 'default') {
-                $('#button').removeClass('btn btn-info');
-                $('#button').addClass('btn btn-info disabled');
-                document.getElementById('button').disabled = true;
-            }
-            else {
-                $('#button').removeClass('btn btn-info disabled');
-                $('#button').addClass('btn btn-info');
-                document.getElementById('button').disabled = false;
-            }
-        };
-        window.onload = show_selected();
-    </script>
 }
 

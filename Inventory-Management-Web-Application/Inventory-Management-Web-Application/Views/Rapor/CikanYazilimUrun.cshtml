@@ -29,7 +29,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Ürünü Çıkartan Kişiyi Seçiniz </label>
-                        @Html.DropDownList("TeslimVerenID", (SelectList)ViewBag.personeller, "Seçiniz...", new { @class = "form-control" })
+                        @Html.DropDownList("TeslimVerenID", (SelectList)ViewBag.personeller, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true"})
                     </div>
                     <button style="float:right;" type="submit" class="btn btn-info">Rapor Çıkar</button>
                 </form>

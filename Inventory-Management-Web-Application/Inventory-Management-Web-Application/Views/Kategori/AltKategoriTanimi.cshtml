@@ -4,6 +4,13 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+@section head{
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/css/bootstrap-select.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.1/js/bootstrap-select.min.js"></script>
+}
+
 <div class="row">
 
     <div class="col-lg-12">
@@ -20,7 +27,7 @@
                             <div class="col-lg-12">
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Ana Kategori Seçiniz </label>&nbsp;<span style="color: red;">*</span>
-                                    @Html.DropDownList("AnaKategorID", (SelectList)ViewBag.kategoriler, "Seçiniz...", new { @class = "form-control", required = "required" })
+                                    @Html.DropDownList("AnaKategorID", (SelectList)ViewBag.kategoriler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", required = "true"})
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Kategori Adı </label>&nbsp;<span style="color: red;">*</span>
