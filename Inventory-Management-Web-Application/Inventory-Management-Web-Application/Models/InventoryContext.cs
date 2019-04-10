@@ -32,6 +32,7 @@ namespace Inventory_Management_Web_Application.Models
         public virtual DbSet<UrunBirim> UrunBirim { get; set; }
         public virtual DbSet<UrunCikis> UrunCikis { get; set; }
         public virtual DbSet<UrunGiris> UrunGiris { get; set; }
+        public virtual DbSet<UrunSecenek> UrunSecenek { get; set; }
         public virtual DbSet<UrunStok> UrunStok { get; set; }
         public virtual DbSet<UrunTip> UrunTip { get; set; }
         public virtual DbSet<YazilimUrun> YazilimUrun { get; set; }
@@ -97,6 +98,10 @@ namespace Inventory_Management_Web_Application.Models
                 .HasMany(e => e.UrunCikis)
                 .WithOptional(e => e.TeslimAlanPersonel)
                 .HasForeignKey(e => e.TeslimAlanKisiID);
+
+            modelBuilder.Entity<UrunSecenek>()
+                .Property(e => e.Adi)
+                .IsUnicode(false);
 
             modelBuilder.Entity<UrunStok>()
                 .HasMany(e => e.ArizaDurum)

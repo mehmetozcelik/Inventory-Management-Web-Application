@@ -61,7 +61,10 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Ürün Tipi Seçiniz </label>
-                        @Html.DropDownList("UrunTipID", (SelectList)ViewBag.uruntipler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true"})
+                        @Html.DropDownList("UrunTipID", (SelectList)ViewBag.uruntipler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", id = "tip"})
+                    </div>
+                    <div class="form-group secenek">
+                        
                     </div>
                     <div class="form-group">
                         <label for="exampleInputEmail1">Eklenme Tarihi (Seçilen tarihten sonra eklenen ürünleri getirir.) </label>
@@ -481,7 +484,25 @@
         });
     </script>
 
-
+<script>
+        var tipId;
+        $("#tip").change(function () {
+            tipId = this.value;
+            $.ajax({
+                url: '/Urun/urunSecenekDropdown/' + tipId,
+                type: 'GET',
+                cache: false,
+                success: function (data) {
+                    $('.secenek').html(data);
+                    console.log('başarı');
+                },
+                error: function () {
+                    $('.secenek').html("");
+                    console.log('hata');
+                }
+            });
+        });
+</script>
 
 }
 

@@ -49,8 +49,13 @@
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Ürün Tipi Seçiniz </label>
-                                    @Html.DropDownList("UrunTipID", (SelectList)ViewBag.uruntipler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true"})
+                                    @Html.DropDownList("UrunTipID", (SelectList)ViewBag.uruntipler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", id = "tip" })
                                 </div>
+                                
+                                <!--ürün seçenek-->
+                                <div class="form-group secenek">  
+                                </div>
+
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Birim Seçiniz </label>&nbsp;<span style="color: red;">*</span>
                                     @Html.DropDownList("UrunBirimID", (SelectList)ViewBag.urunbirimler, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", required = "true", id="tekil"})
@@ -91,10 +96,10 @@
                                     <input type="text" class="form-control" placeholder="Açıklama Giriniz..." name="Aciklama">
                                 </div>
 
-                                <div class="form-group">
+                                @*<div class="form-group">
                                     <label for="exampleInputEmail1">Birim Seçiniz </label>&nbsp;<span style="color: red;">*</span>
                                     @Html.DropDownList("UrunBirimID", (SelectList)ViewBag.urunbirimler, "Seçiniz...", new { @class = "form-control", required = "required", id = "tekil" })
-                                </div>
+                                </div>*@
                                 <!--ürün stok-->
                                 <div class="form-group tekil">
 
@@ -209,6 +214,20 @@
 
         });
 
-
+        var tipId;
+        $("#tip").change(function () {
+            tipId = this.value;
+            $.ajax({
+                url: '/Urun/urunSecenekDropdown/' + tipId,
+                type: 'GET',
+                cache: false,
+                success: function (data) {
+                    $('.secenek').html(data);
+                },
+                error: function () {
+                    $('.secenek').html("");
+                }
+            });
+        });
     </script>
 }

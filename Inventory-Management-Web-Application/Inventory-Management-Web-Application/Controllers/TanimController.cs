@@ -257,6 +257,91 @@ namespace Inventory_Management_Web_Application.Controllers
 
         }
 
+        // ---------------------------------------------------------- Ürün Seçenek Tanımı ---------------------------------------------------------
 
+        public ActionResult UrunSecenekTanimi()
+        {
+            var urunTipleri = db.UrunTip.ToList();
+            ViewBag.urunTipi = new SelectList(urunTipleri, "ID", "Adi");
+            return View(db.UrunSecenek.ToList());
+        }
+
+        [HttpPost]
+        public ActionResult UrunSecenekEkle(UrunSecenek b)
+        {
+            try
+            {
+                db.UrunSecenek.Add(b);
+                db.SaveChanges();
+                TempData["GenelMesaj"] = "Ürün Seçeneği ekleme işlemi başarılı bir şekilde tamamlanmıştır.";
+                return RedirectToAction("UrunSecenekTanimi");
+            }
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
+        }
+
+        [HttpPost]
+        public ActionResult UrunSecenekSil(int id)
+        {
+            UrunSecenek b = db.UrunSecenek.Where(x => x.ID == id).SingleOrDefault();
+            if (b == null)
+            {
+                return Json(false);
+            }
+            else
+            {
+                try
+                {
+                    db.UrunSecenek.Remove(b);
+                    db.SaveChanges();
+                    return Json(true);
+                }
+                catch (Exception)
+                {
+                    return Json("FK");
+                }
+
+            }
+        }
+
+        [HttpGet]
+        public ActionResult UrunSecenekDuzenle(int id)
+        {
+            var urunTipleri = db.UrunTip.ToList();
+            ViewBag.urunTipi = new SelectList(urunTipleri, "ID", "Adi");
+            UrunSecenek b = db.UrunSecenek.Where(x => x.ID == id).FirstOrDefault();
+            return View(b);
+        }
+
+        [HttpPost]
+        public ActionResult UrunSecenekDuzenle(UrunSecenek b)
+        {
+            try
+            {
+                UrunSecenek bb = db.UrunSecenek.Where(x => x.ID == b.ID).SingleOrDefault();
+                if (bb != null)
+                {
+                    bb.Adi = b.Adi;
+                    bb.Aciklama = b.Aciklama;
+                    bb.UrunTipID = b.UrunTipID;
+                    db.SaveChanges();
+                    TempData["GenelMesaj"] = "Ürün Seçeneği düzenleme işlemi başarılı bir şekilde tamamlanmıştır.";
+                    return RedirectToAction("UrunSecenekTanimi");
+                }
+                else
+                {
+
+                    return RedirectToAction("UrunSecenekTanimi");
+                }
+            }
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+
+        }
     }
 }

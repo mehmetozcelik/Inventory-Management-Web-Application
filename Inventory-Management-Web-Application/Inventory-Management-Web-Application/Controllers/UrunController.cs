@@ -33,6 +33,9 @@ namespace Inventory_Management_Web_Application.Controllers
             var uruntipler = db.UrunTip.ToList();
             ViewBag.uruntipler = new SelectList(uruntipler, "ID", "Adi");
 
+            var urunSecenekleri = db.UrunSecenek.ToList();
+            ViewBag.urunSecenekleri = new SelectList(urunSecenekleri, "ID", "Adi");
+
             var anakategoriler = db.AnaKategori.ToList();
             ViewBag.anakategoriler = new SelectList(anakategoriler, "ID", "KategoriAdi");
 
@@ -138,6 +141,25 @@ namespace Inventory_Management_Web_Application.Controllers
         {
             var altkategoriler = db.AltKategori.Where(x => x.AnaKategorID == id).ToList();
             ViewBag.altkategoriler = new SelectList(altkategoriler, "ID", "KategoriAdi");
+            return PartialView();
+        }
+
+        [HttpGet]
+        public PartialViewResult urunSecenekDropdown(int id, int? urunId)
+        {
+            var secenekler = db.UrunSecenek.Where(x => x.UrunTipID == id).ToList();
+            if (secenekler.Count != 0)
+            {
+                if (urunId != null)
+                {
+                    var selectedData = db.Urun.FirstOrDefault(x => x.ID == urunId);
+                    ViewBag.secenekler = new SelectList(secenekler, "ID", "Adi", secenekler.FirstOrDefault(x => x.ID == selectedData.UrunSecenekID).ID);
+                }
+                else
+                {
+                    ViewBag.secenekler = new SelectList(secenekler, "ID", "Adi");
+                }
+            } 
             return PartialView();
         }
 
@@ -398,6 +420,7 @@ namespace Inventory_Management_Web_Application.Controllers
                 gu.Aciklama = u.Aciklama;
                 gu.UrunBirimID = u.UrunBirimID;
                 gu.UrunTipID = u.UrunTipID;
+                gu.UrunSecenekID = u.UrunSecenekID;
                 //gu.UrunSeriNo = u.UrunSeriNo;
                 db.SaveChanges();
                 TempData["GenelMesaj"] = "Ürün Güncelleme işlemi başarılı bir şekilde tamamlanmıştır.";

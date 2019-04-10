@@ -72,6 +72,21 @@
                 }
             </td>
         </tr>
+            <tr>
+                <td>
+                    <b>Ürün Seçeneği</b>
+                </td>
+                <td>
+                    @if (Model.UrunSecenekID != null)
+                    {
+                        @Model.UrunSecenek.Adi
+                    }
+                    else
+                    {
+                        <span>Seçilmemiş</span>
+                    }
+                </td>
+            </tr>
 
         </tbody>
     </table>

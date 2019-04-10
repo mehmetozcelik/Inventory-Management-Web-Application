@@ -13,6 +13,7 @@ namespace Inventory_Management_Web_Application.Models
         public UrunTip()
         {
             Urun = new HashSet<Urun>();
+            UrunSecenek = new HashSet<UrunSecenek>();
         }
 
         public int ID { get; set; }
@@ -25,5 +26,8 @@ namespace Inventory_Management_Web_Application.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Urun> Urun { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<UrunSecenek> UrunSecenek { get; set; }
     }
 }

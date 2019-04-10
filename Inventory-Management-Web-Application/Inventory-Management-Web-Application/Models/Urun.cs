@@ -48,6 +48,7 @@ namespace Inventory_Management_Web_Application.Models
         public string SilmeNedeni { get; set; }
 
         public int? UrunTipID { get; set; }
+        public int? UrunSecenekID { get; set; }
 
         public virtual AltKategori AltKategori { get; set; }
 
@@ -56,6 +57,8 @@ namespace Inventory_Management_Web_Application.Models
         public virtual UrunBirim UrunBirim { get; set; }
 
         public virtual UrunTip UrunTip { get; set; }
+
+        public virtual UrunSecenek UrunSecenek { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<UrunStok> UrunStok { get; set; }
