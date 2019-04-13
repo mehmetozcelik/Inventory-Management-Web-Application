@@ -27,6 +27,10 @@
             <div class="panel-body">
                 <form role="form" method="post" action="/Tanim/UrunSecenekEkle">
                     <div class="form-group">
+                        <label for="exampleInputEmail1">Ürün Tipi Seçiniz </label>&nbsp;<span style="color: red;">*</span>
+                        @Html.DropDownList("UrunTipID", (SelectList)ViewBag.urunTipi, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", required = "true" })
+                    </div>
+                    <div class="form-group">
                         <label for="exampleInputEmail1">Seçenek Adı </label>&nbsp;<span style="color: red;">*</span>
                         <input type="text" class="form-control" placeholder="Seçenek Adı Giriniz..." name="Adi" required>
                     </div>
@@ -34,10 +38,7 @@
                         <label for="exampleInputEmail1">Seçenek Açıklama </label>&nbsp;<span style="color: red;">*</span>
                         <input type="text" class="form-control" placeholder="Seçenek Açıklama Giriniz..." name="Aciklama">
                     </div>
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Ürün Tipi Seçiniz </label>&nbsp;<span style="color: red;">*</span>
-                        @Html.DropDownList("UrunTipID", (SelectList)ViewBag.urunTipi, new { @class = "selectpicker form-control", size = 5, @data_live_search = "true", required = "true" })
-                    </div>
+
                     <button type="submit" class="btn btn-info">Kaydet</button>
                 </form>
 

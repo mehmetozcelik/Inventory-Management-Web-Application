@@ -29,7 +29,7 @@
             </header>
             <div class="panel-body">
                 @{
-                    if (Model.UrunStok.Where(x => x.UrunTekilStok != null).ToList() !=null)
+                    if (Model.UrunStok.Where(x => x.UrunTekilStok != null).ToList().Count >0)
                     {
                         <form role="form" method="post" action="/Urun/stokEkle">
                             <input hidden value="@Model.ID" name="UrunID" />

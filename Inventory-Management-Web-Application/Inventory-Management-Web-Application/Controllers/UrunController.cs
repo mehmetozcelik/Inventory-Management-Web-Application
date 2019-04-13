@@ -728,7 +728,7 @@ namespace Inventory_Management_Web_Application.Controllers
 
         public ActionResult UrunCikislar()
         {
-            return View(db.UrunCikis.Where(x => x.UrunStok.UrunID != null).ToList());
+            return View(db.UrunCikis.Where(x => x.UrunStok.UrunID != null).Take(500).ToList());
         }
 
         public void urunSepetAl()
@@ -869,8 +869,7 @@ namespace Inventory_Management_Web_Application.Controllers
         [HttpGet]
         public ActionResult urunGirisleri()
         {
-            var urunler = db.UrunGiris.Where(x => x.UrunStok.UrunID != null).ToList();
-            ViewBag.yazilimUrunler = db.UrunGiris.Where(x => x.YazilimUrunID != null).ToList();
+            var urunler = db.UrunGiris.Where(x => x.UrunStok.UrunID != null).Take(500).ToList();
             return View(urunler);
         }
 

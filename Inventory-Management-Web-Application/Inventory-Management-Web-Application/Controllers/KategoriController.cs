@@ -197,7 +197,7 @@ namespace Inventory_Management_Web_Application.Controllers
             }
             var AnaKategoriler = db.AnaKategori.ToList();
             ViewBag.kategoriler = new SelectList(AnaKategoriler, "ID", "KategoriAdi");
-            TempData["GenelMesaj"] = "Kategori güncellenmesi başarılı bir şekilde tamamlanmıştır.";
+
             return View(u);
         }
 
@@ -215,6 +215,7 @@ namespace Inventory_Management_Web_Application.Controllers
                 gu.KategoriAdi = u.KategoriAdi;
                 gu.Aciklama = u.Aciklama;
                 db.SaveChanges();
+                TempData["GenelMesaj"] = "Kategori güncellenmesi başarılı bir şekilde tamamlanmıştır.";
                 return RedirectToAction("AltKategoriListesi");
             }
             catch (Exception)
