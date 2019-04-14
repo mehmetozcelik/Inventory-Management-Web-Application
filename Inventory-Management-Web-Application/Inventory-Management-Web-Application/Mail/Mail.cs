@@ -25,7 +25,7 @@ namespace Inventory_Management_Web_Application.Mail
         static Mail()
         {
             mailHost = "smtp.gmail.com";
-            mailPort = 25; // Gmail 25 portunu kullan., 465 & 587; ÇAlışmadığı zaman bu portlarda denenebilir..
+            mailPort = 25;
             mailSSL = true;
         }
 

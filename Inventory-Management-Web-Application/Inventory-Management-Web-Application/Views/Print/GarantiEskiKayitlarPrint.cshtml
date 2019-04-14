@@ -1,0 +1,59 @@
+﻿
+@{
+    Layout = null;
+}
+@using Inventory_Management_Web_Application.Models
+
+@model List<ArizaEskiKayitlar> 
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Garanti Eski Kayıtlar</title>
+    <link href="/Content/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/Content/css/bootstrap-reset.css" rel="stylesheet">
+</head>
+<body>
+    <div style="align-items:center;text-align:center;">
+        <h2>   BI<span style="color:#FF6C60;">STOK</span></h2>
+        <h3>Düzce Üniversitesi Bilgi İşlem Daire Başkanlığı <br /> Garanti Eski Kayıtlar Raporu </h3> <p>@DateTime.Now</p><br /><br />
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Ürün Kodu</th>
+                        <th>Kategori</th>
+                        <th>Adı</th>
+                        <th>Seri No</th>
+                        <th>Eklenme Tarihi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td align="left">
+                                @item.ArizaDurum.UrunStok.Urun.UrunKodu
+                            </td>
+                            <td align="left">
+                                @item.ArizaDurum.UrunStok.Urun.AltKategori.KategoriAdi
+                            </td>
+                            <td align="left">
+                                @item.ArizaDurum.UrunStok.Urun.UrunAdi
+                            </td>
+                            <td align="left">
+                                @item.ArizaDurum.UrunStok.UrunSeriNo
+                            </td>
+                            <td align="left">
+                                @item.StokEklenmeTarihi
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+
+    </div>
+</body>
+</html>

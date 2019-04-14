@@ -44,5 +44,23 @@ namespace Inventory_Management_Web_Application.Controllers
             }
 
         }
+
+
+        public ActionResult GarantiEskiKayitlarPrint()
+        {
+            try
+            {
+                List<ArizaEskiKayitlar> uc = db.ArizaEskiKayitlar.ToList();
+                var report = new ViewAsPdf("GarantiEskiKayitlarPrint", uc)
+                { };
+                return report;
+            }
+            catch (Exception)
+            {
+                return Redirect("/Admin/Hata");
+            }
+        }
+
+
     }
 }

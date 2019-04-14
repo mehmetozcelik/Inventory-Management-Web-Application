@@ -366,6 +366,7 @@
     <Content Include="Views\Tanim\UrunSecenekTanimi.cshtml" />
     <Content Include="Views\Tanim\UrunSecenekDuzenle.cshtml" />
     <Content Include="Views\Urun\urunSecenekDropdown.cshtml" />
+    <Content Include="Views\Print\GarantiEskiKayitlarPrint.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

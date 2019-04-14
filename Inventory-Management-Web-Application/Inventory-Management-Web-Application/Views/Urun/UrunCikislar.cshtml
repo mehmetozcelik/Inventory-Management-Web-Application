@@ -44,11 +44,13 @@
                         <table class="table table-striped table-hover table-bordered" id="editable-sample">
                             <thead>
                                 <tr>
+                                    <th>Ürün Kodu</th>
                                     <th>Ürün Adı</th>
-                                    <th>Teslim Birim</th>
-                                    <th>Teslim Alan</th>
+                                    <th>Seri No Veya Miktar</th>
                                     <th>Teslim Veren</th>
                                     <th>Teslim Tarihi</th>
+                                    <th>Teslim Birim</th>
+                                    <th>Teslim Alan</th>
                                     <th>Açıklama</th>
                                     <th style="text-align:center;"> Tutanak</th>
                                 </tr>
@@ -57,20 +59,31 @@
                                 @foreach (var item in Model)
                                 {
                                 <tr id="@item.ID">
+                                    <td>@item.UrunStok.Urun.UrunKodu</td>
                                     <td>
                                         @item.UrunStok.Urun.UrunAdi
                                     </td>
                                     <td>
-                                        @item.TeslimAlanPersonel.Birim.Adi
-                                    </td>
-                                    <td>
-                                        @item.TeslimAlanPersonel.Adi @item.TeslimAlanPersonel.Soyadi
+                                        @if (item.UrunStok.UrunTekilStok != null)
+                                        {
+                                            <span class="label label-primary label-mini">@item.CikanMictar @item.UrunStok.Urun.UrunBirim.Adi</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="label label-success label-mini">@item.UrunStok.UrunSeriNo</span>
+                                        }
                                     </td>
                                     <td>
                                         @item.Personel.Adi @item.Personel.Soyadi
                                     </td>
                                     <td>
                                         @item.TeslimTarihi.Value.Day/@item.TeslimTarihi.Value.Month/@item.TeslimTarihi.Value.Year
+                                    </td>
+                                    <td>
+                                        @item.TeslimAlanPersonel.Birim.Adi
+                                    </td>
+                                    <td>
+                                        @item.TeslimAlanPersonel.Adi @item.TeslimAlanPersonel.Soyadi
                                     </td>
                                     <td>
                                         @item.Aciklama

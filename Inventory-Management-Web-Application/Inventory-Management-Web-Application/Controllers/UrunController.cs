@@ -149,7 +149,17 @@ namespace Inventory_Management_Web_Application.Controllers
 
         public PartialViewResult altKategoriDropdown(int id)
         {
-            var altkategoriler = db.AltKategori.Where(x => x.AnaKategorID == id).ToList();
+            Personel p = (Personel)Session["Kullanici"];
+            List<KategoriRol> kt = db.KategoriRol.Where(x => x.RolID == p.RolID).ToList();
+
+            List<AltKategori> alt = new List<AltKategori>();
+
+            foreach (KategoriRol item in kt)
+            {
+                AltKategori k = db.AltKategori.Where(x => x.ID == item.KategoriID).SingleOrDefault();
+                alt.Add(k);
+            }
+            var altkategoriler = alt.Where(x => x.AnaKategorID == id).ToList();
             ViewBag.altkategoriler = new SelectList(altkategoriler, "ID", "KategoriAdi");
             return PartialView();
         }
